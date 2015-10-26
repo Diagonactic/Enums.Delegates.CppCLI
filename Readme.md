@@ -3,14 +3,14 @@ Enums and Delegates in C++/CLI
 
 Enums and Delegates are a fundimental component of .Net, however, as of version 6.0 of the
 C# language, there's no way to (directly) constrain a generic parameter to System.Enum or 
-System.Delegate.  There's so many reasons want to do so, not the least of which is the set
-of kludgy static methods on Enum and Delegate that would really benefit from generic
+System.Delegate.  There's so many reasons to want to do so, not the least of which is the 
+set of kludgy static methods on Enum and Delegate that would really benefit from generic
 implementations.
 
 Enum Methods
 ------------
-Unfortunately, some of the instance and static methods exposed to enums are *slow*.
-Fixing them in code would easily be considered a micro-optimisation, but for the rare
+Unfortunately, some of the instance and static methods provided to us by Microsoft are *slow*.
+Fixing them in code would easily be considered a premature optimisation, but for the rare
 occasion that one needs to eek out a few more ms of performance, the options available are
 somewhat ugly.  ToString() is the biggest offender and the fix for it is often a switch
 statement with string literals.  This is easy to write for small enums, but in a program
@@ -47,7 +47,7 @@ happens -- next version!).
 Parse, AsString, and HasFlag are functionally equivalent implementations to the Enum 
 statics but perform faster than each after cache init.  AsString performs faster for most 
 average sized enums of any base type on first call.  Parse and HasFlags are a little
-slower.  Each share parts or all of the cache (Parse/AsString share everything, Descrpition
+slower on first call.  Each share parts or all of the cache (Parse/AsString share, Descrpition
 methods will also initialize everything with the addition of the description information, 
 HasFlags and the other methods that are not direct calls to the Enum static initialize part
 of the cache).  Following that guidance, for example, a call to Parse will make calls to
