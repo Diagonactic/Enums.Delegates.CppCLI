@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<HelpKI>
+  <HelpKINode Title="AddFlag(Of TEnum) method" Url="html/e2115750-16d7-78c2-db42-1469a021946b.htm" />
+  <HelpKINode Title="AddFlag&lt;TEnum&gt; method" Url="html/e2115750-16d7-78c2-db42-1469a021946b.htm" />
+  <HelpKINode Title="AddFlags(Of TEnum) method" Url="html/10a720e6-e501-587e-ade7-a204bcd6f6cc.htm" />
+  <HelpKINode Title="AddFlags&lt;TEnum&gt; method" Url="html/10a720e6-e501-587e-ade7-a204bcd6f6cc.htm" />
+  <HelpKINode Title="AreAllFlagsSet(Of TEnum) method" Url="html/d41b092f-aed7-ae02-8c31-8f5de487523e.htm" />
+  <HelpKINode Title="AreAllFlagsSet&lt;TEnum&gt; method" Url="html/d41b092f-aed7-ae02-8c31-8f5de487523e.htm" />
+  <HelpKINode Title="AreAnyFlagsSet(Of TEnum) method" Url="html/1d8e8eb4-54e1-5e41-d783-dcc57e8acc23.htm" />
+  <HelpKINode Title="AreAnyFlagsSet&lt;TEnum&gt; method" Url="html/1d8e8eb4-54e1-5e41-d783-dcc57e8acc23.htm" />
+  <HelpKINode Title="AsObject method" Url="html/24300165-2e2f-2964-d136-1de9fba7504a.htm" />
+  <HelpKINode Title="AsObject(Of TEnum) method" Url="html/90155980-122c-4e0a-0959-321dce22dc34.htm" />
+  <HelpKINode Title="AsObject&lt;TEnum&gt; method" Url="html/90155980-122c-4e0a-0959-321dce22dc34.htm" />
+  <HelpKINode Title="AsString(Of TEnum) method" Url="html/5f01737a-15f1-0003-87ec-cf381f0e39aa.htm" />
+  <HelpKINode Title="AsString&lt;TEnum&gt; method" Url="html/5f01737a-15f1-0003-87ec-cf381f0e39aa.htm" />
+  <HelpKINode Title="Diagonactic namespace" Url="html/3651a7d6-6977-06d0-e987-ab5a52f798dc.htm" />
+  <HelpKINode Title="Diagonactic.EnumExtensions class" Url="html/a47bdcf7-86af-f9f6-2ee3-94adf269eb01.htm" />
+  <HelpKINode Title="Diagonactic.Enums class" Url="html/8622fd9e-7bc7-8b01-f2e5-2b4323dc5bba.htm" />
+  <HelpKINode Title="EnumExtensions class">
+    <HelpKINode Title="EnumExtensions Class" Url="html/a47bdcf7-86af-f9f6-2ee3-94adf269eb01.htm" />
+    <HelpKINode Title="about EnumExtensions class" Url="html/a47bdcf7-86af-f9f6-2ee3-94adf269eb01.htm" />
+    <HelpKINode Title="methods" Url="html/7b078993-9cdb-0a9b-43dd-b96c34c31953.htm" />
+  </HelpKINode>
+  <HelpKINode Title="EnumExtensions.AddFlag(Of TEnum) method" Url="html/e2115750-16d7-78c2-db42-1469a021946b.htm" />
+  <HelpKINode Title="EnumExtensions.AddFlag&lt;TEnum&gt; method" Url="html/e2115750-16d7-78c2-db42-1469a021946b.htm" />
+  <HelpKINode Title="EnumExtensions.AddFlags(Of TEnum) method" Url="html/10a720e6-e501-587e-ade7-a204bcd6f6cc.htm" />
+  <HelpKINode Title="EnumExtensions.AddFlags&lt;TEnum&gt; method" Url="html/10a720e6-e501-587e-ade7-a204bcd6f6cc.htm" />
+  <HelpKINode Title="EnumExtensions.AreAllFlagsSet(Of TEnum) method" Url="html/d41b092f-aed7-ae02-8c31-8f5de487523e.htm" />
+  <HelpKINode Title="EnumExtensions.AreAllFlagsSet&lt;TEnum&gt; method" Url="html/d41b092f-aed7-ae02-8c31-8f5de487523e.htm" />
+  <HelpKINode Title="EnumExtensions.AreAnyFlagsSet(Of TEnum) method" Url="html/1d8e8eb4-54e1-5e41-d783-dcc57e8acc23.htm" />
+  <HelpKINode Title="EnumExtensions.AreAnyFlagsSet&lt;TEnum&gt; method" Url="html/1d8e8eb4-54e1-5e41-d783-dcc57e8acc23.htm" />
+  <HelpKINode Title="EnumExtensions.AsObject(Of TEnum) method" Url="html/90155980-122c-4e0a-0959-321dce22dc34.htm" />
+  <HelpKINode Title="EnumExtensions.AsObject&lt;TEnum&gt; method" Url="html/90155980-122c-4e0a-0959-321dce22dc34.htm" />
+  <HelpKINode Title="EnumExtensions.AsString(Of TEnum) method" Url="html/5f01737a-15f1-0003-87ec-cf381f0e39aa.htm" />
+  <HelpKINode Title="EnumExtensions.AsString&lt;TEnum&gt; method" Url="html/5f01737a-15f1-0003-87ec-cf381f0e39aa.htm" />
+  <HelpKINode Title="EnumExtensions.Format(Of TEnum) method" Url="html/3e1d69a6-b85d-6551-da2c-24aa03b50bd7.htm" />
+  <HelpKINode Title="EnumExtensions.Format&lt;TEnum&gt; method" Url="html/3e1d69a6-b85d-6551-da2c-24aa03b50bd7.htm" />
+  <HelpKINode Title="EnumExtensions.GetDescription(Of TEnum) method" Url="html/ad37b1be-9576-78ae-f97c-1eabb505ec9d.htm" />
+  <HelpKINode Title="EnumExtensions.GetDescription&lt;TEnum&gt; method" Url="html/ad37b1be-9576-78ae-f97c-1eabb505ec9d.htm" />
+  <HelpKINode Title="EnumExtensions.IsFlagSet(Of TEnum) method" Url="html/969abd58-c8dc-f55d-f7d3-facd8546c6c5.htm" />
+  <HelpKINode Title="EnumExtensions.IsFlagSet&lt;TEnum&gt; method" Url="html/969abd58-c8dc-f55d-f7d3-facd8546c6c5.htm" />
+  <HelpKINode Title="EnumExtensions.RemoveFlag(Of TEnum) method" Url="html/2af20e01-6d7e-abed-3d53-92edeeb48ffe.htm" />
+  <HelpKINode Title="EnumExtensions.RemoveFlag&lt;TEnum&gt; method" Url="html/2af20e01-6d7e-abed-3d53-92edeeb48ffe.htm" />
+  <HelpKINode Title="EnumExtensions.RemoveFlags(Of TEnum) method" Url="html/82a144a1-80a3-be5e-a5a4-10abfc2902e4.htm" />
+  <HelpKINode Title="EnumExtensions.RemoveFlags&lt;TEnum&gt; method" Url="html/82a144a1-80a3-be5e-a5a4-10abfc2902e4.htm" />
+  <HelpKINode Title="EnumExtensions.ToList(Of TEnum) method" Url="html/cece38f9-b3a2-86e6-9ab3-d06a488c4a98.htm" />
+  <HelpKINode Title="EnumExtensions.ToList&lt;TEnum&gt; method" Url="html/cece38f9-b3a2-86e6-9ab3-d06a488c4a98.htm" />
+  <HelpKINode Title="Enums class">
+    <HelpKINode Title="Enums Class" Url="html/8622fd9e-7bc7-8b01-f2e5-2b4323dc5bba.htm" />
+    <HelpKINode Title="about Enums class" Url="html/8622fd9e-7bc7-8b01-f2e5-2b4323dc5bba.htm" />
+    <HelpKINode Title="methods" Url="html/161be44d-7cb1-475c-c81b-7a185f9d484c.htm" />
+  </HelpKINode>
+  <HelpKINode Title="Enums.AsObject method" Url="html/24300165-2e2f-2964-d136-1de9fba7504a.htm" />
+  <HelpKINode Title="Enums.GetNames(Of TEnum) method" Url="html/93bcbd72-71d8-bfd8-bdad-68dfe655e4bb.htm" />
+  <HelpKINode Title="Enums.GetNames&lt;TEnum&gt; method" Url="html/93bcbd72-71d8-bfd8-bdad-68dfe655e4bb.htm" />
+  <HelpKINode Title="Enums.GetValues(Of TEnum) method" Url="html/093c24b3-3dce-737d-f2a4-effd07ad15a2.htm" />
+  <HelpKINode Title="Enums.GetValues&lt;TEnum&gt; method" Url="html/093c24b3-3dce-737d-f2a4-effd07ad15a2.htm" />
+  <HelpKINode Title="Enums.Parse method" Url="html/1ec08ba8-353e-c613-22f3-6462378e3c83.htm" />
+  <HelpKINode Title="Enums.ToEnum method" Url="html/fd679884-1ae5-d2c6-9438-f000ede6241a.htm" />
+  <HelpKINode Title="Enums.TryGetFromDescription(Of TEnum) method" Url="html/6eabc015-437c-6593-b5c4-e2ab74568261.htm" />
+  <HelpKINode Title="Enums.TryGetFromDescription&lt;TEnum&gt; method" Url="html/6eabc015-437c-6593-b5c4-e2ab74568261.htm" />
+  <HelpKINode Title="Enums.TryParse method" Url="html/ead30354-99a9-ca03-1549-8d2bb3615aee.htm" />
+  <HelpKINode Title="Format(Of TEnum) method" Url="html/3e1d69a6-b85d-6551-da2c-24aa03b50bd7.htm" />
+  <HelpKINode Title="Format&lt;TEnum&gt; method" Url="html/3e1d69a6-b85d-6551-da2c-24aa03b50bd7.htm" />
+  <HelpKINode Title="GetDescription(Of TEnum) method" Url="html/ad37b1be-9576-78ae-f97c-1eabb505ec9d.htm" />
+  <HelpKINode Title="GetDescription&lt;TEnum&gt; method" Url="html/ad37b1be-9576-78ae-f97c-1eabb505ec9d.htm" />
+  <HelpKINode Title="GetNames(Of TEnum) method" Url="html/93bcbd72-71d8-bfd8-bdad-68dfe655e4bb.htm" />
+  <HelpKINode Title="GetNames&lt;TEnum&gt; method" Url="html/93bcbd72-71d8-bfd8-bdad-68dfe655e4bb.htm" />
+  <HelpKINode Title="GetValues(Of TEnum) method" Url="html/093c24b3-3dce-737d-f2a4-effd07ad15a2.htm" />
+  <HelpKINode Title="GetValues&lt;TEnum&gt; method" Url="html/093c24b3-3dce-737d-f2a4-effd07ad15a2.htm" />
+  <HelpKINode Title="IsFlagSet(Of TEnum) method" Url="html/969abd58-c8dc-f55d-f7d3-facd8546c6c5.htm" />
+  <HelpKINode Title="IsFlagSet&lt;TEnum&gt; method" Url="html/969abd58-c8dc-f55d-f7d3-facd8546c6c5.htm" />
+  <HelpKINode Title="Parse method" Url="html/1ec08ba8-353e-c613-22f3-6462378e3c83.htm" />
+  <HelpKINode Title="RemoveFlag(Of TEnum) method" Url="html/2af20e01-6d7e-abed-3d53-92edeeb48ffe.htm" />
+  <HelpKINode Title="RemoveFlag&lt;TEnum&gt; method" Url="html/2af20e01-6d7e-abed-3d53-92edeeb48ffe.htm" />
+  <HelpKINode Title="RemoveFlags(Of TEnum) method" Url="html/82a144a1-80a3-be5e-a5a4-10abfc2902e4.htm" />
+  <HelpKINode Title="RemoveFlags&lt;TEnum&gt; method" Url="html/82a144a1-80a3-be5e-a5a4-10abfc2902e4.htm" />
+  <HelpKINode Title="ToEnum method" Url="html/fd679884-1ae5-d2c6-9438-f000ede6241a.htm" />
+  <HelpKINode Title="ToList(Of TEnum) method" Url="html/cece38f9-b3a2-86e6-9ab3-d06a488c4a98.htm" />
+  <HelpKINode Title="ToList&lt;TEnum&gt; method" Url="html/cece38f9-b3a2-86e6-9ab3-d06a488c4a98.htm" />
+  <HelpKINode Title="TryGetFromDescription(Of TEnum) method" Url="html/6eabc015-437c-6593-b5c4-e2ab74568261.htm" />
+  <HelpKINode Title="TryGetFromDescription&lt;TEnum&gt; method" Url="html/6eabc015-437c-6593-b5c4-e2ab74568261.htm" />
+  <HelpKINode Title="TryParse method" Url="html/ead30354-99a9-ca03-1549-8d2bb3615aee.htm" />
+  <HelpKINode Title="version">
+    <HelpKINode Title="1.0.0.0" Url="html/e7ac0f1c-d983-4fa6-a4b8-16ec4a687de7.htm" />
+    <HelpKINode Title="history" Url="html/6d8b18de-bb33-4835-8a0b-139784b3150d.htm" />
+  </HelpKINode>
+  <HelpKINode Title="Welcome" Url="html/abeafdee-19f4-473c-b63d-40f914ef9c8b.htm" />
+</HelpKI>

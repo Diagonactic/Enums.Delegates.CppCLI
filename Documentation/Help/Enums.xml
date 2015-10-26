@@ -1,0 +1,271 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>Enums</name>
+  </assembly>
+  <members>
+    <member name="T:Diagonactic.EnumExtensions">
+      <summary>
+Extension methods for Enum generics
+</summary>
+    </member>
+    <member name="M:Diagonactic.EnumExtensions.AddFlag``1(``0,``0)">
+      <summary>
+	Adds <paramref name="flagToSet" /> to <paramref name="source" /> flags enum using a binary math operation applied to the underlying 
+	type of <typeparamref name="TEnum" />.
+</summary>
+      <param name="source">The value to apply the add operation to.</param>
+      <param name="flagToSet">The flag to add to <paramref name="source" /></param>
+      <typeparam name="TEnum">An <see langword="enum" /> (<see cref="T:System.Enum" />)</typeparam>
+      <returns>
+        <paramref name="source" /> with <paramref name="flagToSet" /> added.</returns>
+    </member>
+    <member name="M:Diagonactic.EnumExtensions.AddFlags``1(``0,``0[])">
+      <summary>
+	Adds <paramref name="flagsToAdd" /> to <paramref name="source" /> flags enum using a binary math operation applied to the underlying 
+	type of <typeparamref name="TEnum" />.
+</summary>
+      <param name="source">The value to apply the add operation to.</param>
+      <param name="flagsToAdd">The flag to add to <paramref name="source" /></param>
+      <typeparam name="TEnum">An <see langword="enum" /> (<see cref="T:System.Enum" />)</typeparam>
+      <returns>
+        <paramref name="source" /> with <paramref name="flagsToAdd" /> added.</returns>
+    </member>
+    <member name="M:Diagonactic.EnumExtensions.AreAllFlagsSet``1(``0,``0[])">
+      <summary>
+	Checks if <paramref name="flagsToTest" /> are all set on <paramref name="source" /> flags enum using a binary math operation applied to the underlying 
+	type of <typeparamref name="TEnum" />.
+</summary>
+      <param name="source">The value to check for flags.</param>
+      <param name="flagsToTest">The flags to check against <paramref name="source" /></param>
+      <typeparam name="TEnum">An <see langword="enum" /> (<see cref="T:System.Enum" />)</typeparam>
+      <returns>
+        <see langword="true" /> if all flags in <paramref name="flagsToTest" /> are set in <paramref name="source" />.</returns>
+    </member>
+    <member name="M:Diagonactic.EnumExtensions.AreAnyFlagsSet``1(``0,``0[])">
+      <summary>
+	Checks if any <paramref name="flagsToTest" /> are set on <paramref name="source" /> flags enum using a binary math operation applied to the underlying 
+	type of <typeparamref name="TEnum" />.
+</summary>
+      <param name="source">The value to check for flags.</param>
+      <param name="flagsToTest">The flags to check against <paramref name="source" /></param>
+      <typeparam name="TEnum">An <see langword="enum" /> (<see cref="T:System.Enum" />)</typeparam>
+      <returns>
+        <see langword="true" /> if <paramref name="source" /> has any of the flags in <paramref name="flagsToTest" />; <see langword="false" /> if all or unset.</returns>
+    </member>
+    <member name="M:Diagonactic.EnumExtensions.AsObject``1(``0)">
+      <summary>Converts <paramref name="value" /> to an <see cref="T:System.Object" /></summary>
+      <param name="value">The value to convert to <see cref="T:System.Object" /></param>
+      <typeparam name="TEnum">An <see langword="enum" /> (<see cref="T:System.Enum" />)</typeparam>
+      <returns>An <see cref="T:System.Object" /> of <paramref name="value" />.</returns>
+    </member>
+    <member name="M:Diagonactic.EnumExtensions.AsString``1(``0)">
+      <summary>
+Converts an <typeparamref name="TEnum" /> to a string.
+</summary>
+      <param name="source" />
+      <typeparam name="TEnum">An <see langword="enum" /> (<see cref="T:System.Enum" />)</typeparam>
+      <returns>Comma separated string version of <typeparamref name="TEnum" /></returns>
+    </member>
+    <member name="M:Diagonactic.EnumExtensions.Format``1(``0,System.String)">
+      <summary>A generic version of <c>Enum.Format</c>.</summary>
+      <param name="source">The enum to format</param>
+      <param name="format">A format string to apply</param>
+      <typeparam name="TEnum">An <see langword="enum" /> (<see cref="T:System.Enum" />)</typeparam>
+      <returns>A formatted representation of <paramref name="source" /></returns>
+    </member>
+    <member name="M:Diagonactic.EnumExtensions.GetDescription``1(``0)">
+      <summary>Gets the value of the <c>DescriptionAttribute</c> attribute associated with <paramref name="source" />. If no description attribute is present, attempts to return a friendly name based on parsing for camelhumps or underscores and reformatting.</summary>
+      <param name="source">The enum to get the description attribute from</param>
+      <typeparam name="TEnum">An <see langword="enum" /> (<see cref="T:System.Enum" />)</typeparam>
+      <returns>The value of the description, or <see langword="null" /> if the value was not found.</returns>
+    </member>
+    <member name="M:Diagonactic.EnumExtensions.IsFlagSet``1(``0,``0)">
+      <summary>Determines if <paramref name="source" /> has the <paramref name="flagToTest" /></summary>
+      <param name="source">The value to test for a flag being set</param>
+      <param name="flagToTest" />
+      <typeparam name="TEnum">An <see langword="enum" /> (<see cref="T:System.Enum" />)</typeparam>
+      <returns>
+        <see langword="true" /> if <paramref name="source" /> contains <paramref name="flagToTest" /></returns>
+    </member>
+    <member name="M:Diagonactic.EnumExtensions.RemoveFlag``1(``0,``0)">
+      <summary>Removes <paramref name="flagToRemove" /> from <paramref name="source" /> flags enum using a binary math operation applied to the underlying type of <typeparamref name="TEnum" />.</summary>
+      <param name="source">The value to apply the add operation to.</param>
+      <param name="flagToRemove">The flag to remove from <paramref name="source" /></param>
+      <typeparam name="TEnum">An <see langword="enum" /> (<see cref="T:System.Enum" />)</typeparam>
+      <returns>The <paramref name="source" /> with <paramref name="flagToRemove" /> added.</returns>
+    </member>
+    <member name="M:Diagonactic.EnumExtensions.RemoveFlags``1(``0,``0[])">
+      <summary>
+	Removes <paramref name="flagsToRemove" /> from <paramref name="source" /> flags enum using a binary math operation applied to the
+	underlying type of <typeparamref name="TEnum" />.
+</summary>
+      <param name="source">The value to apply the remove operation to.</param>
+      <param name="flagsToRemove">The flag to remove from <paramref name="source" /></param>
+      <typeparam name="TEnum">An <see langword="enum" /> (<see cref="T:System.Enum" />)</typeparam>
+      <returns>The <paramref name="source" /> with <paramref name="flagsToRemove" /> removed.</returns>
+    </member>
+    <member name="M:Diagonactic.EnumExtensions.ToList``1(``0)">
+      <summary>Convert <paramref name="source" /> to a list</summary>
+      <param name="source">A flags enum to convert to a list</param>
+      <typeparam name="TEnum">An enum.</typeparam>
+      <returns>Returns a list containing all of the flags contained in <paramref name="source" /></returns>
+    </member>
+    <member name="T:Diagonactic.Enums">
+      <summary>A set of extension and static methods for working with <see langword="enum" /> types generically.</summary>
+    </member>
+    <member name="M:Diagonactic.Enums.AsObject``1(System.Byte)">
+      <summary>Converts <paramref name="value" /> to an <see cref="T:System.Object" /></summary>
+      <param name="value">The value to convert to <see cref="T:System.Object" /></param>
+      <typeparam name="TEnum">An <see langword="enum" /> (<see cref="T:System.Enum" />)</typeparam>
+      <returns>An <see cref="T:System.Object" /> of <paramref name="value" />.</returns>
+    </member>
+    <member name="M:Diagonactic.Enums.AsObject``1(System.Int16)">
+      <summary>Converts <paramref name="value" /> to an <see cref="T:System.Object" /></summary>
+      <param name="value">The value to convert to <see cref="T:System.Object" /></param>
+      <typeparam name="TEnum">An <see langword="enum" /> (<see cref="T:System.Enum" />)</typeparam>
+      <returns>An <see cref="T:System.Object" /> of <paramref name="value" />.</returns>
+    </member>
+    <member name="M:Diagonactic.Enums.AsObject``1(System.Int32)">
+      <summary>Converts <paramref name="value" /> to an <see cref="T:System.Object" /></summary>
+      <param name="value">The value to convert to <see cref="T:System.Object" /></param>
+      <typeparam name="TEnum">An <see langword="enum" /> (<see cref="T:System.Enum" />)</typeparam>
+      <returns>An <see cref="T:System.Object" /> of <paramref name="value" />.</returns>
+    </member>
+    <member name="M:Diagonactic.Enums.AsObject``1(System.Int64)">
+      <summary>Converts <paramref name="value" /> to an <see cref="T:System.Object" /></summary>
+      <param name="value">The value to convert to <see cref="T:System.Object" /></param>
+      <typeparam name="TEnum">An <see langword="enum" /> (<see cref="T:System.Enum" />)</typeparam>
+      <returns>An <see cref="T:System.Object" /> of <paramref name="value" />.</returns>
+    </member>
+    <member name="M:Diagonactic.Enums.AsObject``1(System.SByte)">
+      <summary>Converts <paramref name="value" /> to an <see cref="T:System.Object" /></summary>
+      <param name="value">The value to convert to <see cref="T:System.Object" /></param>
+      <typeparam name="TEnum">An <see langword="enum" /> (<see cref="T:System.Enum" />)</typeparam>
+      <returns>An <see cref="T:System.Object" /> of <paramref name="value" />.</returns>
+    </member>
+    <member name="M:Diagonactic.Enums.AsObject``1(System.UInt16)">
+      <summary>Converts <paramref name="value" /> to an <see cref="T:System.Object" /></summary>
+      <param name="value">The value to convert to <see cref="T:System.Object" /></param>
+      <typeparam name="TEnum">An <see langword="enum" /> (<see cref="T:System.Enum" />)</typeparam>
+      <returns>An <see cref="T:System.Object" /> of <paramref name="value" />.</returns>
+    </member>
+    <member name="M:Diagonactic.Enums.AsObject``1(System.UInt32)">
+      <summary>Converts <paramref name="value" /> to an <see cref="T:System.Object" /></summary>
+      <param name="value">The value to convert to <see cref="T:System.Object" /></param>
+      <typeparam name="TEnum">An <see langword="enum" /> (<see cref="T:System.Enum" />)</typeparam>
+      <returns>An <see cref="T:System.Object" /> of <paramref name="value" />.</returns>
+    </member>
+    <member name="M:Diagonactic.Enums.AsObject``1(System.UInt64)">
+      <summary>Converts <paramref name="value" /> to an <see cref="T:System.Object" /></summary>
+      <param name="value">The value to convert to <see cref="T:System.Object" /></param>
+      <typeparam name="TEnum">An <see langword="enum" /> (<see cref="T:System.Enum" />)</typeparam>
+      <returns>An <see cref="T:System.Object" /> of <paramref name="value" />.</returns>
+    </member>
+    <member name="M:Diagonactic.Enums.GetNames``1">
+      <summary>Gets the names associated with <typeparamref name="TEnum" /></summary>
+      <typeparam name="TEnum">An <see langword="enum" /> (<see cref="T:System.Enum" />)</typeparam>
+      <returns>Names of the enumeration</returns>
+    </member>
+    <member name="M:Diagonactic.Enums.GetValues``1">
+      <summary>A cached wrapped call to <see cref="M:System.Enum.GetValues(System.Type)" />.</summary>
+      <typeparam name="TEnum">An <see langword="enum" /> (<see cref="T:System.Enum" />)</typeparam>
+      <returns>All enum values</returns>
+    </member>
+    <member name="M:Diagonactic.Enums.Parse``1(System.String)">
+      <summary>Parses <paramref name="source" /> for values of <typeparamref name="TEnum" />.</summary>
+      <param name="source">A string value of <typeparamref name="TEnum" /> or a comma separated list of values.</param>
+      <typeparam name="TEnum">An <see langword="enum" /> (<see cref="T:System.Enum" />)</typeparam>
+      <returns>The parsed value</returns>
+      <exception cref="T:System.ArgumentException">One (or more) of the values supplied in <paramref name="source" /> was not found.</exception>
+    </member>
+    <member name="M:Diagonactic.Enums.Parse``1(System.String,System.Boolean)">
+      <summary>Parses <paramref name="source" /> for values of <typeparamref name="TEnum" />, optionally ignoring the case of the provided string.</summary>
+      <param name="source">A string value of <typeparamref name="TEnum" /> or a comma separated list of values.</param>
+      <param name="ignoreCase">Whether or not to ignore the case of <paramref name="source" />.</param>
+      <typeparam name="TEnum">An <see langword="enum" /> (<see cref="T:System.Enum" />)</typeparam>
+      <returns>The parsed value</returns>
+      <exception cref="T:System.ArgumentException">One (or more) of the values supplied in <paramref name="source" /> was not found.</exception>
+    </member>
+    <member name="M:Diagonactic.Enums.ToEnum``1(System.Byte)">
+      <summary>Converts <paramref name="value" /> to <typeparamref name="TEnum" />.</summary>
+      <param name="value">The value to convert</param>
+      <typeparam name="TEnum">An <see langword="enum" /> (<see cref="T:System.Enum" />)</typeparam>
+      <returns>The enum value represented by <typeparamref name="TEnum" /></returns>
+    </member>
+    <member name="M:Diagonactic.Enums.ToEnum``1(System.Int16)">
+      <summary>Converts <paramref name="value" /> to <typeparamref name="TEnum" />.</summary>
+      <param name="value">The value to convert</param>
+      <typeparam name="TEnum">An <see langword="enum" /> (<see cref="T:System.Enum" />)</typeparam>
+      <returns>The enum value represented by <typeparamref name="TEnum" /></returns>
+    </member>
+    <member name="M:Diagonactic.Enums.ToEnum``1(System.Int32)">
+      <summary>Converts <paramref name="value" /> to <typeparamref name="TEnum" />.</summary>
+      <param name="value">The value to convert</param>
+      <typeparam name="TEnum">An <see langword="enum" /> (<see cref="T:System.Enum" />)</typeparam>
+      <returns>The enum value represented by <typeparamref name="TEnum" /></returns>
+    </member>
+    <member name="M:Diagonactic.Enums.ToEnum``1(System.Int64)">
+      <summary>Converts <paramref name="value" /> to <typeparamref name="TEnum" />.</summary>
+      <param name="value">The value to convert</param>
+      <typeparam name="TEnum">An <see langword="enum" /> (<see cref="T:System.Enum" />)</typeparam>
+      <returns>The enum value represented by <typeparamref name="TEnum" /></returns>
+    </member>
+    <member name="M:Diagonactic.Enums.ToEnum``1(System.Object)">
+      <summary>Converts <paramref name="value" /> to <typeparamref name="TEnum" />.</summary>
+      <param name="value">The value to convert</param>
+      <typeparam name="TEnum">An <see langword="enum" /> (<see cref="T:System.Enum" />)</typeparam>
+      <returns>The enum value represented by <typeparamref name="TEnum" /></returns>
+    </member>
+    <member name="M:Diagonactic.Enums.ToEnum``1(System.SByte)">
+      <summary>Converts <paramref name="value" /> to <typeparamref name="TEnum" />.</summary>
+      <param name="value">The value to convert</param>
+      <typeparam name="TEnum">An <see langword="enum" /> (<see cref="T:System.Enum" />)</typeparam>
+      <returns>The enum value represented by <typeparamref name="TEnum" /></returns>
+    </member>
+    <member name="M:Diagonactic.Enums.ToEnum``1(System.UInt16)">
+      <summary>Converts <paramref name="value" /> to <typeparamref name="TEnum" />.</summary>
+      <param name="value">The value to convert</param>
+      <typeparam name="TEnum">An <see langword="enum" /> (<see cref="T:System.Enum" />)</typeparam>
+      <returns>The enum value represented by <typeparamref name="TEnum" /></returns>
+    </member>
+    <member name="M:Diagonactic.Enums.ToEnum``1(System.UInt32)">
+      <summary>Converts <paramref name="value" /> to <typeparamref name="TEnum" />.</summary>
+      <param name="value">The value to convert</param>
+      <typeparam name="TEnum">An <see langword="enum" /> (<see cref="T:System.Enum" />)</typeparam>
+      <returns>The enum value represented by <typeparamref name="TEnum" /></returns>
+    </member>
+    <member name="M:Diagonactic.Enums.ToEnum``1(System.UInt64)">
+      <summary>Converts <paramref name="value" /> to <typeparamref name="TEnum" />.</summary>
+      <param name="value">The value to convert</param>
+      <typeparam name="TEnum">An <see langword="enum" /> (<see cref="T:System.Enum" />)</typeparam>
+      <returns>The enum value represented by <typeparamref name="TEnum" /></returns>
+    </member>
+    <member name="M:Diagonactic.Enums.TryGetFromDescription``1(System.String,``0@)">
+      <summary>Gets the value of the <c>DescriptionAttribute</c> attribute associated with the string value of <paramref name="source" />.</summary>
+      <param name="source">The enum to get the description attribute from</param>
+      <param name="result">The enum value</param>
+      <typeparam name="TEnum">An <see langword="enum" /> (<see cref="T:System.Enum" />)</typeparam>
+      <returns>
+        <see langword="true" /> if <paramref name="source" /> was found and had a description; otherwise <see langword="false" />.</returns>
+    </member>
+    <member name="M:Diagonactic.Enums.TryParse``1(System.String,System.Boolean,``0@)">
+      <summary>Parses <paramref name="source" /> for values of <typeparamref name="TEnum" />, optionally ignoring case.</summary>
+      <param name="source">A string value of <typeparamref name="TEnum" /> or a comma separated list of values.</param>
+      <param name="ignoreCase">Whether or not to ignore the case of <paramref name="source" />.</param>
+      <param name="result">The result of the parse or the default value of <typeparamref name="TEnum" />.</param>
+      <typeparam name="TEnum">An <see langword="enum" /> (<see cref="T:System.Enum" />)</typeparam>
+      <returns>
+        <see langword="true" /> if the value was found; otherwise <see langword="false" /></returns>
+    </member>
+    <member name="M:Diagonactic.Enums.TryParse``1(System.String,``0@)">
+      <summary>Parses <paramref name="source" /> for values of <typeparamref name="TEnum" />.</summary>
+      <param name="source">A string value of <typeparamref name="TEnum" /> or a comma separated list of values.</param>
+      <param name="result">The result of the parse or the default value of <typeparamref name="TEnum" />.</param>
+      <typeparam name="TEnum">An <see langword="enum" /> (<see cref="T:System.Enum" />)</typeparam>
+      <returns>
+        <see langword="true" /> if parse was successful; otherwise <see langword="false" /></returns>
+      <exception cref="T:System.ArgumentException">One (or more) of the values supplied in <paramref name="source" /> was not found.</exception>
+    </member>
+  </members>
+</doc>

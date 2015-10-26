@@ -1,0 +1,160 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".cs" #>
+using System;
+using Diagonactic;
+using DiagonacticTests;
+using EnumCppTests.Attributes;
+using FluentAssertions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+namespace EnumCppUnderlyingTypeTests {
+	[TestClass]
+	public class EnumUnderlyingTests {
+	<#=WriteMethod("SByte", "sbyte", 1)#>
+	<#=WriteMethod("Byte", "byte", 1)#>
+	<#=WriteMethod("Int16", "short", 0x100)#>
+	<#=WriteMethod("UInt16", "ushort", 0x100)#>
+	<#=WriteMethod("Int32", "int", 0x1000)#>
+	<#=WriteMethod("UInt32", "uint", 0x1000)#>
+	<#=WriteMethod("Int64", "long", 0x100000000000000)#>
+	<#=WriteMethod("UInt64", "ulong", 0x100000000000000)#>
+	}
+}
+<#+	string GetHex(ulong startingNumber, ulong multiplier)
+	{
+		ulong newNumber = startingNumber * multiplier;
+		return "0x" + newNumber.ToString("X9");
+	}
+	string WriteMethod(string enumType, string typekw, ulong startingNumber) 
+	{
+		var flagsType = "Flags" + enumType + "Enum";
+		string one = startingNumber.ToString("10X");
+		return @"
+	[TestClass]
+	public class Test" + flagsType + @"EnumUnderlyingKind
+	{
+		[Flags]
+		private enum TestEnum : " + typekw + @"	{ One = " + GetHex(startingNumber, 1) + 
+		@", Two = " + GetHex(startingNumber, 2) + 
+		@",	Four = " + GetHex(startingNumber, 4) + 
+		@", Eight = " + GetHex(startingNumber, 8) + 
+		@", Ten = " + GetHex(startingNumber, 16) + 
+		@"	}
+
+		private const TestEnum Flag1       = TestEnum.One, 
+							   Flag2       = TestEnum.Two,
+							   Flag4       = TestEnum.Four,
+							   Flag8       = TestEnum.Eight,
+							   Flag10      = TestEnum.Ten,
+							   Flag1Flag2  = TestEnum.One | TestEnum.Two,
+							   AllFlags    = TestEnum.One | TestEnum.Two | TestEnum.Four | TestEnum.Eight | TestEnum.Ten;
+		private const string Flag1StringValue = ""One"";
+		private const string Flag2StringValue = ""Two"";
+		private const string FlagsAllStringValue = ""One, Two, Four, Eight, Ten"";
+		private const string Flag2Flag10StringValue = ""Two, Ten"";
+
+		[TestMethod, EnumTest]
+        public void Test" + enumType + @"ToString()
+        {
+            var flag1NativeToString = Flag1.ToString();
+            var flag2NativeToString = Flag2.ToString();
+			Flag1.AsString().ShouldBeEquivalentTo(Flag1StringValue);
+			Flag2.AsString().ShouldBeEquivalentTo(flag2NativeToString);
+			AllFlags.AsString().ShouldBeEquivalentTo(AllFlags.ToString());
+			(Flag2 | Flag10).ShouldBeEquivalentTo(Flag2Flag10StringValue);
+			AllFlags.AsString().ShouldBeEquivalentTo(FlagsAllStringValue);
+		}
+
+		[TestMethod, EnumTest]
+        public void Test" + enumType + @"RemoveFlag()
+		{
+            Flag1Flag2.RemoveFlag(Flag1).ShouldBeEquivalentTo(Flag2);
+			Flag1Flag2.RemoveFlag(Flag2).ShouldBeEquivalentTo(Flag1);
+		}
+
+		[TestMethod, EnumTest]
+        public void Test" + enumType + @"ToList()
+		{
+            var result = Flag1Flag2.ToList();
+			result[0].ShouldBeEquivalentTo(Flag1);
+			result[1].ShouldBeEquivalentTo(Flag2);
+			result.Count.ShouldBeEquivalentTo(2);
+		}
+
+		[TestMethod, EnumTest]
+        public void Test" + enumType + @"AreAllFlagsSet()
+		{
+			Flag1Flag2.AreAllFlagsSet(Flag1, Flag2).Should().BeTrue();
+			Flag1Flag2.AreAllFlagsSet(Flag1, Flag2, Flag4).Should().BeFalse();
+		}
+
+		[TestMethod, EnumTest]
+        public void Test" + enumType + @"AreAnyFlagsSet()
+		{
+            Flag1Flag2.AreAnyFlagsSet(Flag1).Should().BeTrue();
+			Flag1Flag2.AreAnyFlagsSet(Flag4).Should().BeFalse();
+			Flag1Flag2.AreAnyFlagsSet(Flag1, Flag4).Should().BeTrue();
+		}
+
+		[TestMethod, EnumTest]
+        public void Test" + enumType + @"AddFlag()
+        {
+            Flag1.AddFlag(Flag2).ShouldBeEquivalentTo(Flag1Flag2);
+		}
+
+		[TestMethod, EnumTest]
+		public void Test" + enumType + @"AddFlags()
+		{
+            Flag1.AddFlags(Flag2, Flag4, Flag8, Flag10).ShouldBeEquivalentTo(AllFlags);
+		}
+
+		[TestMethod, EnumTest]
+		public void Test" + enumType + @"RemoveFlags()
+		{
+            AllFlags.RemoveFlags(Flag1, Flag2, Flag4, Flag8).ShouldBeEquivalentTo(Flag10);
+		}
+		
+		[TestMethod, EnumTest]
+		public void Test" + enumType + @"IsFlagSet()
+		{
+			Flag1Flag2.IsFlagSet(Flag1).Should().BeTrue();
+            Flag1Flag2.IsFlagSet(Flag4).Should().BeFalse();
+		}
+
+		[TestMethod, EnumTest]
+		public void Test" + enumType + @"ParseOneValue()
+		{
+			Enums.Parse<TestEnum>(Flag1StringValue).ShouldBeEquivalentTo(Flag1);
+            Enums.Parse<TestEnum>(Flag2StringValue).ShouldBeEquivalentTo(Flag2);            
+		}
+
+		[TestMethod, EnumTest]
+		public void Test" + enumType + @"ParseMultipleValues()
+		{
+            Enums.Parse<TestEnum>($""{Flag1}, {Flag2}"").ShouldBeEquivalentTo(Flag1Flag2);
+            Enums.Parse<TestEnum>($""{Flag2}, {Flag1}"").ShouldBeEquivalentTo(Flag1Flag2);
+		}
+
+		[TestMethod, EnumTest]
+		public void Test" + enumType + @"ToEnum()
+		{						
+			Enums.ToEnum<TestEnum>((" + typekw + @")" + GetHex(startingNumber, 1) + @").ShouldBeEquivalentTo(Flag1);
+			Enums.ToEnum<TestEnum>((" + typekw + @")" + GetHex(startingNumber, 1) + " | " + GetHex(startingNumber, 2) + @").ShouldBeEquivalentTo(Flag1Flag2);
+			Enums.ToEnum<TestEnum>((Object)" + GetHex(startingNumber, 1) + @").ShouldBeEquivalentTo(Flag1);
+		}
+
+		[TestMethod, EnumTest]
+		public void Test" + enumType + @"ToAsObject()
+		{
+			Flag1.AsObject().ShouldBeEquivalentTo((Object)Flag1);
+			Flag1Flag2.AsObject().ShouldBeEquivalentTo((Object)(Flag1 | Flag2));
+			var objResult = Enums.AsObject<TestEnum>((" + typekw +@")(" + GetHex(startingNumber, 1) + " | " + GetHex(startingNumber, 2) + @")) as TestEnum? ?? TestEnum.Ten;
+			objResult.ShouldBeEquivalentTo(Flag1 | Flag2);
+        }
+	}";		
+}
+#>
