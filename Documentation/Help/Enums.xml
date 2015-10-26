@@ -170,7 +170,7 @@ Converts an <typeparamref name="TEnum" /> to a string.
     <member name="M:Diagonactic.Enums.GetValues``1">
       <summary>A cached wrapped call to <see cref="M:System.Enum.GetValues(System.Type)" />.</summary>
       <typeparam name="TEnum">An <see langword="enum" /> (<see cref="T:System.Enum" />)</typeparam>
-      <returns>All enum values</returns>
+      <returns>All enum values.</returns>
     </member>
     <member name="M:Diagonactic.Enums.Parse``1(System.String)">
       <summary>Parses <paramref name="source" /> for values of <typeparamref name="TEnum" />.</summary>
