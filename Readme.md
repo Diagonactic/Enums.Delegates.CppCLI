@@ -8,7 +8,7 @@ of kludgy static methods on Enum and Delegate that would really benefit from gen
 implementations.
 
 Enum Methods
-============
+------------
 Unfortunately, some of the instance and static methods exposed to enums are *slow*.
 Fixing them in code would easily be considered a micro-optimisation, but for the rare
 occasion that one needs to eek out a few more ms of performance, the options available are
@@ -64,14 +64,14 @@ type (inexpensive) and one call to a static method on Enum to convert back to th
 (a cost which I think I can remove in a future version).
 
 Delegates
-=========
+---------
 I just started this implementation, as such, some of the methods are not fully covered,
 though they're simply generic wrappers for the statics on Delegate.  The ones you're
 likely to use, like Combine/Remove are covered, but there may be changes here which is
 why this project is still beta at the moment.
 
 A Note From the Author on the Code
-==================================
+----------------------------------
 A seasoned C++ developer I am not.  I've got a lot of history with C++. Unfortunately, 
 it's history.  I stopped developing in that language around 1998.  Recently I started
 playing with embedded systems with tiny processors and memory constraints.  Sure, 
@@ -114,7 +114,7 @@ visually verify that the copy-code is correct (and covered them in unit tests to
 [hopefully] catch them if they are not).
 
 Notes about Compiling
-=====================
+---------------------
 C++/CLI does not directly support "AnyCPU".  I've used a work-around to achieve this.
 The code is compiled as CLR:Safe and only one profile exists for the Enums project:
 x64.  The x64 version *is* AnyCPU (run corflags Enums.dll for proof).  The solution
@@ -128,10 +128,10 @@ profiling at the moment, but I am going to revisit this and see if it would make
 sense to use a side-by-side .dll with a proxy to pick the right version at runtime.
 
 NuGet Package
-=============
+-------------
 I didn't have time this weekend to finish the NuGet package.  Maybe next weekend?  For
 now the project is there, but it's not doing anything.
 
 Documentation
-=============
+-------------
 It's well documented using XML docs and SandCastle (which produces a CHM, and web site).
