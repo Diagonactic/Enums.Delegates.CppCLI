@@ -5,7 +5,16 @@ Enums and Delegates are a fundimental component of .Net, however, as of version 
 C# language, there's no way to (directly) constrain a generic parameter to System.Enum or 
 System.Delegate.  There's so many reasons to want to do so, not the least of which is the 
 set of kludgy static methods on Enum and Delegate that would really benefit from generic
-implementations.
+implementations.  This project does just that with a series of helpful static and extension
+methods that can be consumed by any .Net Language.
+
+Installing
+----------
+The easiest way to get the application is via NuGet.
+
+```
+Install-Package DiagonacticEnumsExtensions
+```
 
 Enum Methods
 ------------
@@ -126,14 +135,6 @@ versions, but I was seeing between 10% and 400% improvements in speed swiching i
 running on.  It doesn't make a *ton* of sense to me, so I'm chocking it up to my
 profiling at the moment, but I am going to revisit this and see if it would make more
 sense to use a side-by-side .dll with a proxy to pick the right version at runtime.
-
-NuGet Package
--------------
-The easiest way to get the application is via NuGet.
-
-```
-Install-Package DiagonacticEnumsExtensions
-```
 
 Documentation
 -------------
