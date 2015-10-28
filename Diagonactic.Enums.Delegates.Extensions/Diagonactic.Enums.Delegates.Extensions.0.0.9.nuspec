@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+    <metadata>
+        <id>Diagonactic.Enums.Delegates.Extensions</id>
+        <version>0.0.9</version>
+        <title>Proper Generic Enum and Delegate Methods</title>
+        <authors>Matthew S. Dippel</authors>
+        <owners>Matthew S. Dippel</owners>
+        <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
+        <projectUrl>https://github.com/Diagonactic/Enums.Delegates.CppCLI</projectUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Enums and Delegates are a fundimental component of .Net, however, as of version 6.0 of the C# language, there's no way to (directly) constrain a generic parameter to System.Enum or System.Delegate. There's so many reasons to want to do so, not the least of which is the set of kludgy static methods on Enum and Delegate that would really benefit from generic implementations.
+
+This package addresses that need.  Written in C++/CLI since C# cannot declare an enum or delegate restriction, this library provides a set of well performing extension and static methods off of the "Diagonactic.Enums" class that provide a more readable way of performing common operations on enums and delegates, all of which can be consumed by C# code.
+
+Included .dll is compiled IL only in "Any CPU" format.</description>
+        <summary>Provides a set of well performing extension and static methods for interacting with enums using *real* generic constraints on System.Enum.</summary>
+        <releaseNotes>C:\Src\EnumCpp\readme.md</releaseNotes>
+        <copyright>Copyright © Matthew S. Dippel (under Apache 2.0)</copyright>
+        <language>en-US</language>
+        <tags>Diagonactic.Enums.Delegates.Extensions</tags>
+    </metadata>
+    <files>
+        <file src="Readme.txt" target="Readme.txt" />
+    </files>
+</package>

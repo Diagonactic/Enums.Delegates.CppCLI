@@ -129,8 +129,11 @@ sense to use a side-by-side .dll with a proxy to pick the right version at runti
 
 NuGet Package
 -------------
-I didn't have time this weekend to finish the NuGet package.  Maybe next weekend?  For
-now the project is there, but it's not doing anything.
+The easiest way to get the application is via NuGet.
+
+```
+Install-Package DiagonacticEnumsExtensions
+```
 
 Documentation
 -------------

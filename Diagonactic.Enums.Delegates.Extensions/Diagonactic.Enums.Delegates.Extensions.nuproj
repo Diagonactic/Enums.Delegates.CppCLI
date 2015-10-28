@@ -19,19 +19,16 @@
   <Import Project="$(NuProjPath)\NuProj.props" Condition="Exists('$(NuProjPath)\NuProj.props')" />
   <PropertyGroup Label="Configuration">
     <Id>Diagonactic.Enums.Delegates.Extensions</Id>
-    <Version>1.0.0</Version>
+    <Version>0.0.9</Version>
     <Title>Diagonactic.Enums.Delegates.Extensions</Title>
-    <Authors>acousticiris</Authors>
-    <Owners>acousticiris</Owners>
+    <Authors>Matthew S. Dippel</Authors>
+    <Owners>Matthew S. Dippel</Owners>
     <Summary>Diagonactic.Enums.Delegates.Extensions</Summary>
     <Description>Diagonactic.Enums.Delegates.Extensions</Description>
-    <ReleaseNotes>
-    </ReleaseNotes>
-    <ProjectUrl>
-    </ProjectUrl>
-    <LicenseUrl>
-    </LicenseUrl>
-    <Copyright>Copyright © acousticiris</Copyright>
+    <ReleaseNotes>$(SolutionDir)readme.md</ReleaseNotes>
+    <ProjectUrl>https://github.com/Diagonactic/Enums.Delegates.CppCLI</ProjectUrl>
+    <LicenseUrl>http://www.apache.org/licenses/LICENSE-2.0</LicenseUrl>
+    <Copyright>Copyright © Matthew S. Dippel (under Apache 2.0)</Copyright>
     <Tags>Diagonactic.Enums.Delegates.Extensions</Tags>
   </PropertyGroup>
   <ItemGroup>
