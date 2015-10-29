@@ -67,3 +67,4 @@ UCosmic.Www.Mvc.Publish.xml
 *.opensdf
 *.sdf
 Documentation/Help/
+ipch/
