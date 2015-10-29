@@ -18,40 +18,33 @@ Install-Package DiagonacticEnumsExtensions
 
 Enum Methods
 ------------
-Unfortunately, some of the instance and static methods provided to us by Microsoft are *slow*.
-Fixing them in code would easily be considered a premature optimisation, but for the rare
-occasion that one needs to eek out a few more ms of performance, the options available are
-somewhat ugly.  ToString() is the biggest offender and the fix for it is often a switch
-statement with string literals.  This is easy to write for small enums, but in a program
-that's constantly changing, keeping your string version in sync with your enum is an
-extra step you're going to forget.  Alternatively, you could use a Dictionary (and, in
-fact, that's what this library does).  It's not so bad, but you'll likely discover after
-implementing it for one of your enum types that a generic implementation would be really
-useful, only to run into the fact that C# doesn't allow you to do it "correctly".  So you
-create a generic implementation using struct, IFormattable, IClonable, and such and cast
-away.
 
-The CLR perfectly supports a generic constraint on System.Enum and System.Delegate.  C#
-does not (yet ... it will likely appear in C# v7.0 if the issue log is followed).  C# has
-no problem consuming a method that has generic constraints on these types, and C++/CLI has 
-no problem creating a method or class constrained in this manner.  So that's what I did.
+Reimplementation of static Enum methods:
+```c#
+MyEnum.MyEnumValue.AsString();
+```
+Converts an enum to a string with cache.
 
-The methods for enum are fully covered by tests and perform very well.  In the case of 
-"AsString()", the replacement for ToString(), the performance is anywhere from 2 to 8
-times faster after cache initialization (and even with init, it's still slightly faster).
+```c#
+Enums.Parse<MyEnum>("MyEnumValue");
+```
+Parses a string value or comma-separated string values to the enum type provided.  Uses same
+cache as AsString();
 
-There is a memory penality paid for that performance, though it's small enough and in my
-cases, the trade-off was necessary.  You can get descriptions from attribute (or it will
-autogenerate descriptions based on the name parsed for camel humps or underscores), 
-turn an enum into a string value, parse a string value for the enum, use simple methods
-like AddFlags, RemoveFlags, HasFlags to check values of flag enums.  All of the check
-and modify methods use direct binary math against the underlying type and all underlying
-types are supported on every method.  All casts are done directly (and safely) and all
-of the methods are unit tested with 100% code coverage (for code that can actually
-execute) and are tested in ways designed -- where possible -- to use the underlying type 
-in ways that would be unique to its type.  Boxing during the processing of the method is
-avoided everywhere it can be (and might be able to be avoided in the one place it still
-happens -- next version!).
+Flag manipulation:
+```c#
+var result = MyEnum.Val1.AddFlag(MyEnum.Val2);  // MyEnum.Val1 | MyEnum.Val2
+result.AddFlags(MyEnum.Val3, MyEnum.Val4);      // MyEnum.Val1 | MyEnum.Val2 | MyEnum.Val3 | MyEnum.Val4
+result.RemoveFlag(MyEnum.Val3);                 // MyEnum.Val1 | MyEnum.Val2 | MyEnum.Val4
+result.RemoveFlags(MyEnum.Val1, MyEnum.Val4);   // MyEnum.Val2
+var isSet = result.IsFlagSet(MyEnum.Val3)       // false
+```
+
+```c#
+MyEnum.MyEnumValue.GetDescription();
+```
+Gets the value of the DescriptionAttribute.Description or converts MyEnumValue to "My Enum Value"
+if DescriptionAttribute is missing.
 
 Parse, AsString, and HasFlag are functionally equivalent implementations to the Enum 
 statics but perform faster than each after cache init.  AsString performs faster for most 
