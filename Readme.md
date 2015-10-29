@@ -18,18 +18,15 @@ Install-Package DiagonacticEnumsExtensions
 
 Enum Methods
 ------------
-
-Reimplementation of static Enum methods:
+Convert an enum to a string (with caching, see below):
 ```c#
 MyEnum.MyEnumValue.AsString();
 ```
-Converts an enum to a string with cache.
 
+Parses a string value or comma-separated string values to the enum type provided:
 ```c#
 Enums.Parse<MyEnum>("MyEnumValue");
 ```
-Parses a string value or comma-separated string values to the enum type provided.  Uses same
-cache as AsString();
 
 Flag manipulation:
 ```c#
@@ -40,11 +37,17 @@ result.RemoveFlags(MyEnum.Val1, MyEnum.Val4);   // MyEnum.Val2
 var isSet = result.IsFlagSet(MyEnum.Val3)       // false
 ```
 
+Get the value of the DescriptionAttribute.Description or convert MyEnumValue to "My Enum Value"
+if DescriptionAttribute is missing:
 ```c#
 MyEnum.MyEnumValue.GetDescription();
 ```
-Gets the value of the DescriptionAttribute.Description or converts MyEnumValue to "My Enum Value"
-if DescriptionAttribute is missing.
+
+Convert an underlying type (numeric) value to the enum type:
+```c#
+Enums.ToEnum(1); // MyEnum.Val1
+Enums.ToEnum(3); // MyEnum.Val1 | mMynum.Val2
+```
 
 Parse, AsString, and HasFlag are functionally equivalent implementations to the Enum 
 statics but perform faster than each after cache init.  AsString performs faster for most 
