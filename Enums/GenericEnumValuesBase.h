@@ -14,7 +14,7 @@ namespace Diagonactic
 		private ref class GenericEnumValuesBase abstract : public GenericEnumBase<TEnum>
 	{
 	internal:
-		static array<TEnum> ^s_values = (array<TEnum>^)Enum::GetValues(TEnum::typeid);
+		static array<TEnum> ^s_values = (array<TEnum>^)Enum::GetValues(s_type);
 		static Int32 s_length = s_values->Length;
 	};
 }

@@ -42,7 +42,7 @@ namespace Diagonactic
 		}
 		static String^ GetDescriptionFromAttribute(String^ source)
 		{
-			array<Object^>^ attr = (TEnum::typeid)->GetField(source)->GetCustomAttributes(DescriptionAttribute::typeid, false);
+			array<Object^>^ attr = (s_type)->GetField(source)->GetCustomAttributes(DescriptionAttribute::typeid, false);
 			if (attr != nullptr && attr->Length > 0)
 			{
 				DescriptionAttribute ^descAttr = (DescriptionAttribute^)attr[0];

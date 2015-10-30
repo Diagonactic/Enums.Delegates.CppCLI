@@ -160,14 +160,14 @@ namespace Diagonactic {
 
 			switch (s_kind)
 			{
-				case UnderlyingKind::Int32Kind:	 result = (TEnum)Enum::ToObject(TEnum::typeid, iVal);    break;
-				case UnderlyingKind::UInt32Kind: result = (TEnum)Enum::ToObject(TEnum::typeid, ui32Val); break;
-				case UnderlyingKind::Int64Kind:  result = (TEnum)Enum::ToObject(TEnum::typeid, i64Val);  break;
-				case UnderlyingKind::UInt64Kind: result = (TEnum)Enum::ToObject(TEnum::typeid, ui64Val); break;
-				case UnderlyingKind::Int16Kind:  result = (TEnum)Enum::ToObject(TEnum::typeid, i16Val);  break;
-				case UnderlyingKind::UInt16Kind: result = (TEnum)Enum::ToObject(TEnum::typeid, ui16Val); break;
-				case UnderlyingKind::ByteKind:   result = (TEnum)Enum::ToObject(TEnum::typeid, bVal);    break;
-				case UnderlyingKind::SByteKind:  result = (TEnum)Enum::ToObject(TEnum::typeid, sbVal);   break;
+				case UnderlyingKind::Int32Kind:	 result = (TEnum)Enum::ToObject(s_type, iVal);    break;
+				case UnderlyingKind::UInt32Kind: result = (TEnum)Enum::ToObject(s_type, ui32Val); break;
+				case UnderlyingKind::Int64Kind:  result = (TEnum)Enum::ToObject(s_type, i64Val);  break;
+				case UnderlyingKind::UInt64Kind: result = (TEnum)Enum::ToObject(s_type, ui64Val); break;
+				case UnderlyingKind::Int16Kind:  result = (TEnum)Enum::ToObject(s_type, i16Val);  break;
+				case UnderlyingKind::UInt16Kind: result = (TEnum)Enum::ToObject(s_type, ui16Val); break;
+				case UnderlyingKind::ByteKind:   result = (TEnum)Enum::ToObject(s_type, bVal);    break;
+				case UnderlyingKind::SByteKind:  result = (TEnum)Enum::ToObject(s_type, sbVal);   break;
 
 				default: throw gcnew Exception("This should never throw. All underlying types are represented above.");
 			}

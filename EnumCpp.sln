@@ -68,7 +68,6 @@ Global
 		{0F63111A-8B68-4763-87C8-6BF818AEC4D6}.Debug|x64.ActiveCfg = Debug|Any CPU
 		{0F63111A-8B68-4763-87C8-6BF818AEC4D6}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{0F63111A-8B68-4763-87C8-6BF818AEC4D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0F63111A-8B68-4763-87C8-6BF818AEC4D6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0F63111A-8B68-4763-87C8-6BF818AEC4D6}.Release|x64.ActiveCfg = Release|Any CPU
 		{0F63111A-8B68-4763-87C8-6BF818AEC4D6}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection

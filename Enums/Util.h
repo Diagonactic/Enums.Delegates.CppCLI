@@ -163,7 +163,7 @@ namespace Diagonactic
 			return result;
 		}
 
-		template <typename TNumber>	static TNumber IsFlagSet(void* enumValue, void* enumFlagToTest)
+		template <typename TNumber>	static Boolean IsFlagSet(void* enumValue, void* enumFlagToTest)
 		{
 			TNumber flag = ClobberTo<TNumber>(enumFlagToTest);
 			return ((ClobberTo<TNumber>(enumValue) & flag) == flag);

@@ -104,14 +104,14 @@ namespace Diagonactic
 				pin_ptr<TEnum> source(&sourceEnum), flagToAdd(&enumFlagToAdd);
 				switch (s_kind)
 				{
-					case UnderlyingKind::Int32Kind:	 return (TEnum)Enum::ToObject(TEnum::typeid, Util::AddFlagTo<Int32>(source, flagToAdd));
-					case UnderlyingKind::UInt32Kind: return (TEnum)Enum::ToObject(TEnum::typeid, Util::AddFlagTo<UInt32>(source, flagToAdd));				
-					case UnderlyingKind::Int64Kind:  return (TEnum)Enum::ToObject(TEnum::typeid, Util::AddFlagTo<Int64>(source, flagToAdd));				
-					case UnderlyingKind::UInt64Kind: return (TEnum)Enum::ToObject(TEnum::typeid, Util::AddFlagTo<UInt64>(source, flagToAdd));				
-					case UnderlyingKind::Int16Kind:  return (TEnum)Enum::ToObject(TEnum::typeid, Util::AddFlagTo<Int16>(source, flagToAdd));
-					case UnderlyingKind::UInt16Kind: return (TEnum)Enum::ToObject(TEnum::typeid, Util::AddFlagTo<UInt16>(source, flagToAdd));
-					case UnderlyingKind::ByteKind:   return (TEnum)Enum::ToObject(TEnum::typeid, Util::AddFlagTo<Byte>(source, flagToAdd));
-					case UnderlyingKind::SByteKind:  return (TEnum)Enum::ToObject(TEnum::typeid, Util::AddFlagTo<SByte>(source, flagToAdd));
+					case UnderlyingKind::Int32Kind:	 return (TEnum)Enum::ToObject(s_type, Util::AddFlagTo<Int32>(source, flagToAdd));
+					case UnderlyingKind::UInt32Kind: return (TEnum)Enum::ToObject(s_type, Util::AddFlagTo<UInt32>(source, flagToAdd));
+					case UnderlyingKind::Int64Kind:  return (TEnum)Enum::ToObject(s_type, Util::AddFlagTo<Int64>(source, flagToAdd));
+					case UnderlyingKind::UInt64Kind: return (TEnum)Enum::ToObject(s_type, Util::AddFlagTo<UInt64>(source, flagToAdd));
+					case UnderlyingKind::Int16Kind:  return (TEnum)Enum::ToObject(s_type, Util::AddFlagTo<Int16>(source, flagToAdd));
+					case UnderlyingKind::UInt16Kind: return (TEnum)Enum::ToObject(s_type, Util::AddFlagTo<UInt16>(source, flagToAdd));
+					case UnderlyingKind::ByteKind:   return (TEnum)Enum::ToObject(s_type, Util::AddFlagTo<Byte>(source, flagToAdd));
+					case UnderlyingKind::SByteKind:  return (TEnum)Enum::ToObject(s_type, Util::AddFlagTo<SByte>(source, flagToAdd));
 				}
 				throw gcnew Exception("This should never throw. All underlying types are represented above.");
 			}
@@ -121,14 +121,14 @@ namespace Diagonactic
 				pin_ptr<TEnum> source(&sourceEnum), flagToRemove(&enumFlagToRemove);
 				switch (s_kind)
 				{
-					case UnderlyingKind::Int32Kind:	 return (TEnum)Enum::ToObject(TEnum::typeid, Util::RemoveFlag<Int32>(source, flagToRemove));
-					case UnderlyingKind::UInt32Kind: return (TEnum)Enum::ToObject(TEnum::typeid, Util::RemoveFlag<UInt32>(source, flagToRemove));				
-					case UnderlyingKind::Int64Kind:  return (TEnum)Enum::ToObject(TEnum::typeid, Util::RemoveFlag<Int64>(source, flagToRemove));				
-					case UnderlyingKind::UInt64Kind: return (TEnum)Enum::ToObject(TEnum::typeid, Util::RemoveFlag<UInt64>(source, flagToRemove));				
-					case UnderlyingKind::Int16Kind:  return (TEnum)Enum::ToObject(TEnum::typeid, Util::RemoveFlag<Int16>(source, flagToRemove));
-					case UnderlyingKind::UInt16Kind: return (TEnum)Enum::ToObject(TEnum::typeid, Util::RemoveFlag<UInt16>(source, flagToRemove));
-					case UnderlyingKind::ByteKind:   return (TEnum)Enum::ToObject(TEnum::typeid, Util::RemoveFlag<Byte>(source, flagToRemove));
-					case UnderlyingKind::SByteKind:  return (TEnum)Enum::ToObject(TEnum::typeid, Util::RemoveFlag<SByte>(source, flagToRemove));
+					case UnderlyingKind::Int32Kind:	 return (TEnum)Enum::ToObject(s_type, Util::RemoveFlag<Int32>(source, flagToRemove));
+					case UnderlyingKind::UInt32Kind: return (TEnum)Enum::ToObject(s_type, Util::RemoveFlag<UInt32>(source, flagToRemove));
+					case UnderlyingKind::Int64Kind:  return (TEnum)Enum::ToObject(s_type, Util::RemoveFlag<Int64>(source, flagToRemove));
+					case UnderlyingKind::UInt64Kind: return (TEnum)Enum::ToObject(s_type, Util::RemoveFlag<UInt64>(source, flagToRemove));
+					case UnderlyingKind::Int16Kind:  return (TEnum)Enum::ToObject(s_type, Util::RemoveFlag<Int16>(source, flagToRemove));
+					case UnderlyingKind::UInt16Kind: return (TEnum)Enum::ToObject(s_type, Util::RemoveFlag<UInt16>(source, flagToRemove));
+					case UnderlyingKind::ByteKind:   return (TEnum)Enum::ToObject(s_type, Util::RemoveFlag<Byte>(source, flagToRemove));
+					case UnderlyingKind::SByteKind:  return (TEnum)Enum::ToObject(s_type, Util::RemoveFlag<SByte>(source, flagToRemove));
 				}
 				throw gcnew Exception("This should never throw. All underlying types are represented above.");
 			}
