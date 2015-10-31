@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 14.0.24606.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Enums", "Enums\Enums.vcxproj", "{042AC5EC-5CCF-4ABE-B976-81CA51DFA52B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B925F328-A580-493A-955E-6EB8672B2D4F} = {B925F328-A580-493A-955E-6EB8672B2D4F}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnumCppTests", "EnumCppTests\EnumCppTests.csproj", "{C9F8296E-6039-49E5-854D-2595F9CD77CE}"
 EndProject
@@ -16,8 +19,11 @@ Project("{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}") = "Documentation", "Documentat
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{26BF5364-8860-4942-ABC0-20920A6CB3B9}"
 	ProjectSection(SolutionItems) = preProject
+		Methodology.md = Methodology.md
 		Readme.md = Readme.md
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSIL", "MSIL\MSIL.csproj", "{B925F328-A580-493A-955E-6EB8672B2D4F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -70,6 +76,18 @@ Global
 		{0F63111A-8B68-4763-87C8-6BF818AEC4D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0F63111A-8B68-4763-87C8-6BF818AEC4D6}.Release|x64.ActiveCfg = Release|Any CPU
 		{0F63111A-8B68-4763-87C8-6BF818AEC4D6}.Release|x86.ActiveCfg = Release|Any CPU
+		{B925F328-A580-493A-955E-6EB8672B2D4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B925F328-A580-493A-955E-6EB8672B2D4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B925F328-A580-493A-955E-6EB8672B2D4F}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B925F328-A580-493A-955E-6EB8672B2D4F}.Debug|x64.Build.0 = Debug|Any CPU
+		{B925F328-A580-493A-955E-6EB8672B2D4F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B925F328-A580-493A-955E-6EB8672B2D4F}.Debug|x86.Build.0 = Debug|Any CPU
+		{B925F328-A580-493A-955E-6EB8672B2D4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B925F328-A580-493A-955E-6EB8672B2D4F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B925F328-A580-493A-955E-6EB8672B2D4F}.Release|x64.ActiveCfg = Release|Any CPU
+		{B925F328-A580-493A-955E-6EB8672B2D4F}.Release|x64.Build.0 = Release|Any CPU
+		{B925F328-A580-493A-955E-6EB8672B2D4F}.Release|x86.ActiveCfg = Release|Any CPU
+		{B925F328-A580-493A-955E-6EB8672B2D4F}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

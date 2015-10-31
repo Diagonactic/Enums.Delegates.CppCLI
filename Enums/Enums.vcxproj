@@ -52,6 +52,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <IntDir>bin\$(PlatformTarget)\$(Configuration)\</IntDir>
+    <CustomBuildBeforeTargets />
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -84,6 +85,9 @@
       <CLRImageType>ForceSafeILImage</CLRImageType>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
+    <PostBuildEvent>
+      <Command>$(SolutionDir)MSIL\bin\Release\MSIL.exe</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -98,6 +102,7 @@
     <ClInclude Include="GenericEnumCore.h" />
     <ClInclude Include="GenericEnumWithDescriptions.h" />
     <ClInclude Include="GenericEnumValuesBase.h" />
+    <ClInclude Include="MsilConvert.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Stdafx.h" />
     <ClInclude Include="Util.h" />

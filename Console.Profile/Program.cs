@@ -101,7 +101,7 @@ namespace ConsoleProfile.Profile
             AddFlags(runs);
             ParseCaseInsensitive(parseRuns);
             Program.Parse(parseRuns);
-            Console.ReadKey();
+            //Console.ReadKey();
         }
     }
 }

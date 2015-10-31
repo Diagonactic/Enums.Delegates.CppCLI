@@ -1,4 +1,6 @@
 #pragma once
+#include "MsilConvert.h"
+
 using namespace System;
 
 enum UnderlyingKind : char
@@ -97,63 +99,6 @@ namespace Diagonactic
 				result |= vals[i];
 			return result;
 		}
-
-		generic <typename TEnum>
-			where TEnum:IComparable, IFormattable, IConvertible, System::Enum
-		static void AddFlag(Int64 %currentEnum, TEnum val)
-		{
-			currentEnum |= ClobberToInt64(val);
-		}
-
-		generic <typename TEnum>
-			where TEnum:IComparable, IFormattable, IConvertible, System::Enum
-		static void AddFlag(Int32 %currentEnum, TEnum val)
-		{
-			currentEnum |= ClobberToInt32(val);
-		}		
-
-		generic <typename TEnum>
-			where TEnum:IComparable, IFormattable, IConvertible, System::Enum
-		static void AddFlag(Int16 %currentEnum, TEnum val)
-		{
-			currentEnum |= ClobberToInt16(val);
-		}
-
-		generic <typename TEnum>
-			where TEnum:IComparable, IFormattable, IConvertible, System::Enum
-		static void AddFlag(UInt64 %currentEnum, TEnum val)
-		{
-			currentEnum |= ClobberToUInt64(val);
-		}
-
-		generic <typename TEnum>
-			where TEnum:IComparable, IFormattable, IConvertible, System::Enum
-		static void AddFlag(UInt32 %currentEnum, TEnum val)
-		{
-			currentEnum |= ClobberToUInt32(val);
-		}
-
-		generic <typename TEnum>
-			where TEnum:IComparable, IFormattable, IConvertible, System::Enum
-		static void AddFlag(UInt16 %currentEnum, TEnum val)
-		{
-			currentEnum |= ClobberToUInt16(val);
-		}
-
-		generic <typename TEnum>
-			where TEnum:IComparable, IFormattable, IConvertible, System::Enum
-		static void AddFlag(SByte %currentEnum, TEnum val)
-		{
-			currentEnum |= ClobberToSByte(val);
-		}
-
-		generic <typename TEnum>
-			where TEnum:IComparable, IFormattable, IConvertible, System::Enum
-		static void AddFlag(Byte %currentEnum, TEnum val)
-		{
-			currentEnum |= ClobberToByte(val);
-		}
-
 		template <typename TNumber> static TNumber RemoveFlags(void* currentEnum, void* values)
 		{
 			TNumber result = ClobberTo<TNumber>(currentEnum);

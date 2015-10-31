@@ -1,10 +1,11 @@
 #pragma once
 #include "Stdafx.h"
+#include "MsilConvert.h"
 #using <C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETCore\v4.5\System.Linq.Dll>
 
 ref class GenericEnumValuesBase;
 enum UnderlyingKind : char;
-
+ref class MsilConvert;
 using namespace System;
 using namespace System::Collections::Generic;
 using namespace System::Text;
@@ -75,7 +76,7 @@ namespace Diagonactic {
 		static Dictionary<String^, String^> ^s_caseMap = gcnew Dictionary<String^, String^>(s_length, StringComparer::OrdinalIgnoreCase);		
 		
 		static array<String^>^ GetNames()
-		{
+		{			
 			return Enumerable::ToArray(s_enumMap->Values);
 		}
 
@@ -87,13 +88,12 @@ namespace Diagonactic {
 
 			StringBuilder ^result = gcnew StringBuilder();
 
-			for each(TEnum item in s_enumMap->Keys)
+			for (int i = 0; i < s_length; i++)
 			{
-				if (item == s_defaultValue)
+				if (s_values[i] == s_defaultValue)
 					continue;
-
-				if (Util::IsFlagSet(value, item, s_kind))
-					result->Append(s_enumMap[item] + ", ");
+				if (Util::IsFlagSet(value, s_values[i], s_kind))
+					result->Append(s_enumMap[s_values[i]])->Append(", ");
 			}
 
 			return (result->Length > 2) ? result->ToString(0, result->Length - 2) : value->ToString();
@@ -123,7 +123,7 @@ namespace Diagonactic {
 
 			SByte sbVal = 0;
 			Byte bVal = 0;
-			Int32 iVal = 0;
+			Int32 i32Val = 0;
 			Int64 i64Val = 0;
 			UInt32 ui32Val = 0;
 			UInt64 ui64Val = 0;
@@ -145,14 +145,14 @@ namespace Diagonactic {
 
 				switch(s_kind)
 				{
-					case UnderlyingKind::Int32Kind:	 Util::AddFlag(iVal, valToAdd);    break;
-					case UnderlyingKind::UInt32Kind: Util::AddFlag(ui32Val, valToAdd); break;
-					case UnderlyingKind::Int64Kind:  Util::AddFlag(i64Val, valToAdd);  break;
-					case UnderlyingKind::UInt64Kind: Util::AddFlag(ui64Val, valToAdd); break;
-					case UnderlyingKind::Int16Kind:  Util::AddFlag(i16Val, valToAdd);  break;
-					case UnderlyingKind::UInt16Kind: Util::AddFlag(ui16Val, valToAdd); break;
-					case UnderlyingKind::ByteKind:   Util::AddFlag(bVal, valToAdd);    break;
-					case UnderlyingKind::SByteKind:  Util::AddFlag(sbVal, valToAdd);   break;
+					case UnderlyingKind::Int32Kind:	 i32Val  |= Util::ClobberToInt32(valToAdd);  break;
+					case UnderlyingKind::UInt32Kind: ui32Val |= Util::ClobberToUInt32(valToAdd); break;
+					case UnderlyingKind::Int64Kind:  i64Val  |= Util::ClobberToInt64(valToAdd);  break;
+					case UnderlyingKind::UInt64Kind: ui64Val |= Util::ClobberToUInt64(valToAdd); break;
+					case UnderlyingKind::Int16Kind:  i16Val  |= Util::ClobberToInt16(valToAdd);  break;
+					case UnderlyingKind::UInt16Kind: ui16Val |= Util::ClobberToUInt16(valToAdd); break;
+					case UnderlyingKind::ByteKind:   bVal    |= Util::ClobberToByte(valToAdd);   break;
+					case UnderlyingKind::SByteKind:  sbVal   |= Util::ClobberToSByte(valToAdd);  break;
 
 					default: throw gcnew Exception("This should never throw. All underlying types are represented above.");
 				}				
@@ -160,14 +160,14 @@ namespace Diagonactic {
 
 			switch (s_kind)
 			{
-				case UnderlyingKind::Int32Kind:	 result = (TEnum)Enum::ToObject(s_type, iVal);    break;
-				case UnderlyingKind::UInt32Kind: result = (TEnum)Enum::ToObject(s_type, ui32Val); break;
-				case UnderlyingKind::Int64Kind:  result = (TEnum)Enum::ToObject(s_type, i64Val);  break;
-				case UnderlyingKind::UInt64Kind: result = (TEnum)Enum::ToObject(s_type, ui64Val); break;
-				case UnderlyingKind::Int16Kind:  result = (TEnum)Enum::ToObject(s_type, i16Val);  break;
-				case UnderlyingKind::UInt16Kind: result = (TEnum)Enum::ToObject(s_type, ui16Val); break;
-				case UnderlyingKind::ByteKind:   result = (TEnum)Enum::ToObject(s_type, bVal);    break;
-				case UnderlyingKind::SByteKind:  result = (TEnum)Enum::ToObject(s_type, sbVal);   break;
+				case UnderlyingKind::Int32Kind:	 result = MsilConvert::ClobberFrom<TEnum>(i32Val);    break;
+				case UnderlyingKind::UInt32Kind: result = MsilConvert::ClobberFrom<TEnum>(ui32Val); break;
+				case UnderlyingKind::Int64Kind:  result = MsilConvert::ClobberFrom<TEnum>(i64Val);  break;
+				case UnderlyingKind::UInt64Kind: result = MsilConvert::ClobberFrom<TEnum>(ui64Val); break;
+				case UnderlyingKind::Int16Kind:  result = MsilConvert::ClobberFrom<TEnum>(i16Val);  break;
+				case UnderlyingKind::UInt16Kind: result = MsilConvert::ClobberFrom<TEnum>(ui16Val); break;
+				case UnderlyingKind::ByteKind:   result = MsilConvert::ClobberFrom<TEnum>(bVal);    break;
+				case UnderlyingKind::SByteKind:  result = MsilConvert::ClobberFrom<TEnum>(sbVal);   break;
 
 				default: throw gcnew Exception("This should never throw. All underlying types are represented above.");
 			}
