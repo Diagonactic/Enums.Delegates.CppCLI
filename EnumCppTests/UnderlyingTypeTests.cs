@@ -4,6 +4,7 @@ using DiagonacticTests;
 using EnumCppTests.Attributes;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using static Diagonactic.Enums.Flags;
 
 namespace EnumCppUnderlyingTypeTests {
 	[TestClass]
@@ -79,7 +80,8 @@ namespace EnumCppUnderlyingTypeTests {
 		[TestMethod, EnumTest]
 		public void TestSByteAddFlags()
 		{
-            Flag1.AddFlags(Flag2, Flag4, Flag8, Flag10).ShouldBeEquivalentTo(AllFlags);
+			var result = Flag1.AddFlags(Flag2, Flag4, Flag8, Flag10);
+            result.ShouldBeEquivalentTo(AllFlags);
 		}
 
 		[TestMethod, EnumTest]
@@ -197,7 +199,8 @@ namespace EnumCppUnderlyingTypeTests {
 		[TestMethod, EnumTest]
 		public void TestByteAddFlags()
 		{
-            Flag1.AddFlags(Flag2, Flag4, Flag8, Flag10).ShouldBeEquivalentTo(AllFlags);
+			var result = Flag1.AddFlags(Flag2, Flag4, Flag8, Flag10);
+            result.ShouldBeEquivalentTo(AllFlags);
 		}
 
 		[TestMethod, EnumTest]
@@ -249,7 +252,7 @@ namespace EnumCppUnderlyingTypeTests {
 	public class TestFlagsInt16EnumEnumUnderlyingKind
 	{
 		[Flags]
-		private enum TestEnum : short	{ One = 0x000000100, Two = 0x000000200,	Four = 0x000000400, Eight = 0x000000800, Ten = 0x000001000	}
+		private enum TestEnum : short	{ One = 0x000000008, Two = 0x000000010,	Four = 0x000000020, Eight = 0x000000040, Ten = 0x000000080	}
 
 		private const TestEnum Flag1       = TestEnum.One, 
 							   Flag2       = TestEnum.Two,
@@ -315,7 +318,8 @@ namespace EnumCppUnderlyingTypeTests {
 		[TestMethod, EnumTest]
 		public void TestInt16AddFlags()
 		{
-            Flag1.AddFlags(Flag2, Flag4, Flag8, Flag10).ShouldBeEquivalentTo(AllFlags);
+			var result = Flag1.AddFlags(Flag2, Flag4, Flag8, Flag10);
+            result.ShouldBeEquivalentTo(AllFlags);
 		}
 
 		[TestMethod, EnumTest]
@@ -348,9 +352,9 @@ namespace EnumCppUnderlyingTypeTests {
 		[TestMethod, EnumTest]
 		public void TestInt16ToEnum()
 		{						
-			Enums.ToEnum<TestEnum>((short)0x000000100).ShouldBeEquivalentTo(Flag1);
-			Enums.ToEnum<TestEnum>((short)0x000000100 | 0x000000200).ShouldBeEquivalentTo(Flag1Flag2);
-			Enums.ToEnum<TestEnum>((Object)0x000000100).ShouldBeEquivalentTo(Flag1);
+			Enums.ToEnum<TestEnum>((short)0x000000008).ShouldBeEquivalentTo(Flag1);
+			Enums.ToEnum<TestEnum>((short)0x000000008 | 0x000000010).ShouldBeEquivalentTo(Flag1Flag2);
+			Enums.ToEnum<TestEnum>((Object)0x000000008).ShouldBeEquivalentTo(Flag1);
 		}
 
 		[TestMethod, EnumTest]
@@ -358,7 +362,7 @@ namespace EnumCppUnderlyingTypeTests {
 		{
 			Flag1.AsObject().ShouldBeEquivalentTo((Object)Flag1);
 			Flag1Flag2.AsObject().ShouldBeEquivalentTo((Object)(Flag1 | Flag2));
-			var objResult = Enums.AsObject<TestEnum>((short)(0x000000100 | 0x000000200)) as TestEnum? ?? TestEnum.Ten;
+			var objResult = Enums.AsObject<TestEnum>((short)(0x000000008 | 0x000000010)) as TestEnum? ?? TestEnum.Ten;
 			objResult.ShouldBeEquivalentTo(Flag1 | Flag2);
         }
 	}
@@ -367,7 +371,7 @@ namespace EnumCppUnderlyingTypeTests {
 	public class TestFlagsUInt16EnumEnumUnderlyingKind
 	{
 		[Flags]
-		private enum TestEnum : ushort	{ One = 0x000000100, Two = 0x000000200,	Four = 0x000000400, Eight = 0x000000800, Ten = 0x000001000	}
+		private enum TestEnum : ushort	{ One = 0x000000010, Two = 0x000000020,	Four = 0x000000040, Eight = 0x000000080, Ten = 0x000000100	}
 
 		private const TestEnum Flag1       = TestEnum.One, 
 							   Flag2       = TestEnum.Two,
@@ -433,7 +437,8 @@ namespace EnumCppUnderlyingTypeTests {
 		[TestMethod, EnumTest]
 		public void TestUInt16AddFlags()
 		{
-            Flag1.AddFlags(Flag2, Flag4, Flag8, Flag10).ShouldBeEquivalentTo(AllFlags);
+			var result = Flag1.AddFlags(Flag2, Flag4, Flag8, Flag10);
+            result.ShouldBeEquivalentTo(AllFlags);
 		}
 
 		[TestMethod, EnumTest]
@@ -466,9 +471,9 @@ namespace EnumCppUnderlyingTypeTests {
 		[TestMethod, EnumTest]
 		public void TestUInt16ToEnum()
 		{						
-			Enums.ToEnum<TestEnum>((ushort)0x000000100).ShouldBeEquivalentTo(Flag1);
-			Enums.ToEnum<TestEnum>((ushort)0x000000100 | 0x000000200).ShouldBeEquivalentTo(Flag1Flag2);
-			Enums.ToEnum<TestEnum>((Object)0x000000100).ShouldBeEquivalentTo(Flag1);
+			Enums.ToEnum<TestEnum>((ushort)0x000000010).ShouldBeEquivalentTo(Flag1);
+			Enums.ToEnum<TestEnum>((ushort)0x000000010 | 0x000000020).ShouldBeEquivalentTo(Flag1Flag2);
+			Enums.ToEnum<TestEnum>((Object)0x000000010).ShouldBeEquivalentTo(Flag1);
 		}
 
 		[TestMethod, EnumTest]
@@ -476,7 +481,7 @@ namespace EnumCppUnderlyingTypeTests {
 		{
 			Flag1.AsObject().ShouldBeEquivalentTo((Object)Flag1);
 			Flag1Flag2.AsObject().ShouldBeEquivalentTo((Object)(Flag1 | Flag2));
-			var objResult = Enums.AsObject<TestEnum>((ushort)(0x000000100 | 0x000000200)) as TestEnum? ?? TestEnum.Ten;
+			var objResult = Enums.AsObject<TestEnum>((ushort)(0x000000010 | 0x000000020)) as TestEnum? ?? TestEnum.Ten;
 			objResult.ShouldBeEquivalentTo(Flag1 | Flag2);
         }
 	}
@@ -485,7 +490,7 @@ namespace EnumCppUnderlyingTypeTests {
 	public class TestFlagsInt32EnumEnumUnderlyingKind
 	{
 		[Flags]
-		private enum TestEnum : int	{ One = 0x000001000, Two = 0x000002000,	Four = 0x000004000, Eight = 0x000008000, Ten = 0x000010000	}
+		private enum TestEnum : int	{ One = 0x000008000, Two = 0x000010000,	Four = 0x000020000, Eight = 0x000040000, Ten = 0x000080000	}
 
 		private const TestEnum Flag1       = TestEnum.One, 
 							   Flag2       = TestEnum.Two,
@@ -551,7 +556,8 @@ namespace EnumCppUnderlyingTypeTests {
 		[TestMethod, EnumTest]
 		public void TestInt32AddFlags()
 		{
-            Flag1.AddFlags(Flag2, Flag4, Flag8, Flag10).ShouldBeEquivalentTo(AllFlags);
+			var result = Flag1.AddFlags(Flag2, Flag4, Flag8, Flag10);
+            result.ShouldBeEquivalentTo(AllFlags);
 		}
 
 		[TestMethod, EnumTest]
@@ -584,9 +590,9 @@ namespace EnumCppUnderlyingTypeTests {
 		[TestMethod, EnumTest]
 		public void TestInt32ToEnum()
 		{						
-			Enums.ToEnum<TestEnum>((int)0x000001000).ShouldBeEquivalentTo(Flag1);
-			Enums.ToEnum<TestEnum>((int)0x000001000 | 0x000002000).ShouldBeEquivalentTo(Flag1Flag2);
-			Enums.ToEnum<TestEnum>((Object)0x000001000).ShouldBeEquivalentTo(Flag1);
+			Enums.ToEnum<TestEnum>((int)0x000008000).ShouldBeEquivalentTo(Flag1);
+			Enums.ToEnum<TestEnum>((int)0x000008000 | 0x000010000).ShouldBeEquivalentTo(Flag1Flag2);
+			Enums.ToEnum<TestEnum>((Object)0x000008000).ShouldBeEquivalentTo(Flag1);
 		}
 
 		[TestMethod, EnumTest]
@@ -594,7 +600,7 @@ namespace EnumCppUnderlyingTypeTests {
 		{
 			Flag1.AsObject().ShouldBeEquivalentTo((Object)Flag1);
 			Flag1Flag2.AsObject().ShouldBeEquivalentTo((Object)(Flag1 | Flag2));
-			var objResult = Enums.AsObject<TestEnum>((int)(0x000001000 | 0x000002000)) as TestEnum? ?? TestEnum.Ten;
+			var objResult = Enums.AsObject<TestEnum>((int)(0x000008000 | 0x000010000)) as TestEnum? ?? TestEnum.Ten;
 			objResult.ShouldBeEquivalentTo(Flag1 | Flag2);
         }
 	}
@@ -603,7 +609,7 @@ namespace EnumCppUnderlyingTypeTests {
 	public class TestFlagsUInt32EnumEnumUnderlyingKind
 	{
 		[Flags]
-		private enum TestEnum : uint	{ One = 0x000001000, Two = 0x000002000,	Four = 0x000004000, Eight = 0x000008000, Ten = 0x000010000	}
+		private enum TestEnum : uint	{ One = 0x000008000, Two = 0x000010000,	Four = 0x000020000, Eight = 0x000040000, Ten = 0x000080000	}
 
 		private const TestEnum Flag1       = TestEnum.One, 
 							   Flag2       = TestEnum.Two,
@@ -669,7 +675,8 @@ namespace EnumCppUnderlyingTypeTests {
 		[TestMethod, EnumTest]
 		public void TestUInt32AddFlags()
 		{
-            Flag1.AddFlags(Flag2, Flag4, Flag8, Flag10).ShouldBeEquivalentTo(AllFlags);
+			var result = Flag1.AddFlags(Flag2, Flag4, Flag8, Flag10);
+            result.ShouldBeEquivalentTo(AllFlags);
 		}
 
 		[TestMethod, EnumTest]
@@ -702,9 +709,9 @@ namespace EnumCppUnderlyingTypeTests {
 		[TestMethod, EnumTest]
 		public void TestUInt32ToEnum()
 		{						
-			Enums.ToEnum<TestEnum>((uint)0x000001000).ShouldBeEquivalentTo(Flag1);
-			Enums.ToEnum<TestEnum>((uint)0x000001000 | 0x000002000).ShouldBeEquivalentTo(Flag1Flag2);
-			Enums.ToEnum<TestEnum>((Object)0x000001000).ShouldBeEquivalentTo(Flag1);
+			Enums.ToEnum<TestEnum>((uint)0x000008000).ShouldBeEquivalentTo(Flag1);
+			Enums.ToEnum<TestEnum>((uint)0x000008000 | 0x000010000).ShouldBeEquivalentTo(Flag1Flag2);
+			Enums.ToEnum<TestEnum>((Object)0x000008000).ShouldBeEquivalentTo(Flag1);
 		}
 
 		[TestMethod, EnumTest]
@@ -712,7 +719,7 @@ namespace EnumCppUnderlyingTypeTests {
 		{
 			Flag1.AsObject().ShouldBeEquivalentTo((Object)Flag1);
 			Flag1Flag2.AsObject().ShouldBeEquivalentTo((Object)(Flag1 | Flag2));
-			var objResult = Enums.AsObject<TestEnum>((uint)(0x000001000 | 0x000002000)) as TestEnum? ?? TestEnum.Ten;
+			var objResult = Enums.AsObject<TestEnum>((uint)(0x000008000 | 0x000010000)) as TestEnum? ?? TestEnum.Ten;
 			objResult.ShouldBeEquivalentTo(Flag1 | Flag2);
         }
 	}
@@ -721,7 +728,7 @@ namespace EnumCppUnderlyingTypeTests {
 	public class TestFlagsInt64EnumEnumUnderlyingKind
 	{
 		[Flags]
-		private enum TestEnum : long	{ One = 0x100000000000000, Two = 0x200000000000000,	Four = 0x400000000000000, Eight = 0x800000000000000, Ten = 0x1000000000000000	}
+		private enum TestEnum : long	{ One = 0x080000000, Two = 0x100000000,	Four = 0x200000000, Eight = 0x400000000, Ten = 0x800000000	}
 
 		private const TestEnum Flag1       = TestEnum.One, 
 							   Flag2       = TestEnum.Two,
@@ -787,7 +794,8 @@ namespace EnumCppUnderlyingTypeTests {
 		[TestMethod, EnumTest]
 		public void TestInt64AddFlags()
 		{
-            Flag1.AddFlags(Flag2, Flag4, Flag8, Flag10).ShouldBeEquivalentTo(AllFlags);
+			var result = Flag1.AddFlags(Flag2, Flag4, Flag8, Flag10);
+            result.ShouldBeEquivalentTo(AllFlags);
 		}
 
 		[TestMethod, EnumTest]
@@ -820,9 +828,9 @@ namespace EnumCppUnderlyingTypeTests {
 		[TestMethod, EnumTest]
 		public void TestInt64ToEnum()
 		{						
-			Enums.ToEnum<TestEnum>((long)0x100000000000000).ShouldBeEquivalentTo(Flag1);
-			Enums.ToEnum<TestEnum>((long)0x100000000000000 | 0x200000000000000).ShouldBeEquivalentTo(Flag1Flag2);
-			Enums.ToEnum<TestEnum>((Object)0x100000000000000).ShouldBeEquivalentTo(Flag1);
+			Enums.ToEnum<TestEnum>((long)0x080000000).ShouldBeEquivalentTo(Flag1);
+			Enums.ToEnum<TestEnum>((long)0x080000000 | 0x100000000).ShouldBeEquivalentTo(Flag1Flag2);
+			Enums.ToEnum<TestEnum>((Object)0x080000000).ShouldBeEquivalentTo(Flag1);
 		}
 
 		[TestMethod, EnumTest]
@@ -830,7 +838,7 @@ namespace EnumCppUnderlyingTypeTests {
 		{
 			Flag1.AsObject().ShouldBeEquivalentTo((Object)Flag1);
 			Flag1Flag2.AsObject().ShouldBeEquivalentTo((Object)(Flag1 | Flag2));
-			var objResult = Enums.AsObject<TestEnum>((long)(0x100000000000000 | 0x200000000000000)) as TestEnum? ?? TestEnum.Ten;
+			var objResult = Enums.AsObject<TestEnum>((long)(0x080000000 | 0x100000000)) as TestEnum? ?? TestEnum.Ten;
 			objResult.ShouldBeEquivalentTo(Flag1 | Flag2);
         }
 	}
@@ -839,7 +847,7 @@ namespace EnumCppUnderlyingTypeTests {
 	public class TestFlagsUInt64EnumEnumUnderlyingKind
 	{
 		[Flags]
-		private enum TestEnum : ulong	{ One = 0x100000000000000, Two = 0x200000000000000,	Four = 0x400000000000000, Eight = 0x800000000000000, Ten = 0x1000000000000000	}
+		private enum TestEnum : ulong	{ One = 0x400000000000000, Two = 0x800000000000000,	Four = 0x1000000000000000, Eight = 0x2000000000000000, Ten = 0x4000000000000000	}
 
 		private const TestEnum Flag1       = TestEnum.One, 
 							   Flag2       = TestEnum.Two,
@@ -905,7 +913,8 @@ namespace EnumCppUnderlyingTypeTests {
 		[TestMethod, EnumTest]
 		public void TestUInt64AddFlags()
 		{
-            Flag1.AddFlags(Flag2, Flag4, Flag8, Flag10).ShouldBeEquivalentTo(AllFlags);
+			var result = Flag1.AddFlags(Flag2, Flag4, Flag8, Flag10);
+            result.ShouldBeEquivalentTo(AllFlags);
 		}
 
 		[TestMethod, EnumTest]
@@ -938,9 +947,9 @@ namespace EnumCppUnderlyingTypeTests {
 		[TestMethod, EnumTest]
 		public void TestUInt64ToEnum()
 		{						
-			Enums.ToEnum<TestEnum>((ulong)0x100000000000000).ShouldBeEquivalentTo(Flag1);
-			Enums.ToEnum<TestEnum>((ulong)0x100000000000000 | 0x200000000000000).ShouldBeEquivalentTo(Flag1Flag2);
-			Enums.ToEnum<TestEnum>((Object)0x100000000000000).ShouldBeEquivalentTo(Flag1);
+			Enums.ToEnum<TestEnum>((ulong)0x400000000000000).ShouldBeEquivalentTo(Flag1);
+			Enums.ToEnum<TestEnum>((ulong)0x400000000000000 | 0x800000000000000).ShouldBeEquivalentTo(Flag1Flag2);
+			Enums.ToEnum<TestEnum>((Object)0x400000000000000).ShouldBeEquivalentTo(Flag1);
 		}
 
 		[TestMethod, EnumTest]
@@ -948,7 +957,7 @@ namespace EnumCppUnderlyingTypeTests {
 		{
 			Flag1.AsObject().ShouldBeEquivalentTo((Object)Flag1);
 			Flag1Flag2.AsObject().ShouldBeEquivalentTo((Object)(Flag1 | Flag2));
-			var objResult = Enums.AsObject<TestEnum>((ulong)(0x100000000000000 | 0x200000000000000)) as TestEnum? ?? TestEnum.Ten;
+			var objResult = Enums.AsObject<TestEnum>((ulong)(0x400000000000000 | 0x800000000000000)) as TestEnum? ?? TestEnum.Ten;
 			objResult.ShouldBeEquivalentTo(Flag1 | Flag2);
         }
 	}

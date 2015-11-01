@@ -153,7 +153,6 @@ namespace Diagonactic
 			literal Int64 F61 = 0x1000000000000000;
 			literal Int64 F62 = 0x2000000000000000;
 			literal Int64 F63 = 0x4000000000000000;
-			literal UInt64 F64 = 0x8000000000000000;
 		};
 
 		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum

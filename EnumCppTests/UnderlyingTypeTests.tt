@@ -1,8 +1,11 @@
-﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+﻿<#@ template debug="false" hostspecific="true" language="C#" #>
+<#@ assembly name="$(SolutionDir)\x64\Release\Enums.dll" #>
 <#@ assembly name="System.Core" #>
+<#@ assembly name="System.Runtime" #>
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="Diagonactic" #>
 <#@ output extension=".cs" #>
 using System;
 using Diagonactic;
@@ -10,18 +13,19 @@ using DiagonacticTests;
 using EnumCppTests.Attributes;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using static Diagonactic.Enums.Flags;
 
 namespace EnumCppUnderlyingTypeTests {
 	[TestClass]
 	public class EnumUnderlyingTests {
-	<#=WriteMethod("SByte", "sbyte", 1)#>
-	<#=WriteMethod("Byte", "byte", 1)#>
-	<#=WriteMethod("Int16", "short", 0x100)#>
-	<#=WriteMethod("UInt16", "ushort", 0x100)#>
-	<#=WriteMethod("Int32", "int", 0x1000)#>
-	<#=WriteMethod("UInt32", "uint", 0x1000)#>
-	<#=WriteMethod("Int64", "long", 0x100000000000000)#>
-	<#=WriteMethod("UInt64", "ulong", 0x100000000000000)#>
+	<#=WriteMethod("SByte", "sbyte", (ulong)Enums.Flags.F1)#>
+	<#=WriteMethod("Byte", "byte", (ulong)Enums.Flags.F1)#>
+	<#=WriteMethod("Int16", "short", (ulong)Enums.Flags.F4)#>
+	<#=WriteMethod("UInt16", "ushort", (ulong)Enums.Flags.F5)#>
+	<#=WriteMethod("Int32", "int", (ulong)Enums.Flags.F16)#>
+	<#=WriteMethod("UInt32", "uint", (ulong)Enums.Flags.F16)#>
+	<#=WriteMethod("Int64", "long", (ulong)Enums.Flags.F32)#>
+	<#=WriteMethod("UInt64", "ulong", (ulong)Enums.Flags.F59)#>
 	}
 }
 <#+	string GetHex(ulong startingNumber, ulong multiplier)
@@ -38,11 +42,11 @@ namespace EnumCppUnderlyingTypeTests {
 	public class Test" + flagsType + @"EnumUnderlyingKind
 	{
 		[Flags]
-		private enum TestEnum : " + typekw + @"	{ One = " + GetHex(startingNumber, 1) + 
-		@", Two = " + GetHex(startingNumber, 2) + 
-		@",	Four = " + GetHex(startingNumber, 4) + 
-		@", Eight = " + GetHex(startingNumber, 8) + 
-		@", Ten = " + GetHex(startingNumber, 16) + 
+		private enum TestEnum : " + typekw + @"	{ One = " + GetHex(startingNumber, (ulong)Enums.Flags.F1) + 
+		@", Two = " + GetHex(startingNumber, (ulong)Enums.Flags.F2) + 
+		@",	Four = " + GetHex(startingNumber, (ulong)Enums.Flags.F3) + 
+		@", Eight = " + GetHex(startingNumber, (ulong)Enums.Flags.F4) + 
+		@", Ten = " + GetHex(startingNumber, (ulong)Enums.Flags.F5) + 
 		@"	}
 
 		private const TestEnum Flag1       = TestEnum.One, 
@@ -109,7 +113,8 @@ namespace EnumCppUnderlyingTypeTests {
 		[TestMethod, EnumTest]
 		public void Test" + enumType + @"AddFlags()
 		{
-            Flag1.AddFlags(Flag2, Flag4, Flag8, Flag10).ShouldBeEquivalentTo(AllFlags);
+			var result = Flag1.AddFlags(Flag2, Flag4, Flag8, Flag10);
+            result.ShouldBeEquivalentTo(AllFlags);
 		}
 
 		[TestMethod, EnumTest]

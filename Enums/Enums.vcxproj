@@ -53,6 +53,7 @@
     <LinkIncremental>false</LinkIncremental>
     <IntDir>bin\$(PlatformTarget)\$(Configuration)\</IntDir>
     <CustomBuildBeforeTargets />
+    <PostBuildEventUseInBuild>true</PostBuildEventUseInBuild>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
