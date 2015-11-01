@@ -83,7 +83,7 @@ namespace Diagonactic
 	/// </para>
 	/// <para>All underlying types are supported and can contain values as large as the underlying type's <c>MaxValue</c>, however, types with more than <see cref="Int32::MaxValue"/> are not.</para>
 	/// </remarks>
-	[Extension]	public ref class Enums sealed abstract
+	public ref class Enums sealed abstract
 	{
 	public:
 		
@@ -93,6 +93,30 @@ namespace Diagonactic
 		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
 		static IReadOnlyList<String^>^ GetNames();
 		
+		/// <summary>
+		/// Gets an array of names of the enum
+		/// </summary>
+		/// <returns>An array of the enum names</returns>
+		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
+		static array<String^>^ GetNamesArray()
+		{ // This had to be defined here due to compiler problem
+			return Enumerable::ToArray<String^>(GenericEnumCore<TEnum>::s_nameMap->Keys);
+		}
+
+		/// <summary>
+		/// Gets the values of the enum as an array
+		/// </summary>
+		/// <returns>An array of values of the enum</returns>
+		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
+			static array<TEnum>^ GetValuesArray()
+		{ // This had to be defined here due to compiler problem
+			int len = GenericEnumValues<TEnum>::s_length;
+			// A copy of the internal representation is made to ensure the internal representaion cannot be changed.
+			array<TEnum>^ newVals = (array<TEnum>^)Array::CreateInstance(GenericEnumMinimal<TEnum>::s_type, len);
+			Array::Copy(GenericEnumValues<TEnum>::s_values, 0, newVals, 0, len);
+			return newVals;
+		}
+
 		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum		
 		static Object^ AsObject(SByte value);
 

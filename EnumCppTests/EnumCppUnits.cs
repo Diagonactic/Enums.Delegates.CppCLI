@@ -9,20 +9,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DiagonacticTests
 {
-    public enum ByteEnum : byte
-    {
-        One = 1,
-        Two = 2,
-        Three = 3
-    }
-
-    [Flags]
-    public enum FlagsByteEnum : byte
-    {
-        One = 0x1,
-        Two = 0x2,
-        Three = 0x4
-    }
+    
     [Flags]
     public enum FlagsLongEnum : long
     {
@@ -121,31 +108,7 @@ namespace DiagonacticTests
         Nine,
         Ten
     }
-
     
-
-    [Flags]
-    enum FlagsShortEnum : short
-    {
-        Five = 0x1,
-        Six = 0x2,
-        Seven = 0x4
-    }
-
-    [Flags]
-    enum FlagsUIntEnum : uint
-    {
-        Four = 0x40000000,
-        Five = 0x80000000
-    }
-
-    [Flags]
-    enum FlagsUShortEnum : ushort
-    {
-        Five = 0x1,
-        Six = 0x2,
-        Seven = 0x4
-    }
 
     [Flags]
     enum FlagsSByteEnum : sbyte
@@ -154,14 +117,7 @@ namespace DiagonacticTests
         Six = 0x2,
         Seven = 0x4
     }
-
-    [Flags]
-    enum FlagsIntEnum : int
-    {
-        Five = 0x1,
-        Six = 0x2,
-        Seven = 0x4
-    }
+    
 
     [TestClass]
     public class EnumUnitTests

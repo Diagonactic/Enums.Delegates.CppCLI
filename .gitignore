@@ -68,3 +68,4 @@ UCosmic.Www.Mvc.Publish.xml
 *.sdf
 Documentation/Help/
 ipch/
+*.opendb

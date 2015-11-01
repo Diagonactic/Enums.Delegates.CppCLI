@@ -9,6 +9,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Enums", "Enums\Enums.vcxpro
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnumCppTests", "EnumCppTests\EnumCppTests.csproj", "{C9F8296E-6039-49E5-854D-2595F9CD77CE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B925F328-A580-493A-955E-6EB8672B2D4F} = {B925F328-A580-493A-955E-6EB8672B2D4F}
+		{042AC5EC-5CCF-4ABE-B976-81CA51DFA52B} = {042AC5EC-5CCF-4ABE-B976-81CA51DFA52B}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Console.Profile", "Console.Profile\Console.Profile.csproj", "{56C7D606-826F-45BD-A7A1-F2E0B4659441}"
 EndProject

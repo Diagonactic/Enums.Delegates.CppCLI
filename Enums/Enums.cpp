@@ -28,7 +28,7 @@ namespace Diagonactic
 		TEnum result;
 		Diagonactic::GenericEnumCore<TEnum>::ParseEnum(source, false, true, result);
 		return result;
-	}
+	}	
 	
 	/// <summary>Converts <paramref name="value"/> to <typeparamref name="TEnum"/>.</summary>
 	/// <remarks>This is a wrapped call to a <see cref="System::Enum"/> method.</remarks>

@@ -14,13 +14,12 @@ namespace Diagonactic
 
 		private ref class GenericEnumMinimal abstract
 		{
-		protected:
-			
+
+		internal:
+
 			static TEnum s_defaultValue = TEnum();
 			static Type^ s_type = TEnum::typeid;
 			static UnderlyingKind s_kind = Util::GetKind(s_defaultValue);
-
-		internal:
 
 			static Boolean HasFlag(TEnum source, TEnum testVal)
 			{
