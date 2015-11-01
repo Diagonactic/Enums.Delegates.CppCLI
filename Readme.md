@@ -61,6 +61,20 @@ Enums.ToEnum(1); // MyEnum.Val1
 Enums.ToEnum(3); // MyEnum.Val1 | mMynum.Val2
 ```
 
+Define a flags enum conveniently (C# 6.0):
+```c#
+using static Enums.Flags
+
+[Flags]
+enum FlagsEnum : byte
+{
+	FirstFlag = F1,
+	SecondFlag = F2,
+	ThirdFlat = F3,
+	// ... types encoded from sbyte to UInt64 for universal usage ...
+}
+```
+
 Compiling
 ---------
 

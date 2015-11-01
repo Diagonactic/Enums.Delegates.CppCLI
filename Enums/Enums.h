@@ -86,7 +86,76 @@ namespace Diagonactic
 	public ref class Enums sealed abstract
 	{
 	public:
-		
+		ref class Flags sealed abstract
+		{
+			
+		public:			
+			literal SByte F1 = 0x1;
+			literal SByte F2 = 0x2;
+			literal SByte F3 = 0x4;
+			literal SByte F4 = 0x8;
+			literal SByte F5 = 0x10;
+			literal SByte F6 = 0x20;
+			literal SByte F7 = 0x40;
+			literal Byte F8 = 0x80;
+			literal Int16 F9 = 0x100;
+			literal Int16 F10 = 0x200;
+			literal Int16 F11 = 0x400;
+			literal UInt16 F12 = 0x800;
+			literal Int32 F13 = 0x1000;
+			literal Int32 F14 = 0x2000;
+			literal Int32 F15 = 0x4000;
+			literal Int32 F16 = 0x8000;
+			literal Int32 F17 = 0x10000;
+			literal Int32 F18 = 0x20000;
+			literal Int32 F19 = 0x40000;
+			literal Int32 F20 = 0x80000;
+			literal Int32 F21 = 0x100000;
+			literal Int32 F22 = 0x200000;
+			literal Int32 F23 = 0x400000;
+			literal Int32 F24 = 0x800000;
+			literal Int32 F25 = 0x1000000;
+			literal Int32 F26 = 0x2000000;
+			literal Int32 F27 = 0x4000000;
+			literal Int32 F28 = 0x8000000;
+			literal Int32 F29 = 0x10000000;
+			literal Int32 F30 = 0x20000000;
+			literal Int32 F31 = 0x40000000;
+			literal UInt32 F32 = 0x80000000;
+			literal Int64 F33 = 0x100000000;
+			literal Int64 F34 = 0x200000000;
+			literal Int64 F35 = 0x400000000;
+			literal Int64 F36 = 0x800000000;
+			literal Int64 F37 = 0x1000000000;
+			literal Int64 F38 = 0x2000000000;
+			literal Int64 F39 = 0x4000000000;
+			literal Int64 F40 = 0x8000000000;
+			literal Int64 F41 = 0x10000000000;
+			literal Int64 F42 = 0x20000000000;
+			literal Int64 F43 = 0x40000000000;
+			literal Int64 F44 = 0x80000000000;
+			literal Int64 F45 = 0x100000000000;
+			literal Int64 F46 = 0x200000000000;
+			literal Int64 F47 = 0x400000000000;
+			literal Int64 F48 = 0x800000000000;
+			literal Int64 F49 = 0x1000000000000;
+			literal Int64 F50 = 0x2000000000000;
+			literal Int64 F51 = 0x4000000000000;
+			literal Int64 F52 = 0x8000000000000;
+			literal Int64 F53 = 0x10000000000000;
+			literal Int64 F54 = 0x20000000000000;
+			literal Int64 F55 = 0x40000000000000;
+			literal Int64 F56 = 0x80000000000000;
+			literal Int64 F57 = 0x100000000000000;
+			literal Int64 F58 = 0x200000000000000;
+			literal Int64 F59 = 0x400000000000000;
+			literal Int64 F60 = 0x800000000000000;
+			literal Int64 F61 = 0x1000000000000000;
+			literal Int64 F62 = 0x2000000000000000;
+			literal Int64 F63 = 0x4000000000000000;
+			literal UInt64 F64 = 0x8000000000000000;
+		};
+
 		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
 		static IReadOnlyList<TEnum>^ GetValues();
 

@@ -6,6 +6,7 @@ using EnumCppTests.Attributes;
 using Diagonactic;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using static Diagonactic.Enums.Flags;
 
 namespace DiagonacticTests
 {
@@ -13,63 +14,63 @@ namespace DiagonacticTests
     [Flags]
     public enum FlagsLongEnum : long
     {
-        Oned   = 0x10000000,
-        Twod   = 0x20000000,
-        Threed = 0x40000000,
-        Fourd  = 0x80000000,
-        Onec   = 0x100000000,
-        Twoc   = 0x200000000,
-        Threec = 0x400000000,
-        Fourc  = 0x800000000,
-        Oneb   = 0x1000000000,
-        Twob   = 0x2000000000,
-        Threeb = 0x4000000000,
-        Fourb  = 0x8000000000,
-        Onea   = 0x100000000000,
-        Twoa   = 0x200000000000,
-        Threea = 0x400000000000,
-        Foura  = 0x800000000000,
-        Zero   = 0x8000000000000,
-        One  =  0x10000000000000,
-        Two  =  0x20000000000000,
-        Three = 0x40000000000000,
-        Four  = 0x80000000000000,
-        Five  = 0x100000000000000,
-        Six   = 0x200000000000000,
-        Seven = 0x400000000000000,
-        Eight = 0x800000000000000,
-        Nine  = 0x1000000000000000,
-        Ten   = 0x2000000000000000
+        Oned   = F32,
+        Twod   = F33,
+        Threed = F34,
+        Fourd  = F35,
+        Onec   = F36,
+        Twoc   = F37,
+        Threec = F38,
+        Fourc  = F39,
+        Oneb   = F40,
+        Twob   = F41,
+        Threeb = F42,
+        Fourb  = F43,
+        Onea   = F44,
+        Twoa   = F45,
+        Threea = F46,
+        Foura  = F47,
+        Zero   = F48,
+        One  =  F49,
+        Two  =  F50,
+        Three = F51,
+        Four  = F52,
+        Five  = F53,
+        Six   = F54,
+        Seven = F55,
+        Eight = F56,
+        Nine  = F57,
+        Ten   = F58
     }
 
     [Flags]
     public enum FlagsULongEnum : ulong
     {
-        Oned = 0x100000000,
-        Twod = 0x200000000,
-        Threed = 0x400000000,
-        Fourd = 0x800000000,
-        Onec = 0x1000000000,
-        Twoc = 0x2000000000,
-        Threec = 0x4000000000,
-        Fourc = 0x8000000000,
-        Oneb = 0x10000000000,
-        Twob = 0x20000000000,
-        Threeb = 0x40000000000,
-        Fourb = 0x80000000000,
-        Onea = 0x1000000000000,
-        Twoa = 0x2000000000000,
-        Threea = 0x4000000000000,
-        Foura = 0x8000000000000,
-        Zero = 0x80000000000000,
-        One = 0x100000000000000,
-        Two = 0x200000000000000,
-        Three = 0x400000000000000,
-        Four = 0x800000000000000,
-        Five = 0x1000000000000000,
-        Six = 0x2000000000000000,
-        Seven = 0x4000000000000000,
-        Eight = 0x8000000000000000
+        Oned = F40,
+        Twod = F41,
+        Threed = F42,
+        Fourd = F43,
+        Onec = F44,
+        Twoc = F45,
+        Threec = F46,
+        Fourc = F47,
+        Oneb = F48,
+        Twob = F49,
+        Threeb = F50,
+        Fourb = F51,
+        Onea = F52,
+        Twoa = F53,
+        Threea = F54,
+        Foura = F55,
+        Zero = F56,
+        One = F57,
+        Two = F58,
+        Three = F59,
+        Four = F60,
+        Five = F61,
+        Six = F62,
+        Seven = F63,
+        Eight = F64
     }
 
     public enum DescriptionEnum
@@ -113,9 +114,9 @@ namespace DiagonacticTests
     [Flags]
     enum FlagsSByteEnum : sbyte
     {
-        Five = 0x1,
-        Six = 0x2,
-        Seven = 0x4
+        Five = Enums.Flags.F1,
+        Six = Enums.Flags.F2,
+        Seven = Enums.Flags.F3
     }
     
 
@@ -191,6 +192,11 @@ namespace DiagonacticTests
             names.First().ShouldBeEquivalentTo("Five");
             names.Last().ShouldBeEquivalentTo("Seven");
             names.Any(x => x == "Six").Should().BeTrue();
+            var asArray = Enums.GetNamesArray<FlagsSByteEnum>();
+            asArray.Length.ShouldBeEquivalentTo(3);
+            asArray.First().ShouldBeEquivalentTo("Five");
+            asArray.Last().ShouldBeEquivalentTo("Seven");
+            asArray.Any(x => x == "Six").Should().BeTrue();
         }
 
         [TestMethod, EnumTest]
@@ -213,19 +219,14 @@ namespace DiagonacticTests
             names.First().ShouldBeEquivalentTo(FlagsSByteEnum.Five);
             names.Last().ShouldBeEquivalentTo(FlagsSByteEnum.Seven);
             names.Any(x => x == FlagsSByteEnum.Six).Should().BeTrue();
+            var asArray = Enums.GetValuesArray<FlagsSByteEnum>();
+            asArray.Length.ShouldBeEquivalentTo(3);
+            asArray.First().ShouldBeEquivalentTo(FlagsSByteEnum.Five);
+            asArray.Last().ShouldBeEquivalentTo(FlagsSByteEnum.Seven);
+            names.Any(x => x == FlagsSByteEnum.Six).Should().BeTrue();
         }
 
-        [TestMethod, EnumTest]
-        public void TestGetNamesAsArray()
-        {
-            var names = Enums.GetNames<FlagsSByteEnum>();
-            names.Count.ShouldBeEquivalentTo(3);
-            names.First().ShouldBeEquivalentTo("Five");
-            names.Last().ShouldBeEquivalentTo("Seven");
-            names.Any(x => x == "Six").Should().BeTrue();
-        }
-
-
+        
         [TestMethod, EnumTest]
         public void TestAddFlag()
         {
