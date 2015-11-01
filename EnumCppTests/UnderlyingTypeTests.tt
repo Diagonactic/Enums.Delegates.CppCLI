@@ -13,19 +13,19 @@ using DiagonacticTests;
 using EnumCppTests.Attributes;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using static Diagonactic.Enums.Flags;
+using static Diagonactic.Enums.Flag;
 
 namespace EnumCppUnderlyingTypeTests {
 	[TestClass]
 	public class EnumUnderlyingTests {
-	<#=WriteMethod("SByte", "sbyte", (ulong)Enums.Flags.F1)#>
-	<#=WriteMethod("Byte", "byte", (ulong)Enums.Flags.F1)#>
-	<#=WriteMethod("Int16", "short", (ulong)Enums.Flags.F4)#>
-	<#=WriteMethod("UInt16", "ushort", (ulong)Enums.Flags.F5)#>
-	<#=WriteMethod("Int32", "int", (ulong)Enums.Flags.F16)#>
-	<#=WriteMethod("UInt32", "uint", (ulong)Enums.Flags.F16)#>
-	<#=WriteMethod("Int64", "long", (ulong)Enums.Flags.F32)#>
-	<#=WriteMethod("UInt64", "ulong", (ulong)Enums.Flags.F59)#>
+	<#=WriteMethod("SByte", "sbyte", (ulong)Enums.Flag.F1)#>
+	<#=WriteMethod("Byte", "byte", (ulong)Enums.Flag.F1)#>
+	<#=WriteMethod("Int16", "short", (ulong)Enums.Flag.F4)#>
+	<#=WriteMethod("UInt16", "ushort", (ulong)Enums.Flag.F5)#>
+	<#=WriteMethod("Int32", "int", (ulong)Enums.Flag.F16)#>
+	<#=WriteMethod("UInt32", "uint", (ulong)Enums.Flag.F16)#>
+	<#=WriteMethod("Int64", "long", (ulong)Enums.Flag.F32)#>
+	<#=WriteMethod("UInt64", "ulong", (ulong)Enums.Flag.F59)#>
 	}
 }
 <#+	string GetHex(ulong startingNumber, ulong multiplier)
@@ -42,11 +42,11 @@ namespace EnumCppUnderlyingTypeTests {
 	public class Test" + flagsType + @"EnumUnderlyingKind
 	{
 		[Flags]
-		private enum TestEnum : " + typekw + @"	{ One = " + GetHex(startingNumber, (ulong)Enums.Flags.F1) + 
-		@", Two = " + GetHex(startingNumber, (ulong)Enums.Flags.F2) + 
-		@",	Four = " + GetHex(startingNumber, (ulong)Enums.Flags.F3) + 
-		@", Eight = " + GetHex(startingNumber, (ulong)Enums.Flags.F4) + 
-		@", Ten = " + GetHex(startingNumber, (ulong)Enums.Flags.F5) + 
+		private enum TestEnum : " + typekw + @"	{ One = " + GetHex(startingNumber, (ulong)Enums.Flag.F1) + 
+		@", Two = " + GetHex(startingNumber, (ulong)Enums.Flag.F2) + 
+		@",	Four = " + GetHex(startingNumber, (ulong)Enums.Flag.F3) + 
+		@", Eight = " + GetHex(startingNumber, (ulong)Enums.Flag.F4) + 
+		@", Ten = " + GetHex(startingNumber, (ulong)Enums.Flag.F5) + 
 		@"	}
 
 		private const TestEnum Flag1       = TestEnum.One, 

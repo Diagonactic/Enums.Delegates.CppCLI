@@ -6,7 +6,7 @@ using EnumCppTests.Attributes;
 using Diagonactic;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using static Diagonactic.Enums.Flags;
+using static Diagonactic.Enums.Flag;
 
 namespace DiagonacticTests
 {
@@ -109,14 +109,13 @@ namespace DiagonacticTests
         Nine,
         Ten
     }
-    
 
     [Flags]
     enum FlagsSByteEnum : sbyte
     {
-        Five = (sbyte)Enums.Flags.F1,
-        Six = (sbyte)Enums.Flags.F2,
-        Seven = (sbyte)Enums.Flags.F3
+        Five = (sbyte)F1,
+        Six = (sbyte)F2,
+        Seven = (sbyte)F3
     }
     
 

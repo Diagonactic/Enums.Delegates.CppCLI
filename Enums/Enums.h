@@ -86,7 +86,7 @@ namespace Diagonactic
 	public ref class Enums sealed abstract
 	{
 	public:
-		ref class Flags sealed abstract
+		ref class Flag sealed abstract
 		{
 			
 		public:			

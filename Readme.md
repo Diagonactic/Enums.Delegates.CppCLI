@@ -63,7 +63,7 @@ Enums.ToEnum(3); // MyEnum.Val1 | mMynum.Val2
 
 Define a flags enum conveniently (C# 6.0):
 ```c#
-using static Enums.Flags
+using static Enums.Flag
 
 [Flags]
 enum FlagsEnum : byte

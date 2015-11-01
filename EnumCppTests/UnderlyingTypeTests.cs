@@ -4,7 +4,7 @@ using DiagonacticTests;
 using EnumCppTests.Attributes;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using static Diagonactic.Enums.Flags;
+using static Diagonactic.Enums.Flag;
 
 namespace EnumCppUnderlyingTypeTests {
 	[TestClass]
