@@ -1,7 +1,5 @@
 #pragma once
-#include "Stdafx.h"
-//#include "GenericEnumCore.h"
-#using <C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETCore\v4.5\System.Linq.Dll>
+#include "GenericEnumCore.h"
 
 using namespace System;
 using namespace System::Collections::Generic;
@@ -13,13 +11,13 @@ ref class GenericEnumCore;
 namespace Diagonactic
 {
 	generic<typename TEnum>	where TEnum : IComparable, IFormattable, IConvertible, System::Enum
-	private ref class GenericEnumWithDescriptions sealed : public GenericEnumCore<TEnum>
+	private ref class GenericEnumCoreDescriptions sealed : public GenericEnumCore<TEnum>
 	{
 	private:
 		static Dictionary<String^, TEnum> ^s_descriptionToEnum = gcnew Dictionary<String^, TEnum>(s_length);
 		static Dictionary<TEnum, String^> ^s_enumToDescription = gcnew Dictionary<TEnum, String^>(s_length);
 
-		static GenericEnumWithDescriptions()
+		static GenericEnumCoreDescriptions()
 		{
 			array<String^>^ names = GetNames();
 			

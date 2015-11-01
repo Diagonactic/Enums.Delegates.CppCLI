@@ -12,7 +12,7 @@ namespace Diagonactic
 	generic<typename TEnum>
 		where TEnum : IComparable, IFormattable, IConvertible, System::Enum
 
-		private ref class GenericEnumBase abstract
+		private ref class GenericEnumMinimal abstract
 		{
 		protected:
 			

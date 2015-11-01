@@ -2,6 +2,8 @@
 
 using namespace System;
 using namespace System::Runtime::Serialization;
+using namespace System::Reflection;
+
 [Extension]
 public ref class Delegates abstract sealed
 {

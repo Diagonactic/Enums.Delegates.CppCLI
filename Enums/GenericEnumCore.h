@@ -1,9 +1,8 @@
 #pragma once
-#include "Stdafx.h"
-#include "MsilConvert.h"
-#using <C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETCore\v4.5\System.Linq.Dll>
 
-ref class GenericEnumValuesBase;
+#include "GenericEnumValues.h"
+
+ref class GenericEnumValues;
 enum UnderlyingKind : char;
 ref class MsilConvert;
 using namespace System;
@@ -18,7 +17,7 @@ using namespace System::Linq;
 namespace Diagonactic {
 		
 	generic<typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
-	private ref class GenericEnumCore : public GenericEnumValuesBase<TEnum>
+	private ref class GenericEnumCore : public GenericEnumValues<TEnum>
 	{
 
 	private:

@@ -2,11 +2,12 @@
 #include "stdafx.h"
 #include "EnumExtensions.h"
 
-ref class GenericEnumBase;
-
+ref class GenericEnumMinimal;
+ref class GenericEnumCoreDescriptions;
 using namespace System;
 
 namespace Diagonactic {
+
 
 	/// <summary>
 	/// Converts an <typeparamref name="TEnum"/> to a string.
@@ -38,7 +39,7 @@ namespace Diagonactic {
 	generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
 		String^ EnumExtensions::GetDescription(TEnum source)
 	{
-		return GenericEnumWithDescriptions<TEnum>::TryGetDescription(source);
+		return GenericEnumCoreDescriptions<TEnum>::TryGetDescription(source);
 	}
 
 	/// <summary>A generic version of <c>Enum.Format</c>.</summary>
@@ -61,7 +62,7 @@ namespace Diagonactic {
 	generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
 		Boolean EnumExtensions::IsFlagSet(TEnum source, TEnum flagToTest)
 	{
-		return Diagonactic::GenericEnumBase<TEnum>::HasFlag(source, flagToTest);
+		return Diagonactic::GenericEnumMinimal<TEnum>::HasFlag(source, flagToTest);
 	}
 
 	/// <summary>
@@ -75,7 +76,7 @@ namespace Diagonactic {
 	generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
 		TEnum EnumExtensions::AddFlag(TEnum source, TEnum flagToSet)
 	{
-		return Diagonactic::GenericEnumBase<TEnum>::AddFlag(source, flagToSet);
+		return Diagonactic::GenericEnumMinimal<TEnum>::AddFlag(source, flagToSet);
 	}
 
 	/// <summary>Removes <paramref name="flagToRemove"/> from <paramref name="source"/> flags enum using a binary math operation applied to the underlying type of <typeparamref name="TEnum"/>.</summary>
@@ -86,7 +87,7 @@ namespace Diagonactic {
 	generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
 		TEnum EnumExtensions::RemoveFlag(TEnum source, TEnum flagToRemove)
 	{
-		return Diagonactic::GenericEnumBase<TEnum>::RemoveFlag(source, flagToRemove);
+		return Diagonactic::GenericEnumMinimal<TEnum>::RemoveFlag(source, flagToRemove);
 	}
 
 

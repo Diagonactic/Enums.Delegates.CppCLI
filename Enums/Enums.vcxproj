@@ -98,10 +98,10 @@
     <ClInclude Include="Delegates.h" />
     <ClInclude Include="EnumExtensions.h" />
     <ClInclude Include="Enums.h" />
-    <ClInclude Include="GenericEnumBase.h" />
+    <ClInclude Include="GenericEnumMinimal.h" />
     <ClInclude Include="GenericEnumCore.h" />
-    <ClInclude Include="GenericEnumWithDescriptions.h" />
-    <ClInclude Include="GenericEnumValuesBase.h" />
+    <ClInclude Include="GenericEnumCoreDescriptions.h" />
+    <ClInclude Include="GenericEnumValues.h" />
     <ClInclude Include="MsilConvert.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Stdafx.h" />
@@ -117,14 +117,10 @@
     <ClCompile Include="EnumExtensions.cpp" />
     <ClCompile Include="EnumExtensions.ToList.cpp" />
     <ClCompile Include="Enums.cpp" />
-    <ClCompile Include="GenericEnumBase.cpp" />
-    <ClCompile Include="GenericEnumCore.cpp" />
-    <ClCompile Include="GenericEnumWithDescriptions.cpp" />
     <ClCompile Include="Stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Util.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />

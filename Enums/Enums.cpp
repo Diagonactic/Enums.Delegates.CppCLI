@@ -1,5 +1,6 @@
 #include "Stdafx.h"
-#include "EnumExtensions.h"
+#include "Enums.h"
+
 #using <C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETCore\v4.5\System.Linq.Dll>
 
 using namespace System;
@@ -7,10 +8,9 @@ using namespace System::Runtime::CompilerServices;
 using namespace System::Linq;
 
 ref class GenericEnumCore;
-ref class GenericEnumBase;
+ref class GenericEnumMinimal;
 ref class GenericEnumWithDescription;
-ref class GenericEnumValuesBase;
-ref class EnumExtensions;
+ref class GenericEnumValues;
 
 /// <summary>
 /// Core namespace for Diagonactic Utility Libraries
@@ -216,7 +216,7 @@ namespace Diagonactic
 	generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
 	IReadOnlyList<TEnum>^ Enums::GetValues()
 	{
-		return gcnew ReadOnlyCollection<TEnum>((IList<TEnum>^)Diagonactic::GenericEnumValuesBase<TEnum>::s_values);
+		return gcnew ReadOnlyCollection<TEnum>((IList<TEnum>^)Diagonactic::GenericEnumValues<TEnum>::s_values);
 	}
 
 	/// <summary>Gets the value of the <c>DescriptionAttribute</c> attribute associated with the string value of <paramref name="source"/>.</summary>
@@ -227,7 +227,7 @@ namespace Diagonactic
 	generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
 	Boolean Enums::TryGetFromDescription(String ^source, [Out] TEnum %result)
 	{
-		return GenericEnumWithDescriptions<TEnum>::TryGetEnum(source, result);
+		return GenericEnumCoreDescriptions<TEnum>::TryGetEnum(source, result);
 	}
 	
 	/// <summary>Gets the names associated with <typeparamref name="TEnum"/></summary>

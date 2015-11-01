@@ -4,11 +4,6 @@
 
 #pragma once
 #include "Util.h"
-#include "GenericEnumBase.h"
-#include "GenericEnumValuesBase.h"
-#include "GenericEnumCore.h"
-#include "GenericEnumWithDescriptions.h"
-#include "Enums.h"
 #include "MsilConvert.h"
 
 #using <C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETCore\v4.5\System.Linq.Dll>

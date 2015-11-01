@@ -2,7 +2,7 @@
 #include "stdafx.h"
 #include "EnumExtensions.h"
 
-ref class GenericEnumBase;
+ref class GenericEnumMinimal;
 
 using namespace System;
 
@@ -19,6 +19,6 @@ namespace Diagonactic {
 	generic <typename TEnum> where TEnum: IComparable, IFormattable, IConvertible, System::Enum
 		Boolean EnumExtensions::AreAnyFlagsSet(TEnum source, ...array<TEnum>^ flagsToTest)
 	{
-		return GenericEnumBase<TEnum>::AreAnyFlagsSet(flagsToTest, source);
+		return GenericEnumMinimal<TEnum>::AreAnyFlagsSet(flagsToTest, source);
 	}
 }

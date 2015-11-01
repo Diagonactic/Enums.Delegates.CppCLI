@@ -2,7 +2,7 @@
 #include "stdafx.h"
 #include "EnumExtensions.h"
 
-ref class GenericEnumBase;
+ref class GenericEnumMinimal;
 
 using namespace System;
 
@@ -20,6 +20,6 @@ namespace Diagonactic {
 	{
 		// Ok, so if this stupid damn method is moved to the EnumExtensions.h file below AddFlags, it won't compile (put it above and AddFlags won't compile).
 		// So this is a kludge and it's driving me crazy.
-		return GenericEnumBase<TEnum>::RemoveFlags(source, flagsToRemove);
+		return GenericEnumMinimal<TEnum>::RemoveFlags(source, flagsToRemove);
 	};
 }
