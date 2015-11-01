@@ -86,10 +86,13 @@ namespace Diagonactic
 	public ref class Enums sealed abstract
 	{
 	public:
+		/// <summary>
+		/// Constants for generating flags enums conveniently from byte enums to Int64 enums, simply use F1 - F64 to define each item.
+		/// </summary>
 		ref class Flag sealed abstract
 		{
 			
-		public:			
+		public:
 			literal Byte F1 = 0x1;
 			literal Byte F2 = 0x2;
 			literal Byte F3 = 0x4;
