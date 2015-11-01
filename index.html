@@ -1,0 +1,136 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Enums.delegates.cppcli by Diagonactic</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-dark.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/Diagonactic/Enums.Delegates.CppCLI">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/Diagonactic/Enums.Delegates.CppCLI/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/Diagonactic/Enums.Delegates.CppCLI/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>Enums.delegates.cppcli</h1>
+          <p>High performance enum library for C# written generically with System.Enum constraint (in C++/CLI since C# doesn&#39;t support that!)</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/Diagonactic">Diagonactic</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
+        </div>
+
+        <h1>
+<a id="enums-and-delegates-in-ccli" class="anchor" href="#enums-and-delegates-in-ccli" aria-hidden="true"><span class="octicon octicon-link"></span></a>Enums and Delegates in C++/CLI</h1>
+
+<p>Enums and Delegates are a fundimental component of .Net, however, as of version 6.0 of the
+C# language, there's no way to (directly) constrain a generic parameter to System.Enum or 
+System.Delegate.  There's so many reasons to want to do so, not the least of which is the 
+set of kludgy static methods on Enum and Delegate that would really benefit from generic
+implementations.  This project does just that with a series of helpful static and extension
+methods that can be consumed by any .Net Language.</p>
+
+<p>Delegate support at this time should be considered "beta". Enum support is quite solid.</p>
+
+<p>A great deal of care was taken to ensure that this implementation is extremely fast.  Where
+trade-offs between memory and speed were possible, speed was preferred. Enums are small and
+the memory used is "per type" not per instance.  In addition to using high-performing casts,
+an MSIL project is included which rewrites the generic methods that convert from numeric
+values back to the generic TEnum in a "blind cast" sort of manner.</p>
+
+<p>See "Methodology.md" for more information</p>
+
+<h2>
+<a id="installing" class="anchor" href="#installing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installing</h2>
+
+<p>The easiest way to get the application is via NuGet.</p>
+
+<pre><code>Install-Package DiagonacticEnumsExtensions
+</code></pre>
+
+<h2>
+<a id="enum-methods" class="anchor" href="#enum-methods" aria-hidden="true"><span class="octicon octicon-link"></span></a>Enum Methods</h2>
+
+<p>Convert an enum to a string (with caching; see Methodology.md). Performs anywhere from 1.5-10 
+times faster than ToString() with greatest performance on single enum values (16 times faster 
+in unrealistic unit tests provided):</p>
+
+<div class="highlight highlight-source-cs"><pre>MyEnum.MyEnumValue.AsString();</pre></div>
+
+<p>Parses a string value or comma-separated string values to the enum type provided:</p>
+
+<div class="highlight highlight-source-cs"><pre>Enums.Parse&lt;MyEnum&gt;(<span class="pl-s"><span class="pl-pds">"</span>MyEnumValue<span class="pl-pds">"</span></span>);</pre></div>
+
+<p>Flag manipulation:</p>
+
+<div class="highlight highlight-source-cs"><pre><span class="pl-k">var</span> result = MyEnum.Val1.AddFlag(MyEnum.Val2);  <span class="pl-c">// MyEnum.Val1 | MyEnum.Val2</span>
+result.AddFlags(MyEnum.Val3, MyEnum.Val4);      <span class="pl-c">// MyEnum.Val1 | MyEnum.Val2 | MyEnum.Val3 | MyEnum.Val4</span>
+result.RemoveFlag(MyEnum.Val3);                 <span class="pl-c">// MyEnum.Val1 | MyEnum.Val2 | MyEnum.Val4</span>
+result.RemoveFlags(MyEnum.Val1, MyEnum.Val4);   <span class="pl-c">// MyEnum.Val2</span>
+<span class="pl-k">var</span> isSet = result.IsFlagSet(MyEnum.Val3)       <span class="pl-c">// false</span></pre></div>
+
+<p>Get the value of the DescriptionAttribute.Description or convert MyEnumValue to "My Enum Value"
+if DescriptionAttribute is missing:</p>
+
+<div class="highlight highlight-source-cs"><pre>MyEnum.MyEnumValue.GetDescription();</pre></div>
+
+<p>Convert an underlying type (numeric) value to the enum type:</p>
+
+<div class="highlight highlight-source-cs"><pre>Enums.ToEnum(<span class="pl-c1">1</span>); <span class="pl-c">// MyEnum.Val1</span>
+Enums.ToEnum(<span class="pl-c1">3</span>); <span class="pl-c">// MyEnum.Val1 | mMynum.Val2</span></pre></div>
+
+<p>Define a flags enum conveniently (C# 6.0):</p>
+
+<div class="highlight highlight-source-cs"><pre><span class="pl-k">using</span> static Enums.Flags
+
+[Flags]
+<span class="pl-k">enum</span> <span class="pl-en">FlagsEnum</span> : <span class="pl-k">byte</span>
+{
+    FirstFlag = F1,
+    SecondFlag = F2,
+    ThirdFlat = F3,
+    <span class="pl-c">// ... types encoded from byte to Int64 for (near) universal usage ...</span>
+}</pre></div>
+
+<h2>
+<a id="compiling" class="anchor" href="#compiling" aria-hidden="true"><span class="octicon octicon-link"></span></a>Compiling</h2>
+
+<p>Simply grab the repo via git, open in Visual Studio 2015, and run Build.  Visual Studio will
+build the C++ project last and execute the MSIL conversion after build.  If you wish to work
+with the library without the MSIL conversion, either switch to the Debug build or 
+remove the post-build command from the Release mode.</p>
+
+<p>Note that the C++/CLI project claims to be in "x64" configuration.  It's not accurate; the
+project compiles in "AnyCPU" mode with no 32-bit preference applied.  C++/CLI has no "AnyCPU"
+built-in mode but with the right settings in the project, one can be created when the library
+code can be fully represented in MSIL.  Yay! No Side-by-Side nonsense.</p>
+
+<h2>
+<a id="documentation" class="anchor" href="#documentation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Documentation</h2>
+
+<p>It's well documented using XML docs and SandCastle (which produces a CHM, and web site).</p>
+      </section>
+
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
