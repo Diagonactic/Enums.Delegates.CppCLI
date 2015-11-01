@@ -90,13 +90,13 @@ namespace Diagonactic
 		{
 			
 		public:			
-			literal SByte F1 = 0x1;
-			literal SByte F2 = 0x2;
-			literal SByte F3 = 0x4;
-			literal SByte F4 = 0x8;
-			literal SByte F5 = 0x10;
-			literal SByte F6 = 0x20;
-			literal SByte F7 = 0x40;
+			literal Byte F1 = 0x1;
+			literal Byte F2 = 0x2;
+			literal Byte F3 = 0x4;
+			literal Byte F4 = 0x8;
+			literal Byte F5 = 0x10;
+			literal Byte F6 = 0x20;
+			literal Byte F7 = 0x40;
 			literal Byte F8 = 0x80;
 			literal Int16 F9 = 0x100;
 			literal Int16 F10 = 0x200;

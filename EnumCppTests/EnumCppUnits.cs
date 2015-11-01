@@ -46,7 +46,7 @@ namespace DiagonacticTests
     [Flags]
     public enum FlagsULongEnum : ulong
     {
-        Oned = F39,
+        Oned = F8,
         Twod = F40,
         Threed = F41,
         Fourd = F42,
@@ -114,9 +114,9 @@ namespace DiagonacticTests
     [Flags]
     enum FlagsSByteEnum : sbyte
     {
-        Five = Enums.Flags.F1,
-        Six = Enums.Flags.F2,
-        Seven = Enums.Flags.F3
+        Five = (sbyte)Enums.Flags.F1,
+        Six = (sbyte)Enums.Flags.F2,
+        Seven = (sbyte)Enums.Flags.F3
     }
     
 
