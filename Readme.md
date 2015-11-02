@@ -70,7 +70,7 @@ enum FlagsEnum : byte
 {
 	FirstFlag = F1,
 	SecondFlag = F2,
-	ThirdFlat = F3,
+	ThirdFlag = F3,
 	// ... types encoded from byte to Int64 for (near) universal usage ...
 }
 ```
