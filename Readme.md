@@ -44,6 +44,12 @@ Flag manipulation:
 ```c#
 var result = MyEnum.Val1.AddFlag(MyEnum.Val2);  // MyEnum.Val1 | MyEnum.Val2
 result.AddFlags(MyEnum.Val3, MyEnum.Val4);      // MyEnum.Val1 | MyEnum.Val2 | MyEnum.Val3 | MyEnum.Val4
+result.AddFlagIf(MyEnum.Val3, () => true);      // MyEnum.Val1 | MyEnum.Val2 | MyEnum.Val3
+result.AddFlagIf(MyEnum.Val3, true);			// MyEnum.Val1 | MyEnum.Val2 | MyEnum.Val3
+result.AddFlagIf(MyEnum.Val3, false);           // MyEnum.Val1 | MyEnum.Val2 | MyEnum.Val3
+result.RemoveFlagIf(MyEnum.Val1, false);        // MyEnum.Val1 | MyEnum.Val2
+result.RemoveFlagIf(MyEnum.Val1, () => true);   // MyEnum.Val2
+result.ModifyFlag(MyEnum.Val2, true);           // MyEnum.Val1 | MyEnum.Val2 (sets if true, removes if false -- Delegate removal overload available, too)
 result.RemoveFlag(MyEnum.Val3);                 // MyEnum.Val1 | MyEnum.Val2 | MyEnum.Val4
 result.RemoveFlags(MyEnum.Val1, MyEnum.Val4);   // MyEnum.Val2
 var isSet = result.IsFlagSet(MyEnum.Val3)       // false

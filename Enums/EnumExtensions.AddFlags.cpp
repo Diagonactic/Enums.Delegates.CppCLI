@@ -21,4 +21,5 @@ namespace Diagonactic {
 	{
 		return GenericEnumMinimal<TEnum>::AddFlags(flagsToAdd, source);
 	}
+	
 }
