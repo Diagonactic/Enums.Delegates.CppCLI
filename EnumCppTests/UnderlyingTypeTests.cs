@@ -55,6 +55,8 @@ namespace EnumCppUnderlyingTypeTests {
 			Flag1Flag2.RemoveFlagIf(Flag1, true).ShouldBeEquivalentTo(Flag2);
 			Flag1Flag2.RemoveFlagIf(Flag2, () => false).ShouldBeEquivalentTo(Flag1Flag2);
 			Flag1Flag2.RemoveFlagIf(Flag2, () => true).ShouldBeEquivalentTo(Flag1);
+			Flag1Flag2.RemoveFlagIf(Flag2, (s) => s == TestEnum.One).ShouldBeEquivalentTo(Flag1Flag2); // false
+			Flag1Flag2.RemoveFlagIf(Flag2, (s) => s.IsFlagSet(TestEnum.One)).ShouldBeEquivalentTo(Flag1); // true
 		}
 
 		[TestMethod, EnumTest]
@@ -65,6 +67,8 @@ namespace EnumCppUnderlyingTypeTests {
 			Flag1Flag2.ModifyFlag(Flag4, true).ShouldBeEquivalentTo(Flag1Flag2Flag4);
 			Flag1Flag2.ModifyFlag(Flag4, () => true).ShouldBeEquivalentTo(Flag1Flag2Flag4);
 			Flag1Flag2.ModifyFlag(Flag4, () => false).ShouldBeEquivalentTo(Flag1Flag2);
+			Flag1Flag2.ModifyFlag(Flag4, (s) => s.IsFlagSet(Flag1)).ShouldBeEquivalentTo(Flag1Flag2Flag4);
+			Flag1Flag2.ModifyFlag(Flag4, (s) => !s.IsFlagSet(Flag1)).ShouldBeEquivalentTo(Flag1Flag2);
 		}
 
 		[TestMethod, EnumTest]
@@ -104,6 +108,8 @@ namespace EnumCppUnderlyingTypeTests {
 			Flag2.AddFlagIf(Flag1, true).ShouldBeEquivalentTo(Flag1Flag2);
 			Flag2.AddFlagIf(Flag1, () => true).ShouldBeEquivalentTo(Flag1Flag2);
 			Flag1.AddFlagIf(Flag2, () => false).ShouldBeEquivalentTo(Flag1);
+			Flag2.AddFlagIf(Flag1, (s) => TestEnum.Two == s).ShouldBeEquivalentTo(Flag1Flag2);
+			Flag1.AddFlagIf(Flag2, (s) => TestEnum.One != s).ShouldBeEquivalentTo(Flag1);
 		}
 
 		[TestMethod, EnumTest]
@@ -203,6 +209,8 @@ namespace EnumCppUnderlyingTypeTests {
 			Flag1Flag2.RemoveFlagIf(Flag1, true).ShouldBeEquivalentTo(Flag2);
 			Flag1Flag2.RemoveFlagIf(Flag2, () => false).ShouldBeEquivalentTo(Flag1Flag2);
 			Flag1Flag2.RemoveFlagIf(Flag2, () => true).ShouldBeEquivalentTo(Flag1);
+			Flag1Flag2.RemoveFlagIf(Flag2, (s) => s == TestEnum.One).ShouldBeEquivalentTo(Flag1Flag2); // false
+			Flag1Flag2.RemoveFlagIf(Flag2, (s) => s.IsFlagSet(TestEnum.One)).ShouldBeEquivalentTo(Flag1); // true
 		}
 
 		[TestMethod, EnumTest]
@@ -213,6 +221,8 @@ namespace EnumCppUnderlyingTypeTests {
 			Flag1Flag2.ModifyFlag(Flag4, true).ShouldBeEquivalentTo(Flag1Flag2Flag4);
 			Flag1Flag2.ModifyFlag(Flag4, () => true).ShouldBeEquivalentTo(Flag1Flag2Flag4);
 			Flag1Flag2.ModifyFlag(Flag4, () => false).ShouldBeEquivalentTo(Flag1Flag2);
+			Flag1Flag2.ModifyFlag(Flag4, (s) => s.IsFlagSet(Flag1)).ShouldBeEquivalentTo(Flag1Flag2Flag4);
+			Flag1Flag2.ModifyFlag(Flag4, (s) => !s.IsFlagSet(Flag1)).ShouldBeEquivalentTo(Flag1Flag2);
 		}
 
 		[TestMethod, EnumTest]
@@ -252,6 +262,8 @@ namespace EnumCppUnderlyingTypeTests {
 			Flag2.AddFlagIf(Flag1, true).ShouldBeEquivalentTo(Flag1Flag2);
 			Flag2.AddFlagIf(Flag1, () => true).ShouldBeEquivalentTo(Flag1Flag2);
 			Flag1.AddFlagIf(Flag2, () => false).ShouldBeEquivalentTo(Flag1);
+			Flag2.AddFlagIf(Flag1, (s) => TestEnum.Two == s).ShouldBeEquivalentTo(Flag1Flag2);
+			Flag1.AddFlagIf(Flag2, (s) => TestEnum.One != s).ShouldBeEquivalentTo(Flag1);
 		}
 
 		[TestMethod, EnumTest]
@@ -351,6 +363,8 @@ namespace EnumCppUnderlyingTypeTests {
 			Flag1Flag2.RemoveFlagIf(Flag1, true).ShouldBeEquivalentTo(Flag2);
 			Flag1Flag2.RemoveFlagIf(Flag2, () => false).ShouldBeEquivalentTo(Flag1Flag2);
 			Flag1Flag2.RemoveFlagIf(Flag2, () => true).ShouldBeEquivalentTo(Flag1);
+			Flag1Flag2.RemoveFlagIf(Flag2, (s) => s == TestEnum.One).ShouldBeEquivalentTo(Flag1Flag2); // false
+			Flag1Flag2.RemoveFlagIf(Flag2, (s) => s.IsFlagSet(TestEnum.One)).ShouldBeEquivalentTo(Flag1); // true
 		}
 
 		[TestMethod, EnumTest]
@@ -361,6 +375,8 @@ namespace EnumCppUnderlyingTypeTests {
 			Flag1Flag2.ModifyFlag(Flag4, true).ShouldBeEquivalentTo(Flag1Flag2Flag4);
 			Flag1Flag2.ModifyFlag(Flag4, () => true).ShouldBeEquivalentTo(Flag1Flag2Flag4);
 			Flag1Flag2.ModifyFlag(Flag4, () => false).ShouldBeEquivalentTo(Flag1Flag2);
+			Flag1Flag2.ModifyFlag(Flag4, (s) => s.IsFlagSet(Flag1)).ShouldBeEquivalentTo(Flag1Flag2Flag4);
+			Flag1Flag2.ModifyFlag(Flag4, (s) => !s.IsFlagSet(Flag1)).ShouldBeEquivalentTo(Flag1Flag2);
 		}
 
 		[TestMethod, EnumTest]
@@ -400,6 +416,8 @@ namespace EnumCppUnderlyingTypeTests {
 			Flag2.AddFlagIf(Flag1, true).ShouldBeEquivalentTo(Flag1Flag2);
 			Flag2.AddFlagIf(Flag1, () => true).ShouldBeEquivalentTo(Flag1Flag2);
 			Flag1.AddFlagIf(Flag2, () => false).ShouldBeEquivalentTo(Flag1);
+			Flag2.AddFlagIf(Flag1, (s) => TestEnum.Two == s).ShouldBeEquivalentTo(Flag1Flag2);
+			Flag1.AddFlagIf(Flag2, (s) => TestEnum.One != s).ShouldBeEquivalentTo(Flag1);
 		}
 
 		[TestMethod, EnumTest]
@@ -499,6 +517,8 @@ namespace EnumCppUnderlyingTypeTests {
 			Flag1Flag2.RemoveFlagIf(Flag1, true).ShouldBeEquivalentTo(Flag2);
 			Flag1Flag2.RemoveFlagIf(Flag2, () => false).ShouldBeEquivalentTo(Flag1Flag2);
 			Flag1Flag2.RemoveFlagIf(Flag2, () => true).ShouldBeEquivalentTo(Flag1);
+			Flag1Flag2.RemoveFlagIf(Flag2, (s) => s == TestEnum.One).ShouldBeEquivalentTo(Flag1Flag2); // false
+			Flag1Flag2.RemoveFlagIf(Flag2, (s) => s.IsFlagSet(TestEnum.One)).ShouldBeEquivalentTo(Flag1); // true
 		}
 
 		[TestMethod, EnumTest]
@@ -509,6 +529,8 @@ namespace EnumCppUnderlyingTypeTests {
 			Flag1Flag2.ModifyFlag(Flag4, true).ShouldBeEquivalentTo(Flag1Flag2Flag4);
 			Flag1Flag2.ModifyFlag(Flag4, () => true).ShouldBeEquivalentTo(Flag1Flag2Flag4);
 			Flag1Flag2.ModifyFlag(Flag4, () => false).ShouldBeEquivalentTo(Flag1Flag2);
+			Flag1Flag2.ModifyFlag(Flag4, (s) => s.IsFlagSet(Flag1)).ShouldBeEquivalentTo(Flag1Flag2Flag4);
+			Flag1Flag2.ModifyFlag(Flag4, (s) => !s.IsFlagSet(Flag1)).ShouldBeEquivalentTo(Flag1Flag2);
 		}
 
 		[TestMethod, EnumTest]
@@ -548,6 +570,8 @@ namespace EnumCppUnderlyingTypeTests {
 			Flag2.AddFlagIf(Flag1, true).ShouldBeEquivalentTo(Flag1Flag2);
 			Flag2.AddFlagIf(Flag1, () => true).ShouldBeEquivalentTo(Flag1Flag2);
 			Flag1.AddFlagIf(Flag2, () => false).ShouldBeEquivalentTo(Flag1);
+			Flag2.AddFlagIf(Flag1, (s) => TestEnum.Two == s).ShouldBeEquivalentTo(Flag1Flag2);
+			Flag1.AddFlagIf(Flag2, (s) => TestEnum.One != s).ShouldBeEquivalentTo(Flag1);
 		}
 
 		[TestMethod, EnumTest]
@@ -647,6 +671,8 @@ namespace EnumCppUnderlyingTypeTests {
 			Flag1Flag2.RemoveFlagIf(Flag1, true).ShouldBeEquivalentTo(Flag2);
 			Flag1Flag2.RemoveFlagIf(Flag2, () => false).ShouldBeEquivalentTo(Flag1Flag2);
 			Flag1Flag2.RemoveFlagIf(Flag2, () => true).ShouldBeEquivalentTo(Flag1);
+			Flag1Flag2.RemoveFlagIf(Flag2, (s) => s == TestEnum.One).ShouldBeEquivalentTo(Flag1Flag2); // false
+			Flag1Flag2.RemoveFlagIf(Flag2, (s) => s.IsFlagSet(TestEnum.One)).ShouldBeEquivalentTo(Flag1); // true
 		}
 
 		[TestMethod, EnumTest]
@@ -657,6 +683,8 @@ namespace EnumCppUnderlyingTypeTests {
 			Flag1Flag2.ModifyFlag(Flag4, true).ShouldBeEquivalentTo(Flag1Flag2Flag4);
 			Flag1Flag2.ModifyFlag(Flag4, () => true).ShouldBeEquivalentTo(Flag1Flag2Flag4);
 			Flag1Flag2.ModifyFlag(Flag4, () => false).ShouldBeEquivalentTo(Flag1Flag2);
+			Flag1Flag2.ModifyFlag(Flag4, (s) => s.IsFlagSet(Flag1)).ShouldBeEquivalentTo(Flag1Flag2Flag4);
+			Flag1Flag2.ModifyFlag(Flag4, (s) => !s.IsFlagSet(Flag1)).ShouldBeEquivalentTo(Flag1Flag2);
 		}
 
 		[TestMethod, EnumTest]
@@ -696,6 +724,8 @@ namespace EnumCppUnderlyingTypeTests {
 			Flag2.AddFlagIf(Flag1, true).ShouldBeEquivalentTo(Flag1Flag2);
 			Flag2.AddFlagIf(Flag1, () => true).ShouldBeEquivalentTo(Flag1Flag2);
 			Flag1.AddFlagIf(Flag2, () => false).ShouldBeEquivalentTo(Flag1);
+			Flag2.AddFlagIf(Flag1, (s) => TestEnum.Two == s).ShouldBeEquivalentTo(Flag1Flag2);
+			Flag1.AddFlagIf(Flag2, (s) => TestEnum.One != s).ShouldBeEquivalentTo(Flag1);
 		}
 
 		[TestMethod, EnumTest]
@@ -795,6 +825,8 @@ namespace EnumCppUnderlyingTypeTests {
 			Flag1Flag2.RemoveFlagIf(Flag1, true).ShouldBeEquivalentTo(Flag2);
 			Flag1Flag2.RemoveFlagIf(Flag2, () => false).ShouldBeEquivalentTo(Flag1Flag2);
 			Flag1Flag2.RemoveFlagIf(Flag2, () => true).ShouldBeEquivalentTo(Flag1);
+			Flag1Flag2.RemoveFlagIf(Flag2, (s) => s == TestEnum.One).ShouldBeEquivalentTo(Flag1Flag2); // false
+			Flag1Flag2.RemoveFlagIf(Flag2, (s) => s.IsFlagSet(TestEnum.One)).ShouldBeEquivalentTo(Flag1); // true
 		}
 
 		[TestMethod, EnumTest]
@@ -805,6 +837,8 @@ namespace EnumCppUnderlyingTypeTests {
 			Flag1Flag2.ModifyFlag(Flag4, true).ShouldBeEquivalentTo(Flag1Flag2Flag4);
 			Flag1Flag2.ModifyFlag(Flag4, () => true).ShouldBeEquivalentTo(Flag1Flag2Flag4);
 			Flag1Flag2.ModifyFlag(Flag4, () => false).ShouldBeEquivalentTo(Flag1Flag2);
+			Flag1Flag2.ModifyFlag(Flag4, (s) => s.IsFlagSet(Flag1)).ShouldBeEquivalentTo(Flag1Flag2Flag4);
+			Flag1Flag2.ModifyFlag(Flag4, (s) => !s.IsFlagSet(Flag1)).ShouldBeEquivalentTo(Flag1Flag2);
 		}
 
 		[TestMethod, EnumTest]
@@ -844,6 +878,8 @@ namespace EnumCppUnderlyingTypeTests {
 			Flag2.AddFlagIf(Flag1, true).ShouldBeEquivalentTo(Flag1Flag2);
 			Flag2.AddFlagIf(Flag1, () => true).ShouldBeEquivalentTo(Flag1Flag2);
 			Flag1.AddFlagIf(Flag2, () => false).ShouldBeEquivalentTo(Flag1);
+			Flag2.AddFlagIf(Flag1, (s) => TestEnum.Two == s).ShouldBeEquivalentTo(Flag1Flag2);
+			Flag1.AddFlagIf(Flag2, (s) => TestEnum.One != s).ShouldBeEquivalentTo(Flag1);
 		}
 
 		[TestMethod, EnumTest]
@@ -943,6 +979,8 @@ namespace EnumCppUnderlyingTypeTests {
 			Flag1Flag2.RemoveFlagIf(Flag1, true).ShouldBeEquivalentTo(Flag2);
 			Flag1Flag2.RemoveFlagIf(Flag2, () => false).ShouldBeEquivalentTo(Flag1Flag2);
 			Flag1Flag2.RemoveFlagIf(Flag2, () => true).ShouldBeEquivalentTo(Flag1);
+			Flag1Flag2.RemoveFlagIf(Flag2, (s) => s == TestEnum.One).ShouldBeEquivalentTo(Flag1Flag2); // false
+			Flag1Flag2.RemoveFlagIf(Flag2, (s) => s.IsFlagSet(TestEnum.One)).ShouldBeEquivalentTo(Flag1); // true
 		}
 
 		[TestMethod, EnumTest]
@@ -953,6 +991,8 @@ namespace EnumCppUnderlyingTypeTests {
 			Flag1Flag2.ModifyFlag(Flag4, true).ShouldBeEquivalentTo(Flag1Flag2Flag4);
 			Flag1Flag2.ModifyFlag(Flag4, () => true).ShouldBeEquivalentTo(Flag1Flag2Flag4);
 			Flag1Flag2.ModifyFlag(Flag4, () => false).ShouldBeEquivalentTo(Flag1Flag2);
+			Flag1Flag2.ModifyFlag(Flag4, (s) => s.IsFlagSet(Flag1)).ShouldBeEquivalentTo(Flag1Flag2Flag4);
+			Flag1Flag2.ModifyFlag(Flag4, (s) => !s.IsFlagSet(Flag1)).ShouldBeEquivalentTo(Flag1Flag2);
 		}
 
 		[TestMethod, EnumTest]
@@ -992,6 +1032,8 @@ namespace EnumCppUnderlyingTypeTests {
 			Flag2.AddFlagIf(Flag1, true).ShouldBeEquivalentTo(Flag1Flag2);
 			Flag2.AddFlagIf(Flag1, () => true).ShouldBeEquivalentTo(Flag1Flag2);
 			Flag1.AddFlagIf(Flag2, () => false).ShouldBeEquivalentTo(Flag1);
+			Flag2.AddFlagIf(Flag1, (s) => TestEnum.Two == s).ShouldBeEquivalentTo(Flag1Flag2);
+			Flag1.AddFlagIf(Flag2, (s) => TestEnum.One != s).ShouldBeEquivalentTo(Flag1);
 		}
 
 		[TestMethod, EnumTest]
@@ -1091,6 +1133,8 @@ namespace EnumCppUnderlyingTypeTests {
 			Flag1Flag2.RemoveFlagIf(Flag1, true).ShouldBeEquivalentTo(Flag2);
 			Flag1Flag2.RemoveFlagIf(Flag2, () => false).ShouldBeEquivalentTo(Flag1Flag2);
 			Flag1Flag2.RemoveFlagIf(Flag2, () => true).ShouldBeEquivalentTo(Flag1);
+			Flag1Flag2.RemoveFlagIf(Flag2, (s) => s == TestEnum.One).ShouldBeEquivalentTo(Flag1Flag2); // false
+			Flag1Flag2.RemoveFlagIf(Flag2, (s) => s.IsFlagSet(TestEnum.One)).ShouldBeEquivalentTo(Flag1); // true
 		}
 
 		[TestMethod, EnumTest]
@@ -1101,6 +1145,8 @@ namespace EnumCppUnderlyingTypeTests {
 			Flag1Flag2.ModifyFlag(Flag4, true).ShouldBeEquivalentTo(Flag1Flag2Flag4);
 			Flag1Flag2.ModifyFlag(Flag4, () => true).ShouldBeEquivalentTo(Flag1Flag2Flag4);
 			Flag1Flag2.ModifyFlag(Flag4, () => false).ShouldBeEquivalentTo(Flag1Flag2);
+			Flag1Flag2.ModifyFlag(Flag4, (s) => s.IsFlagSet(Flag1)).ShouldBeEquivalentTo(Flag1Flag2Flag4);
+			Flag1Flag2.ModifyFlag(Flag4, (s) => !s.IsFlagSet(Flag1)).ShouldBeEquivalentTo(Flag1Flag2);
 		}
 
 		[TestMethod, EnumTest]
@@ -1140,6 +1186,8 @@ namespace EnumCppUnderlyingTypeTests {
 			Flag2.AddFlagIf(Flag1, true).ShouldBeEquivalentTo(Flag1Flag2);
 			Flag2.AddFlagIf(Flag1, () => true).ShouldBeEquivalentTo(Flag1Flag2);
 			Flag1.AddFlagIf(Flag2, () => false).ShouldBeEquivalentTo(Flag1);
+			Flag2.AddFlagIf(Flag1, (s) => TestEnum.Two == s).ShouldBeEquivalentTo(Flag1Flag2);
+			Flag1.AddFlagIf(Flag2, (s) => TestEnum.One != s).ShouldBeEquivalentTo(Flag1);
 		}
 
 		[TestMethod, EnumTest]

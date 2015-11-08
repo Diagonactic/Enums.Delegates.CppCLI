@@ -43,16 +43,17 @@ Enums.Parse<MyEnum>("MyEnumValue");
 Flag manipulation:
 ```c#
 var result = MyEnum.Val1.AddFlag(MyEnum.Val2);  // MyEnum.Val1 | MyEnum.Val2
-result.AddFlags(MyEnum.Val3, MyEnum.Val4);      // MyEnum.Val1 | MyEnum.Val2 | MyEnum.Val3 | MyEnum.Val4
-result.AddFlagIf(MyEnum.Val3, () => true);      // MyEnum.Val1 | MyEnum.Val2 | MyEnum.Val3
-result.AddFlagIf(MyEnum.Val3, true);			// MyEnum.Val1 | MyEnum.Val2 | MyEnum.Val3
-result.AddFlagIf(MyEnum.Val3, false);           // MyEnum.Val1 | MyEnum.Val2 | MyEnum.Val3
-result.RemoveFlagIf(MyEnum.Val1, false);        // MyEnum.Val1 | MyEnum.Val2
-result.RemoveFlagIf(MyEnum.Val1, () => true);   // MyEnum.Val2
-result.ModifyFlag(MyEnum.Val2, true);           // MyEnum.Val1 | MyEnum.Val2 (sets if true, removes if false -- Delegate removal overload available, too)
-result.RemoveFlag(MyEnum.Val3);                 // MyEnum.Val1 | MyEnum.Val2 | MyEnum.Val4
-result.RemoveFlags(MyEnum.Val1, MyEnum.Val4);   // MyEnum.Val2
-var isSet = result.IsFlagSet(MyEnum.Val3)       // false
+result.AddFlags(MyEnum.Val3, MyEnum.Val4); // MyEnum.Val1 | MyEnum.Val2 | MyEnum.Val3 | MyEnum.Val4
+result.AddFlagIf(MyEnum.Val3, () => true); // MyEnum.Val1 | MyEnum.Val2 | MyEnum.Val3
+result.AddFlagIf(MyEnum.Val3, (s) => s.IsFlagSet(MyEnum.Val1)); // MyEnum.Val1 | MyEnum.Val2 | MyEnum.Val3
+result.AddFlagIf(MyEnum.Val3, true); // MyEnum.Val1 | MyEnum.Val2 | MyEnum.Val3
+result.AddFlagIf(MyEnum.Val3, false); // MyEnum.Val1 | MyEnum.Val2 | MyEnum.Val3
+result.RemoveFlagIf(MyEnum.Val1, false); // MyEnum.Val1 | MyEnum.Val2
+result.RemoveFlagIf(MyEnum.Val1, () => true); // MyEnum.Val2
+result.ModifyFlag(MyEnum.Val2, true); // MyEnum.Val1 | MyEnum.Val2 (sets if true, removes if false -- Delegate removal overload available, too)
+result.RemoveFlag(MyEnum.Val3); // MyEnum.Val1 | MyEnum.Val2 | MyEnum.Val4
+result.RemoveFlags(MyEnum.Val1, MyEnum.Val4); // MyEnum.Val2
+var isSet = result.IsFlagSet(MyEnum.Val3); // false
 ```
 
 Get the value of the DescriptionAttribute.Description or convert MyEnumValue to "My Enum Value"
@@ -81,6 +82,9 @@ enum FlagsEnum : byte
 }
 ```
 
+Each of the conditional types (AddFlagIf/RemoveFlagIf/ModifyFlag) can be called with a boolean, a
+function that returns a boolean or a Predicate delegate which will have its original value passed in
+as the parameter.
 Compiling
 ---------
 
