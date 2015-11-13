@@ -56,7 +56,7 @@ result.RemoveFlags(MyEnum.Val1, MyEnum.Val4); // MyEnum.Val2
 ```
 
 Testing enum values (AreAny/AreAll)
-```
+```c#
 MyEnum.Val1.AreAnyFlagsSet(MyEnum.Val1, MyEnum.Val2, MyEnum.Val3); // true
 MyEnum.Val1.AreAllFlagsSet(MyEnum.Val1, MyEnum.Val2, MyEnum.Val3); // false
 MyEnum.Val1.IsFlagSet(MyEnum.Val1); // true - performs better than HasFlag
