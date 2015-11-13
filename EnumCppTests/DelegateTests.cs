@@ -25,5 +25,26 @@ namespace EnumCppTests
 
             d.RemoveDelegate(c).GetInvokationsAsArray().Length.ShouldBeEquivalentTo(2);
         }
+
+        public event EventHandler<EventArgs> TestEventArgs;
+        
+        public event EventHandler<EventArgs> SubscribeUnsubscribe { add { } remove { } }
+        
+        [TestMethod, DelegateTest]
+        public void TestFireOnce()
+        {
+            int ea = 0;
+            EventHandler<EventArgs> eventWithArgs = (sender, args) => ea++;
+
+            Delegates.AttachWithUnsubscribe(this, nameof(DelegateTests.TestEventArgs), eventWithArgs);
+            //Delegates.AttachWithUnsubscribe(this, nameof(DelegateTests.TestWithoutEventArgs), eventWithoutArgs);
+
+            TestEventArgs?.Invoke(this, null);
+            TestEventArgs?.Invoke(this, null);
+            TestEventArgs?.Invoke(this, null);
+
+            ea.ShouldBeEquivalentTo(1);
+            TestEventArgs.Should().BeNull();
+        }
     }
 }

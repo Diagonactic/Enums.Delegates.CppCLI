@@ -53,7 +53,14 @@ result.RemoveFlagIf(MyEnum.Val1, () => true); // MyEnum.Val2
 result.ModifyFlag(MyEnum.Val2, true); // MyEnum.Val1 | MyEnum.Val2 (sets if true, removes if false -- Delegate removal overload available, too)
 result.RemoveFlag(MyEnum.Val3); // MyEnum.Val1 | MyEnum.Val2 | MyEnum.Val4
 result.RemoveFlags(MyEnum.Val1, MyEnum.Val4); // MyEnum.Val2
-var isSet = result.IsFlagSet(MyEnum.Val3); // false
+```
+
+Testing enum values (AreAny/AreAll)
+```
+MyEnum.Val1.AreAnyFlagsSet(MyEnum.Val1, MyEnum.Val2, MyEnum.Val3); // true
+MyEnum.Val1.AreAllFlagsSet(MyEnum.Val1, MyEnum.Val2, MyEnum.Val3); // false
+MyEnum.Val1.IsFlagSet(MyEnum.Val1); // true - performs better than HasFlag
+MyEnum.Val1.IsFlagSet(MyEnum.Val2); // false
 ```
 
 Get the value of the DescriptionAttribute.Description or convert MyEnumValue to "My Enum Value"

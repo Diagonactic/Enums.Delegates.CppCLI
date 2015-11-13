@@ -4,6 +4,44 @@ using namespace System;
 using namespace System::Runtime::Serialization;
 using namespace System::Reflection;
 
+generic <typename TEventArgs> where TEventArgs : EventArgs
+delegate void SingleRaiseDelegate(Object^ sender, TEventArgs eventArgs);
+
+generic <typename TTargetClass, typename TEventArgs> where TEventArgs : System::EventArgs where TTargetClass : ref class
+ref class EventsHelper
+{
+private:
+	TTargetClass m_targetClass;	
+	EventHandler<TEventArgs>^ m_newDelegate;
+	EventHandler<TEventArgs>^ m_raiseOnce;
+	EventInfo^ m_targetEvent;	
+
+public:
+	
+
+	EventsHelper(TTargetClass targetClass, EventInfo^ targetEvent, EventHandler<TEventArgs>^ raiseOnce)
+	{
+		m_targetClass = targetClass;		
+		m_raiseOnce = raiseOnce;
+		m_targetEvent = targetEvent;
+	}
+
+	void RaiseOnce(Object^ sender, TEventArgs eventArgs)
+	{
+		m_targetEvent->RemoveEventHandler(m_targetClass, m_newDelegate);
+		m_raiseOnce->Invoke(sender, eventArgs);
+	}
+
+	void SetDelegate(EventHandler<TEventArgs>^ newDelegate)
+	{
+		m_newDelegate = newDelegate;
+	}
+
+private:
+
+
+};
+
 [Extension]
 public ref class Delegates abstract sealed
 {
@@ -12,7 +50,87 @@ private:
 	{
 		
 	}
+	
 public:
+
+
+	/// <summary>
+	/// Adds a subscription to a publicly declared event, inserting an unsubscribe event before the delegate is executed.
+	/// </summary>
+	/// <param name="target">The class to which the public event belongs</param>
+	/// <param name="targetEvent">The name of the public event to subscribe to</param>
+	/// <param name="raiseWithUnsubscribe">The delegate to attach with subscription removal</param>
+	generic <typename TTargetClass, typename TEventArgs>
+		where TEventArgs : System::EventArgs
+		where TTargetClass : ref class
+		static void AttachWithUnsubscribe(TTargetClass target, String^ eventName, EventHandler<TEventArgs>^ raiseWithUnsubscribe)
+	{
+		auto eventInfo = TTargetClass::typeid->GetEvent(eventName);
+		if (eventInfo == nullptr) throw gcnew ArgumentException(String::Format("Event {0} was not found on target specified", eventName), "eventName");
+
+		AttachWithUnsubscribe(target, eventInfo, raiseWithUnsubscribe);
+	}
+
+	/// <summary>
+	/// Adds a subscription to a declared event, inserting an unsubscribe event before the delegate is executed.
+	/// </summary>
+	/// <param name="target">The class to which the event belongs</param>
+	/// <param name="targetEvent">The event to subscribe to</param>
+	/// <param name="raiseWithUnsubscribe">The delegate to attach with subscription removal</param>
+	generic <typename TTargetClass, typename TEventArgs> 
+		where TEventArgs : System::EventArgs
+		where TTargetClass : ref class
+		static void AttachWithUnsubscribe(TTargetClass target, EventInfo^ targetEvent, EventHandler<TEventArgs>^ raiseWithUnsubscribe)
+	{
+		if (targetEvent == nullptr)	throw gcnew ArgumentNullException("targetEvent");
+
+		auto eventWrapper = gcnew EventsHelper<TTargetClass, TEventArgs>(target, targetEvent, raiseWithUnsubscribe);
+		auto singleRaiseDelegate = gcnew EventHandler<TEventArgs>(eventWrapper, &EventsHelper<TTargetClass, TEventArgs>::RaiseOnce);
+		
+		eventWrapper->SetDelegate(singleRaiseDelegate);		
+		
+		targetEvent->AddEventHandler(target, singleRaiseDelegate);
+	}
+
+	/// <summary>
+	/// Converts a delegate to another delegate if their types are compatible
+	/// </summary>
+	/// <param name="source">A delegate</param>
+	/// <typeparam name="TDelegate">The delegate to convert to <typeparamref name="TResult"/> to</typeparam>
+	/// <typeparam name="TResult">The delegate to convert <typeparamref name="TDelegate"/> to</typeparam>
+	/// <exception cref="System::ArgumentException">
+	///		<para>Cannot convert a deleate without invocations defined</para>
+	///		<para>TDelegate and TResult are not compatible</para>
+	/// </exception>
+	/// <exception cref="System::MissingMethodException"><typeparamref name="TDelegate"/> Invoke method not found</exception>
+	/// <exception cref="System::MethodAccessException">The caller does not have the permissions necessary to access method</exception>
+	/// <seealso href="http://jacobcarpenters.blogspot.com/2006_11_01_archive.html">Implementation in C# that this was based on</seealso>
+	/// <returns>A delegate of type <typeparamref name="TResult"/> created from <typeparamref name="TDelegate"/></returns>
+	generic <typename TResult, typename TDelegate> where TDelegate : System::Delegate, ICloneable, ISerializable where TResult : System::Delegate, ICloneable, ISerializable
+		[Extension] static TResult ConvertTo(TDelegate source) 
+	{
+		array<Delegate^>^ invocationList = source->GetInvocationList();
+			
+		if (invocationList->Length == 0)
+			throw gcnew ArgumentException("Cannot convert a delegate without invocations defined", "source");
+		else if (invocationList->Length == 1)
+			return safe_cast<TResult>(Delegate::CreateDelegate(TResult::typeid, invocationList[0]->Target, invocationList[0]->Method));
+		else
+		{
+			array<TResult>^ newDelegates = safe_cast<array<TResult>^>(Array::CreateInstance(TResult::typeid, invocationList->Length));
+
+			for (Int32 i = 0; i < invocationList->Length; i++)
+				newDelegates[i] = safe_cast<TResult>(Delegate::CreateDelegate(TResult::typeid, invocationList[i]->Target, invocationList[i]->Method));
+
+			auto retVal = safe_cast<TResult>(Delegate::Combine(invocationList));
+			if (retVal == nullptr)
+				throw gcnew ArgumentException("TDelegate and TResult are not compatible");
+
+			return retVal;
+		}
+	if (source->GetInvocationList()->Length > 1)
+			throw gcnew ArgumentException("Multicast delegates cannot safely be converted", "source");
+	}
 
 	/// <summary>
 	/// Returns the invocation list of <paramref name="source"/>
