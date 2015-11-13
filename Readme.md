@@ -44,15 +44,23 @@ Flag manipulation:
 ```c#
 var result = MyEnum.Val1.AddFlag(MyEnum.Val2);  // MyEnum.Val1 | MyEnum.Val2
 result.AddFlags(MyEnum.Val3, MyEnum.Val4); // MyEnum.Val1 | MyEnum.Val2 | MyEnum.Val3 | MyEnum.Val4
-result.AddFlagIf(MyEnum.Val3, () => true); // MyEnum.Val1 | MyEnum.Val2 | MyEnum.Val3
-result.AddFlagIf(MyEnum.Val3, (s) => s.IsFlagSet(MyEnum.Val1)); // MyEnum.Val1 | MyEnum.Val2 | MyEnum.Val3
-result.AddFlagIf(MyEnum.Val3, true); // MyEnum.Val1 | MyEnum.Val2 | MyEnum.Val3
-result.AddFlagIf(MyEnum.Val3, false); // MyEnum.Val1 | MyEnum.Val2 | MyEnum.Val3
-result.RemoveFlagIf(MyEnum.Val1, false); // MyEnum.Val1 | MyEnum.Val2
-result.RemoveFlagIf(MyEnum.Val1, () => true); // MyEnum.Val2
-result.ModifyFlag(MyEnum.Val2, true); // MyEnum.Val1 | MyEnum.Val2 (sets if true, removes if false -- Delegate removal overload available, too)
 result.RemoveFlag(MyEnum.Val3); // MyEnum.Val1 | MyEnum.Val2 | MyEnum.Val4
 result.RemoveFlags(MyEnum.Val1, MyEnum.Val4); // MyEnum.Val2
+
+// AddFlagIf, RemoveFlagIf and ModifyFlag all have delegate and predicate overloads.
+result = MyEnum.Val1 | MyEnum.Val2
+result.AddFlagIf(MyEnum.Val3, () => true); // MyEnum.Val1 | MyEnum.Val2 | MyEnum.Val3
+result.AddFlagIf(MyEnum.Val3, (s) => s.IsFlagSet(MyEnum.Val1)); // Val3 already added, same as above
+result.AddFlagIf(MyEnum.Val4, true); // MyEnum.Val1 | MyEnum.Val2 | MyEnum.Val3 | MyEnum.Val4
+
+result = MyEnum.Val1 | MyEnum.Val2
+result.RemoveFlagIf(MyEnum.Val1, false); // MyEnum.Val1 | MyEnum.Val2
+result.RemoveFlagIf(MyEnum.Val1, () => true); // MyEnum.Val2
+
+result = MyEnum.Val1
+result.ModifyFlag(MyEnum.Val2, true); // MyEnum.Val1 | MyEnum.Val2 (sets if true)
+result.ModifyFlag(MyEnum.Val2, false); // MyEnum.Val1 (removes if false)
+
 ```
 
 Testing enum values (AreAny/AreAll)
