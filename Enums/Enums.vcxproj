@@ -114,6 +114,7 @@
     <ClCompile Include="EnumExtensions.AddFlags.cpp" />
     <ClCompile Include="EnumExtensions.AreAllFlagsSet.cpp" />
     <ClCompile Include="EnumExtensions.AreAnyFlagsSet.cpp" />
+    <ClCompile Include="EnumExtensions.EqualsAny.cpp" />
     <ClCompile Include="EnumExtensions.RemoveFlags.cpp" />
     <ClCompile Include="EnumExtensions.cpp" />
     <ClCompile Include="EnumExtensions.ToList.cpp" />

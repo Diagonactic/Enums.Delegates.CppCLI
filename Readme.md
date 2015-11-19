@@ -66,6 +66,7 @@ result.ModifyFlag(MyEnum.Val2, false); // MyEnum.Val1 (removes if false)
 Testing enum values (AreAny/AreAll)
 ```c#
 MyEnum.Val1.AreAnyFlagsSet(MyEnum.Val1, MyEnum.Val2, MyEnum.Val3); // true
+MyEnum.Val1.EqualsAny(MyEnum.Val1, MyEnum.Val2, MyEnum.Val3); // true - like the above but for non-flags enums
 MyEnum.Val1.AreAllFlagsSet(MyEnum.Val1, MyEnum.Val2, MyEnum.Val3); // false
 MyEnum.Val1.IsFlagSet(MyEnum.Val1); // true - performs better than HasFlag
 MyEnum.Val1.IsFlagSet(MyEnum.Val2); // false

@@ -15,6 +15,9 @@ namespace Diagonactic {
 		
 		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
 			[Extension] static Boolean AreAnyFlagsSet(TEnum source, ...array<TEnum>^ flagsToTest);
+
+		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
+			[Extension] static Boolean EqualsAny(TEnum source, ...array<TEnum>^ valuesToTest);
 		
 		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
 			[Extension] static List<TEnum>^ ToList(TEnum source);

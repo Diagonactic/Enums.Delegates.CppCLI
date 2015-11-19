@@ -82,6 +82,26 @@ namespace Diagonactic
 				}
 				throw gcnew Exception("This should never throw. All underlying types are represented above.");
 			}
+			
+			static Boolean EqualsAny(array<TEnum>^ enumValuesToCheck, TEnum sourceEnum)
+			{
+				pin_ptr<TEnum> source(&sourceEnum);
+				pin_ptr<array<TEnum>^> valuesToCheck(&enumValuesToCheck);
+
+				switch (s_kind)
+				{
+				case UnderlyingKind::Int32Kind:	 return Util::EqualsAny<Int32>(source, valuesToCheck);
+				case UnderlyingKind::Int64Kind:	 return Util::EqualsAny<Int64>(source, valuesToCheck);
+				case UnderlyingKind::Int16Kind:	 return Util::EqualsAny<Int16>(source, valuesToCheck);
+				case UnderlyingKind::UInt32Kind: return Util::EqualsAny<UInt32>(source, valuesToCheck);
+				case UnderlyingKind::UInt64Kind: return Util::EqualsAny<UInt64>(source, valuesToCheck);
+				case UnderlyingKind::UInt16Kind: return Util::EqualsAny<UInt16>(source, valuesToCheck);
+				case UnderlyingKind::ByteKind:   return Util::EqualsAny<Byte>(source, valuesToCheck);
+				case UnderlyingKind::SByteKind:	 return Util::EqualsAny<SByte>(source, valuesToCheck);
+				}
+
+				throw gcnew Exception("This should never throw. All underlying types are represented above.");
+			}
 
 			static TEnum RemoveFlags(TEnum sourceEnum, ...array<TEnum>^ enumFlagsToRemove)
 			{

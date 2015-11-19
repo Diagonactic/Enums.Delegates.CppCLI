@@ -129,6 +129,14 @@ namespace EnumCppUnderlyingTypeTests {
 		}
 
 		[TestMethod, EnumTest]
+        public void Test" + enumType + @"EqualsAny()
+		{
+            Flag1Flag2.EqualsAny(Flag1).Should().BeFalse();
+			Flag1.EqualsAny(Flag1, Flag2, Flag4).Should().BeTrue();
+			Flag1.EqualsAny(Flag2, Flag4).Should().BeFalse();
+		}
+
+		[TestMethod, EnumTest]
         public void Test" + enumType + @"AddFlag()
         {
             Flag1.AddFlag(Flag2).ShouldBeEquivalentTo(Flag1Flag2);

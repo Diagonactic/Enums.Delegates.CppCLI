@@ -96,6 +96,14 @@ namespace EnumCppUnderlyingTypeTests {
 		}
 
 		[TestMethod, EnumTest]
+        public void TestSByteEqualsAny()
+		{
+            Flag1Flag2.EqualsAny(Flag1).Should().BeFalse();
+			Flag1.EqualsAny(Flag1, Flag2, Flag4).Should().BeTrue();
+			Flag1.EqualsAny(Flag2, Flag4).Should().BeFalse();
+		}
+
+		[TestMethod, EnumTest]
         public void TestSByteAddFlag()
         {
             Flag1.AddFlag(Flag2).ShouldBeEquivalentTo(Flag1Flag2);
@@ -247,6 +255,14 @@ namespace EnumCppUnderlyingTypeTests {
             Flag1Flag2.AreAnyFlagsSet(Flag1).Should().BeTrue();
 			Flag1Flag2.AreAnyFlagsSet(Flag4).Should().BeFalse();
 			Flag1Flag2.AreAnyFlagsSet(Flag1, Flag4).Should().BeTrue();
+		}
+
+		[TestMethod, EnumTest]
+        public void TestByteEqualsAny()
+		{
+            Flag1Flag2.EqualsAny(Flag1).Should().BeFalse();
+			Flag1.EqualsAny(Flag1, Flag2, Flag4).Should().BeTrue();
+			Flag1.EqualsAny(Flag2, Flag4).Should().BeFalse();
 		}
 
 		[TestMethod, EnumTest]
@@ -404,6 +420,14 @@ namespace EnumCppUnderlyingTypeTests {
 		}
 
 		[TestMethod, EnumTest]
+        public void TestInt16EqualsAny()
+		{
+            Flag1Flag2.EqualsAny(Flag1).Should().BeFalse();
+			Flag1.EqualsAny(Flag1, Flag2, Flag4).Should().BeTrue();
+			Flag1.EqualsAny(Flag2, Flag4).Should().BeFalse();
+		}
+
+		[TestMethod, EnumTest]
         public void TestInt16AddFlag()
         {
             Flag1.AddFlag(Flag2).ShouldBeEquivalentTo(Flag1Flag2);
@@ -555,6 +579,14 @@ namespace EnumCppUnderlyingTypeTests {
             Flag1Flag2.AreAnyFlagsSet(Flag1).Should().BeTrue();
 			Flag1Flag2.AreAnyFlagsSet(Flag4).Should().BeFalse();
 			Flag1Flag2.AreAnyFlagsSet(Flag1, Flag4).Should().BeTrue();
+		}
+
+		[TestMethod, EnumTest]
+        public void TestUInt16EqualsAny()
+		{
+            Flag1Flag2.EqualsAny(Flag1).Should().BeFalse();
+			Flag1.EqualsAny(Flag1, Flag2, Flag4).Should().BeTrue();
+			Flag1.EqualsAny(Flag2, Flag4).Should().BeFalse();
 		}
 
 		[TestMethod, EnumTest]
@@ -712,6 +744,14 @@ namespace EnumCppUnderlyingTypeTests {
 		}
 
 		[TestMethod, EnumTest]
+        public void TestInt32EqualsAny()
+		{
+            Flag1Flag2.EqualsAny(Flag1).Should().BeFalse();
+			Flag1.EqualsAny(Flag1, Flag2, Flag4).Should().BeTrue();
+			Flag1.EqualsAny(Flag2, Flag4).Should().BeFalse();
+		}
+
+		[TestMethod, EnumTest]
         public void TestInt32AddFlag()
         {
             Flag1.AddFlag(Flag2).ShouldBeEquivalentTo(Flag1Flag2);
@@ -863,6 +903,14 @@ namespace EnumCppUnderlyingTypeTests {
             Flag1Flag2.AreAnyFlagsSet(Flag1).Should().BeTrue();
 			Flag1Flag2.AreAnyFlagsSet(Flag4).Should().BeFalse();
 			Flag1Flag2.AreAnyFlagsSet(Flag1, Flag4).Should().BeTrue();
+		}
+
+		[TestMethod, EnumTest]
+        public void TestUInt32EqualsAny()
+		{
+            Flag1Flag2.EqualsAny(Flag1).Should().BeFalse();
+			Flag1.EqualsAny(Flag1, Flag2, Flag4).Should().BeTrue();
+			Flag1.EqualsAny(Flag2, Flag4).Should().BeFalse();
 		}
 
 		[TestMethod, EnumTest]
@@ -1020,6 +1068,14 @@ namespace EnumCppUnderlyingTypeTests {
 		}
 
 		[TestMethod, EnumTest]
+        public void TestInt64EqualsAny()
+		{
+            Flag1Flag2.EqualsAny(Flag1).Should().BeFalse();
+			Flag1.EqualsAny(Flag1, Flag2, Flag4).Should().BeTrue();
+			Flag1.EqualsAny(Flag2, Flag4).Should().BeFalse();
+		}
+
+		[TestMethod, EnumTest]
         public void TestInt64AddFlag()
         {
             Flag1.AddFlag(Flag2).ShouldBeEquivalentTo(Flag1Flag2);
@@ -1171,6 +1227,14 @@ namespace EnumCppUnderlyingTypeTests {
             Flag1Flag2.AreAnyFlagsSet(Flag1).Should().BeTrue();
 			Flag1Flag2.AreAnyFlagsSet(Flag4).Should().BeFalse();
 			Flag1Flag2.AreAnyFlagsSet(Flag1, Flag4).Should().BeTrue();
+		}
+
+		[TestMethod, EnumTest]
+        public void TestUInt64EqualsAny()
+		{
+            Flag1Flag2.EqualsAny(Flag1).Should().BeFalse();
+			Flag1.EqualsAny(Flag1, Flag2, Flag4).Should().BeTrue();
+			Flag1.EqualsAny(Flag2, Flag4).Should().BeFalse();
 		}
 
 		[TestMethod, EnumTest]

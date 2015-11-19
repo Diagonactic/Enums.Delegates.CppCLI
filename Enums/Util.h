@@ -132,6 +132,16 @@ namespace Diagonactic
 			return false;
 		}
 
+		template <typename TNumber>	static Boolean EqualsAny(void* enumValue, void* enumToTest)
+		{
+			array<TNumber>^ values = ClobberTo<array<TNumber>^>(enumToTest);
+			auto value = ClobberTo<TNumber>(enumValue);
+			for (Int32 i = 0; i < values->Length; i++)
+				if (value == values[i])
+					return true;
+			return false;
+		}
+
 		generic <typename TEnum>
 			where TEnum:IComparable, IFormattable, IConvertible, System::Enum
 		static Boolean IsFlagSet(TEnum enumSource, TEnum enumFlagToTest, UnderlyingKind kind)
