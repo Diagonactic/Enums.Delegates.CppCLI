@@ -72,10 +72,32 @@ in unrealistic unit tests provided):</p>
 <p>Flag manipulation:</p>
 
 <div class="highlight highlight-source-cs"><pre><span class="pl-k">var</span> result = MyEnum.Val1.AddFlag(MyEnum.Val2);  <span class="pl-c">// MyEnum.Val1 | MyEnum.Val2</span>
-result.AddFlags(MyEnum.Val3, MyEnum.Val4);      <span class="pl-c">// MyEnum.Val1 | MyEnum.Val2 | MyEnum.Val3 | MyEnum.Val4</span>
-result.RemoveFlag(MyEnum.Val3);                 <span class="pl-c">// MyEnum.Val1 | MyEnum.Val2 | MyEnum.Val4</span>
-result.RemoveFlags(MyEnum.Val1, MyEnum.Val4);   <span class="pl-c">// MyEnum.Val2</span>
-<span class="pl-k">var</span> isSet = result.IsFlagSet(MyEnum.Val3)       <span class="pl-c">// false</span></pre></div>
+result.AddFlags(MyEnum.Val3, MyEnum.Val4); <span class="pl-c">// MyEnum.Val1 | MyEnum.Val2 | MyEnum.Val3 | MyEnum.Val4</span>
+result.RemoveFlag(MyEnum.Val3); <span class="pl-c">// MyEnum.Val1 | MyEnum.Val2 | MyEnum.Val4</span>
+result.RemoveFlags(MyEnum.Val1, MyEnum.Val4); <span class="pl-c">// MyEnum.Val2</span>
+
+<span class="pl-c">// AddFlagIf, RemoveFlagIf and ModifyFlag all have delegate and predicate overloads.</span>
+result = MyEnum.Val1 | MyEnum.Val2
+result.AddFlagIf(MyEnum.Val3, () =&gt; <span class="pl-c1">true</span>); <span class="pl-c">// MyEnum.Val1 | MyEnum.Val2 | MyEnum.Val3</span>
+result.AddFlagIf(MyEnum.Val3, (s) =&gt; s.IsFlagSet(MyEnum.Val1)); <span class="pl-c">// Val3 already added, same as above</span>
+result.AddFlagIf(MyEnum.Val4, <span class="pl-c1">true</span>); <span class="pl-c">// MyEnum.Val1 | MyEnum.Val2 | MyEnum.Val3 | MyEnum.Val4</span>
+
+result = MyEnum.Val1 | MyEnum.Val2
+result.RemoveFlagIf(MyEnum.Val1, <span class="pl-c1">false</span>); <span class="pl-c">// MyEnum.Val1 | MyEnum.Val2</span>
+result.RemoveFlagIf(MyEnum.Val1, () =&gt; <span class="pl-c1">true</span>); <span class="pl-c">// MyEnum.Val2</span>
+
+result = MyEnum.Val1
+result.ModifyFlag(MyEnum.Val2, <span class="pl-c1">true</span>); <span class="pl-c">// MyEnum.Val1 | MyEnum.Val2 (sets if true)</span>
+result.ModifyFlag(MyEnum.Val2, <span class="pl-c1">false</span>); <span class="pl-c">// MyEnum.Val1 (removes if false)</span>
+</pre></div>
+
+<p>Testing enum values (AreAny/AreAll)</p>
+
+<div class="highlight highlight-source-cs"><pre>MyEnum.Val1.AreAnyFlagsSet(MyEnum.Val1, MyEnum.Val2, MyEnum.Val3); <span class="pl-c">// true</span>
+MyEnum.Val1.EqualsAny(MyEnum.Val1, MyEnum.Val2, MyEnum.Val3); <span class="pl-c">// true - like the above but for non-flags enums</span>
+MyEnum.Val1.AreAllFlagsSet(MyEnum.Val1, MyEnum.Val2, MyEnum.Val3); <span class="pl-c">// false</span>
+MyEnum.Val1.IsFlagSet(MyEnum.Val1); <span class="pl-c">// true - performs better than HasFlag</span>
+MyEnum.Val1.IsFlagSet(MyEnum.Val2); <span class="pl-c">// false</span></pre></div>
 
 <p>Get the value of the DescriptionAttribute.Description or convert MyEnumValue to "My Enum Value"
 if DescriptionAttribute is missing:</p>
@@ -96,9 +118,13 @@ Enums.ToEnum(<span class="pl-c1">3</span>); <span class="pl-c">// MyEnum.Val1 | 
 {
     FirstFlag = F1,
     SecondFlag = F2,
-    ThirdFlat = F3,
+    ThirdFlag = F3,
     <span class="pl-c">// ... types encoded from byte to Int64 for (near) universal usage ...</span>
 }</pre></div>
+
+<p>Each of the conditional types (AddFlagIf/RemoveFlagIf/ModifyFlag) can be called with a boolean, a
+function that returns a boolean or a Predicate delegate which will have its original value passed in
+as the parameter.</p>
 
 <h2>
 <a id="compiling" class="anchor" href="#compiling" aria-hidden="true"><span class="octicon octicon-link"></span></a>Compiling</h2>
