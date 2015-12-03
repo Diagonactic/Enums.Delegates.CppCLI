@@ -24,7 +24,7 @@ namespace EnumCppUnderlyingTypeTests {
 	<#=WriteMethod("UInt16", "ushort", (ulong)Enums.Flag.F5)#>
 	<#=WriteMethod("Int32", "int", (ulong)Enums.Flag.F16)#>
 	<#=WriteMethod("UInt32", "uint", (ulong)Enums.Flag.F16)#>
-	<#=WriteMethod("Int64", "long", (ulong)Enums.Flag.F32)#>
+	<#=WriteMethod("Int64", "long", (ulong)Enums.Flag.F42)#>
 	<#=WriteMethod("UInt64", "ulong", (ulong)Enums.Flag.F59)#>
 	}
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 using namespace System;
+using namespace System::Runtime::CompilerServices;
 
 enum UnderlyingKind : char
 {
@@ -20,10 +21,9 @@ namespace Diagonactic
 	internal:
 		static array<Char> ^s_Split = gcnew array<Char>(1);
 		
-
-
 		generic <typename TEnum> 
 			where TEnum:IComparable, IFormattable, IConvertible, System::Enum
+		[MethodImpl(MethodImplOptions::AggressiveInlining)]
 		static UnderlyingKind GetKind(TEnum)
 		{
 			auto uKind = Enum::GetUnderlyingType(TEnum::typeid);
@@ -48,116 +48,54 @@ namespace Diagonactic
 		}
 
 #pragma warning(disable:4956 4957)
-		template <typename TNumber>	static TNumber ClobberTo(void* enumVal)
-		{
-			return *reinterpret_cast<TNumber*>(enumVal);
-		}
 
-		template <typename TNumber>	static TNumber RemoveFlag(void* enumValue, void* flagToAdd)
-		{
-			return ClobberTo<TNumber>(enumValue) & ~ClobberTo<TNumber>(flagToAdd);
-		}
+#define CLOBBERTOTYPETARGETTEMPLATE(type) generic <typename TEnum> where TEnum:IComparable, IFormattable, IConvertible, System::Enum\
+			[MethodImpl(MethodImplOptions::AggressiveInlining)] static type ClobberTo##type(TEnum val) { return *reinterpret_cast<type*>(&val); }
 
-		template <typename TNumber>	static TNumber AddFlagTo(void* enumValue, void* flagToAdd)
-		{
-			return ClobberTo<TNumber>(enumValue) | ClobberTo<TNumber>(flagToAdd);
-		}
-
-		generic <typename TEnum> where TEnum:IComparable, IFormattable, IConvertible, System::Enum
-		static Byte ClobberToByte(TEnum val) { return *reinterpret_cast<Byte*>(&val); }
-
-		generic <typename TEnum> where TEnum:IComparable, IFormattable, IConvertible, System::Enum
-		static SByte ClobberToSByte(TEnum val) { return *reinterpret_cast<SByte*>(&val); }
-
-		generic <typename TEnum> where TEnum:IComparable, IFormattable, IConvertible, System::Enum
-		static Int16 ClobberToInt16(TEnum val) { return *reinterpret_cast<Int16*>(&val); }
-
-		generic <typename TEnum> where TEnum:IComparable, IFormattable, IConvertible, System::Enum
-		static UInt16 ClobberToUInt16(TEnum val) { return *reinterpret_cast<UInt16*>(&val);	}
-
-		generic <typename TEnum> where TEnum:IComparable, IFormattable, IConvertible, System::Enum		
-		static Int32 ClobberToInt32(TEnum val) { return *reinterpret_cast<Int32*>(&val); }
-		
-		generic <typename TEnum> where TEnum:IComparable, IFormattable, IConvertible, System::Enum
-		static UInt32 ClobberToUInt32(TEnum val) { return *reinterpret_cast<UInt32*>(&val);	}
-
-		generic <typename TEnum> where TEnum:IComparable, IFormattable, IConvertible, System::Enum
-		static Int64 ClobberToInt64(TEnum val)	{ return *reinterpret_cast<Int64*>(&val); }
-		
-		generic <typename TEnum> where TEnum:IComparable, IFormattable, IConvertible, System::Enum
-		static UInt64 ClobberToUInt64(TEnum val) { return *reinterpret_cast<UInt64*>(&val);	}
-
+		CLOBBERTOTYPETARGETTEMPLATE(Byte)
+		CLOBBERTOTYPETARGETTEMPLATE(SByte)
+		CLOBBERTOTYPETARGETTEMPLATE(Int16)
+		CLOBBERTOTYPETARGETTEMPLATE(UInt16)
+		CLOBBERTOTYPETARGETTEMPLATE(Int32)
+		CLOBBERTOTYPETARGETTEMPLATE(UInt32)
+		CLOBBERTOTYPETARGETTEMPLATE(Int64)
+		CLOBBERTOTYPETARGETTEMPLATE(UInt64)
 #pragma warning(default:4956 4957)
 		
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------- Add Flags
-		template <typename TNumber> static TNumber AddFlags(void* currentEnum, void* values)
+		template <typename TNumber>
+		[MethodImpl(MethodImplOptions::AggressiveInlining)]
+		static TNumber AddFlagTo(TNumber enumValue, TNumber flagToAdd)
 		{
-			TNumber result = ClobberTo<TNumber>(currentEnum);
-			array<TNumber>^ vals = ClobberTo<array<TNumber>^>(values);
-			for (Int32 i = 0; i < vals->Length; i++)
-				result |= vals[i];
-			return result;
-		}
-		template <typename TNumber> static TNumber RemoveFlags(void* currentEnum, void* values)
-		{
-			TNumber result = ClobberTo<TNumber>(currentEnum);
-			array<TNumber>^ vals = ClobberTo<array<TNumber>^>(values);
-			for (Int32 i = 0; i < vals->Length; i++)
-				result &= ~vals[i];
-			return result;
+			return enumValue | flagToAdd;
 		}
 
-		template <typename TNumber>	static Boolean IsFlagSet(void* enumValue, void* enumFlagToTest)
+		template <typename TNumber>
+		[MethodImpl(MethodImplOptions::AggressiveInlining)]
+		static TNumber RemoveFlagFrom(TNumber enumValue, TNumber flagToAdd)
 		{
-			TNumber flag = ClobberTo<TNumber>(enumFlagToTest);
-			return ((ClobberTo<TNumber>(enumValue) & flag) == flag);
+			return enumValue & ~flagToAdd;
 		}
 
-		template <typename TNumber>	static Boolean AreAllFlagsSet(void* enumValue, void* enumFlagToTest)
+		template <typename TNumber>
+		[MethodImpl(MethodImplOptions::AggressiveInlining)] static Boolean IsFlagSet(TNumber enumValue, TNumber enumFlagToTest)
 		{
-			array<TNumber>^ flags = ClobberTo<array<TNumber>^>(enumFlagToTest);
-			for (Int32 i = 0; i < flags->Length; i++)
-				if (!((ClobberTo<TNumber>(enumValue) & flags[i]) == flags[i]))
-					return false;
-			return true;			
-		}
-
-		template <typename TNumber>	static Boolean AreAnyFlagsSet(void* enumValue, void* enumFlagToTest)
-		{
-			array<TNumber>^ flags = ClobberTo<array<TNumber>^>(enumFlagToTest);
-			auto value = ClobberTo<TNumber>(enumValue);
-			for (Int32 i = 0; i < flags->Length; i++)
-				if ((value & flags[i]) == flags[i])
-					return true;
-			return false;
-		}
-
-		template <typename TNumber>	static Boolean EqualsAny(void* enumValue, void* enumToTest)
-		{
-			array<TNumber>^ values = ClobberTo<array<TNumber>^>(enumToTest);
-			auto value = ClobberTo<TNumber>(enumValue);
-			for (Int32 i = 0; i < values->Length; i++)
-				if (value == values[i])
-					return true;
-			return false;
+			return (enumValue & enumFlagToTest) == enumFlagToTest;
 		}
 
 		generic <typename TEnum>
 			where TEnum:IComparable, IFormattable, IConvertible, System::Enum
 		static Boolean IsFlagSet(TEnum enumSource, TEnum enumFlagToTest, UnderlyingKind kind)
 		{
-			pin_ptr<TEnum> source(&enumSource);
-			pin_ptr<TEnum> enumToTest(&enumFlagToTest);
 			switch(kind)
 			{
-				case UnderlyingKind::Int32Kind:  return IsFlagSet<Int32>(source, enumToTest);
-				case UnderlyingKind::SByteKind:  return IsFlagSet<SByte>(source, enumToTest);
-				case UnderlyingKind::ByteKind:   return IsFlagSet<Byte>(source, enumToTest);
-				case UnderlyingKind::UInt32Kind: return IsFlagSet<UInt32>(source, enumToTest);
-				case UnderlyingKind::Int64Kind:  return IsFlagSet<Int64>(source, enumToTest);
-				case UnderlyingKind::Int16Kind:  return IsFlagSet<Int16>(source, enumToTest);
-				case UnderlyingKind::UInt16Kind: return IsFlagSet<UInt16>(source, enumToTest);
-				case UnderlyingKind::UInt64Kind: return IsFlagSet<UInt64>(source, enumToTest);
+				case UnderlyingKind::Int32Kind:  return IsFlagSet(ClobberToInt32<TEnum>(enumSource), ClobberToInt32<TEnum>(enumFlagToTest));
+				case UnderlyingKind::SByteKind:  return IsFlagSet(ClobberToSByte<TEnum>(enumSource), ClobberToSByte<TEnum>(enumFlagToTest));
+				case UnderlyingKind::ByteKind:   return IsFlagSet(ClobberToByte<TEnum>(enumSource), ClobberToByte<TEnum>(enumFlagToTest));
+				case UnderlyingKind::UInt32Kind: return IsFlagSet(ClobberToUInt32<TEnum>(enumSource), ClobberToUInt32<TEnum>(enumFlagToTest));
+				case UnderlyingKind::Int64Kind:  return IsFlagSet(ClobberToInt64<TEnum>(enumSource), ClobberToInt64<TEnum>(enumFlagToTest));
+				case UnderlyingKind::Int16Kind:  return IsFlagSet(ClobberToInt16<TEnum>(enumSource), ClobberToInt16<TEnum>(enumFlagToTest));
+				case UnderlyingKind::UInt16Kind: return IsFlagSet(ClobberToUInt16<TEnum>(enumSource), ClobberToUInt16<TEnum>(enumFlagToTest));
+				case UnderlyingKind::UInt64Kind: return IsFlagSet(ClobberToUInt64<TEnum>(enumSource), ClobberToUInt64<TEnum>(enumFlagToTest));
 			}
 				
 			throw gcnew InvalidOperationException("Failed to determine underlying type when detecting whether or not flag was set");

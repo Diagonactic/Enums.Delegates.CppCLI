@@ -45,14 +45,7 @@ private:
 [Extension]
 public ref class Delegates abstract sealed
 {
-private:
-	static Delegates()
-	{
-		
-	}
-	
 public:
-
 
 	/// <summary>
 	/// Adds a subscription to a publicly declared event, inserting an unsubscribe event before the delegate is executed.
@@ -63,7 +56,7 @@ public:
 	generic <typename TTargetClass, typename TEventArgs>
 		where TEventArgs : System::EventArgs
 		where TTargetClass : ref class
-		static void AttachWithUnsubscribe(TTargetClass target, String^ eventName, EventHandler<TEventArgs>^ raiseWithUnsubscribe)
+			static void AttachWithUnsubscribe(TTargetClass target, String^ eventName, EventHandler<TEventArgs>^ raiseWithUnsubscribe)
 	{
 		auto eventInfo = TTargetClass::typeid->GetEvent(eventName);
 		if (eventInfo == nullptr) throw gcnew ArgumentException(String::Format("Event {0} was not found on target specified", eventName), "eventName");

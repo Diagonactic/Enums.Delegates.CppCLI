@@ -99,10 +99,12 @@
     <ClInclude Include="Delegates.h" />
     <ClInclude Include="EnumExtensions.h" />
     <ClInclude Include="Enums.h" />
+    <ClInclude Include="EqualityComparers.h" />
     <ClInclude Include="GenericEnumMinimal.h" />
     <ClInclude Include="GenericEnumCore.h" />
     <ClInclude Include="GenericEnumCoreDescriptions.h" />
     <ClInclude Include="GenericEnumValues.h" />
+    <ClInclude Include="InterlockedEnum.h" />
     <ClInclude Include="MsilConvert.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Stdafx.h" />
@@ -119,6 +121,8 @@
     <ClCompile Include="EnumExtensions.cpp" />
     <ClCompile Include="EnumExtensions.ToList.cpp" />
     <ClCompile Include="Enums.cpp" />
+    <ClCompile Include="EqualityComparers.cpp" />
+    <ClCompile Include="InterlockedEnum.cpp" />
     <ClCompile Include="Stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>

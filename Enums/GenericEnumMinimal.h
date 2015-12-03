@@ -1,10 +1,98 @@
 #pragma once
 #include "Stdafx.h"
 using namespace System;
+using namespace System::Collections::Generic;
+using namespace System::Reflection;
+using namespace System::ComponentModel;
+using namespace System::Runtime::InteropServices;
 
 enum UnderlyingKind : char;
 ref class Util;
 ref class MsilConvert;
+
+#define AREALLFLAGSSET(type, sourceEnum, enumFlagsToCheck) case UnderlyingKind::type##Kind:\
+{\
+	auto i = enumFlagsToCheck->Length;\
+	do {\
+		i--;\
+		if (!(Util::IsFlagSet(Util::ClobberTo##type(sourceEnum), Util::ClobberTo##type(enumFlagsToCheck[i]))))\
+			return false;\
+		if (i == 0) return true;\
+	} while(true);\
+}
+
+#define AREANYFLAGSSET(type, sourceEnum, enumFlagsToCheck) case UnderlyingKind::type##Kind:\
+{\
+	auto i = enumFlagsToCheck->Length;\
+	do {\
+		i--;\
+		if (Util::IsFlagSet(Util::ClobberTo##type(sourceEnum), Util::ClobberTo##type(enumFlagsToCheck[i])))\
+			return true;\
+		if (i == 0) return false;\
+	} while(true);\
+}
+#define AREANYFLAGSSETALL(sourceEnum, enumFlagsToCheck) switch(s_kind) {\
+	AREANYFLAGSSET(Int32, sourceEnum, enumFlagsToCheck)\
+	AREANYFLAGSSET(Int64, sourceEnum, enumFlagsToCheck)\
+	AREANYFLAGSSET(Int16, sourceEnum, enumFlagsToCheck)\
+	AREANYFLAGSSET(UInt32, sourceEnum, enumFlagsToCheck)\
+	AREANYFLAGSSET(UInt64, sourceEnum, enumFlagsToCheck)\
+	AREANYFLAGSSET(UInt16, sourceEnum, enumFlagsToCheck)\
+	AREANYFLAGSSET(Byte, sourceEnum, enumFlagsToCheck)\
+	AREANYFLAGSSET(SByte, sourceEnum, enumFlagsToCheck)\
+}
+#define AREALLFLAGSSETALL(sourceEnum, enumFlagsToCheck) switch(s_kind) {\
+	AREALLFLAGSSET(Int32, sourceEnum, enumFlagsToCheck)\
+	AREALLFLAGSSET(Int64, sourceEnum, enumFlagsToCheck)\
+	AREALLFLAGSSET(Int16, sourceEnum, enumFlagsToCheck)\
+	AREALLFLAGSSET(UInt32, sourceEnum, enumFlagsToCheck)\
+	AREALLFLAGSSET(UInt64, sourceEnum, enumFlagsToCheck)\
+	AREALLFLAGSSET(UInt16, sourceEnum, enumFlagsToCheck)\
+	AREALLFLAGSSET(Byte, sourceEnum, enumFlagsToCheck)\
+	AREALLFLAGSSET(SByte, sourceEnum, enumFlagsToCheck)\
+}
+
+#define TYPECASEEXECUTEFOREACH(type, enumMethod, enumVal, enumArray) case UnderlyingKind::type##Kind:\
+{\
+Int32 len = enumArray->Length;\
+auto retVal = Util::ClobberTo##type(enumVal);\
+for (int i = 0; i < len; i++)\
+	retVal = Util::enumMethod(retVal, Util::ClobberTo##type(enumArray[i]));\
+return MsilConvert::ClobberFrom<TEnum>(retVal);\
+}
+
+#define TYPECASECALLRETURN(type, callPart, p1, p2) case UnderlyingKind::type##Kind: return MsilConvert::ClobberFrom<TEnum>(Util::##callPart(Util::ClobberTo##type(p1), Util::ClobberTo##type(p2)))
+#define EXECUTEFOREACHALLTYPES(enumMethod, enumVal, enumArray) switch(s_kind) {\
+	TYPECASEEXECUTEFOREACH(Int32, enumMethod, enumVal, enumArray)\
+	TYPECASEEXECUTEFOREACH(Int64, enumMethod, enumVal, enumArray)\
+	TYPECASEEXECUTEFOREACH(Int16, enumMethod, enumVal, enumArray)\
+	TYPECASEEXECUTEFOREACH(UInt32, enumMethod, enumVal, enumArray)\
+	TYPECASEEXECUTEFOREACH(UInt64, enumMethod, enumVal, enumArray)\
+	TYPECASEEXECUTEFOREACH(UInt16, enumMethod, enumVal, enumArray)\
+	TYPECASEEXECUTEFOREACH(Byte, enumMethod, enumVal, enumArray)\
+	TYPECASEEXECUTEFOREACH(SByte, enumMethod, enumVal, enumArray)\
+}
+#define EXECUTEALLTYPES(callPart, p1, p2) switch (s_kind) { \
+	TYPECASECALLRETURN(Int32, callPart, p1, p2);\
+	TYPECASECALLRETURN(UInt32, callPart, p1, p2);\
+	TYPECASECALLRETURN(Int64, callPart, p1, p2);\
+	TYPECASECALLRETURN(UInt64, callPart, p1, p2);\
+	TYPECASECALLRETURN(Int16, callPart, p1, p2);\
+	TYPECASECALLRETURN(UInt16, callPart, p1, p2);\
+	TYPECASECALLRETURN(Byte, callPart, p1, p2);\
+	TYPECASECALLRETURN(SByte, callPart, p1, p2);\
+}
+
+#define EXECUTEALLTYPESARRAYTARGET(callPart, p1, p2) switch (s_kind) { \
+	TYPECASECALLRETURN(Int32,  ArrayInt32,  callPart, p1, p2);\
+	TYPECASECALLRETURN(UInt32, ArrayUInt32, callPart, p1, p2);\
+	TYPECASECALLRETURN(Int64,  ArrayInt64,  callPart, p1, p2);\
+	TYPECASECALLRETURN(UInt64, ArrayUInt64, callPart, p1, p2);\
+	TYPECASECALLRETURN(Int16,  ArrayInt16,  callPart, p1, p2);\
+	TYPECASECALLRETURN(UInt16, ArrayUInt16, callPart, p1, p2);\
+	TYPECASECALLRETURN(Byte,   ArrayByte,   callPart, p1, p2);\
+	TYPECASECALLRETURN(SByte,  ArraySByte,  callPart, p1, p2);\
+}
 
 namespace Diagonactic
 {
@@ -22,139 +110,54 @@ namespace Diagonactic
 			static UnderlyingKind s_kind = Util::GetKind(s_defaultValue);
 
 			static Boolean HasFlag(TEnum source, TEnum testVal)
-			{
+			{				
 				return Util::IsFlagSet(source, testVal, s_kind);
+			}
+
+			static TEnum RemoveFlags(TEnum sourceEnum, ...array<TEnum>^ enumFlagsToRemove)
+			{
+				EXECUTEFOREACHALLTYPES(RemoveFlagFrom, sourceEnum, enumFlagsToRemove)
+				throw gcnew Exception("This should never throw. All underlying types are represented above.");
 			}
 
 			static TEnum AddFlags(array<TEnum>^ enumFlagsToAdd, TEnum sourceEnum)
 			{
-				pin_ptr<TEnum> source(&sourceEnum);
-				pin_ptr<array<TEnum>^> flagsToAdd(&enumFlagsToAdd);
-
-				switch (s_kind)
-				{
-					case UnderlyingKind::Int32Kind:	 return MsilConvert::ClobberFrom<TEnum>(Util::AddFlags<Int32>(source, flagsToAdd));
-					case UnderlyingKind::Int64Kind:	 return MsilConvert::ClobberFrom<TEnum>(Util::AddFlags<Int64>(source, flagsToAdd));
-					case UnderlyingKind::Int16Kind:	 return MsilConvert::ClobberFrom<TEnum>(Util::AddFlags<Int16>(source, flagsToAdd));
-					case UnderlyingKind::UInt32Kind: return MsilConvert::ClobberFrom<TEnum>(Util::AddFlags<UInt32>(source, flagsToAdd));
-					case UnderlyingKind::UInt64Kind: return MsilConvert::ClobberFrom<TEnum>(Util::AddFlags<UInt64>(source, flagsToAdd));
-					case UnderlyingKind::UInt16Kind: return MsilConvert::ClobberFrom<TEnum>(Util::AddFlags<UInt16>(source, flagsToAdd));
-					case UnderlyingKind::ByteKind:   return MsilConvert::ClobberFrom<TEnum>(Util::AddFlags<Byte>(source, flagsToAdd));
-					case UnderlyingKind::SByteKind:	 return MsilConvert::ClobberFrom<TEnum>(Util::AddFlags<SByte>(source, flagsToAdd));
-				}
+				EXECUTEFOREACHALLTYPES(AddFlagTo, sourceEnum, enumFlagsToAdd)
 				throw gcnew Exception("This should never throw. All underlying types are represented above.");
 			}
 
 			static Boolean AreAllFlagsSet(array<TEnum>^ enumFlagsToCheck, TEnum sourceEnum)
 			{
-				pin_ptr<TEnum> source(&sourceEnum);
-				pin_ptr<array<TEnum>^> flagsToCheck(&enumFlagsToCheck);
-
-				switch (s_kind)
-				{
-					case UnderlyingKind::Int32Kind:	 return Util::AreAllFlagsSet<Int32>(source, flagsToCheck);
-					case UnderlyingKind::Int64Kind:	 return Util::AreAllFlagsSet<Int64>(source, flagsToCheck);
-					case UnderlyingKind::Int16Kind:	 return Util::AreAllFlagsSet<Int16>(source, flagsToCheck);
-					case UnderlyingKind::UInt32Kind: return Util::AreAllFlagsSet<UInt32>(source, flagsToCheck);
-					case UnderlyingKind::UInt64Kind: return Util::AreAllFlagsSet<UInt64>(source, flagsToCheck);
-					case UnderlyingKind::UInt16Kind: return Util::AreAllFlagsSet<UInt16>(source, flagsToCheck);
-					case UnderlyingKind::ByteKind:   return Util::AreAllFlagsSet<Byte>(source, flagsToCheck);
-					case UnderlyingKind::SByteKind:	 return Util::AreAllFlagsSet<SByte>(source, flagsToCheck);
-				}
+				AREALLFLAGSSETALL(sourceEnum, enumFlagsToCheck);				
 				throw gcnew Exception("This should never throw. All underlying types are represented above.");
 			}
 
 			static Boolean AreAnyFlagsSet(array<TEnum>^ enumFlagsToCheck, TEnum sourceEnum)
 			{
-				pin_ptr<TEnum> source(&sourceEnum);
-				pin_ptr<array<TEnum>^> flagsToCheck(&enumFlagsToCheck);
-
-				switch (s_kind)
-				{
-					case UnderlyingKind::Int32Kind:	 return Util::AreAnyFlagsSet<Int32>(source, flagsToCheck);
-					case UnderlyingKind::Int64Kind:	 return Util::AreAnyFlagsSet<Int64>(source, flagsToCheck);
-					case UnderlyingKind::Int16Kind:	 return Util::AreAnyFlagsSet<Int16>(source, flagsToCheck);
-					case UnderlyingKind::UInt32Kind: return Util::AreAnyFlagsSet<UInt32>(source, flagsToCheck);
-					case UnderlyingKind::UInt64Kind: return Util::AreAnyFlagsSet<UInt64>(source, flagsToCheck);
-					case UnderlyingKind::UInt16Kind: return Util::AreAnyFlagsSet<UInt16>(source, flagsToCheck);
-					case UnderlyingKind::ByteKind:   return Util::AreAnyFlagsSet<Byte>(source, flagsToCheck);
-					case UnderlyingKind::SByteKind:	 return Util::AreAnyFlagsSet<SByte>(source, flagsToCheck);
-				}
+				AREANYFLAGSSETALL(sourceEnum, enumFlagsToCheck);
 				throw gcnew Exception("This should never throw. All underlying types are represented above.");
-			}
-			
-			static Boolean EqualsAny(array<TEnum>^ enumValuesToCheck, TEnum sourceEnum)
+			}		
+
+			static TEnum AddFlag(TEnum sourceEnum, TEnum target)
 			{
-				pin_ptr<TEnum> source(&sourceEnum);
-				pin_ptr<array<TEnum>^> valuesToCheck(&enumValuesToCheck);
-
-				switch (s_kind)
-				{
-				case UnderlyingKind::Int32Kind:	 return Util::EqualsAny<Int32>(source, valuesToCheck);
-				case UnderlyingKind::Int64Kind:	 return Util::EqualsAny<Int64>(source, valuesToCheck);
-				case UnderlyingKind::Int16Kind:	 return Util::EqualsAny<Int16>(source, valuesToCheck);
-				case UnderlyingKind::UInt32Kind: return Util::EqualsAny<UInt32>(source, valuesToCheck);
-				case UnderlyingKind::UInt64Kind: return Util::EqualsAny<UInt64>(source, valuesToCheck);
-				case UnderlyingKind::UInt16Kind: return Util::EqualsAny<UInt16>(source, valuesToCheck);
-				case UnderlyingKind::ByteKind:   return Util::EqualsAny<Byte>(source, valuesToCheck);
-				case UnderlyingKind::SByteKind:	 return Util::EqualsAny<SByte>(source, valuesToCheck);
-				}
-
-				throw gcnew Exception("This should never throw. All underlying types are represented above.");
-			}
-
-			static TEnum RemoveFlags(TEnum sourceEnum, ...array<TEnum>^ enumFlagsToRemove)
-			{
-				pin_ptr<TEnum> source(&sourceEnum);
-				pin_ptr<array<TEnum>^> flagsToRemove(&enumFlagsToRemove);
-
-				switch (s_kind)
-				{
-					case UnderlyingKind::Int32Kind:  return MsilConvert::ClobberFrom<TEnum>(Util::RemoveFlags<Int32>(source, flagsToRemove));
-					case UnderlyingKind::Int64Kind:  return MsilConvert::ClobberFrom<TEnum>(Util::RemoveFlags<Int64>(source, flagsToRemove));
-					case UnderlyingKind::Int16Kind:  return MsilConvert::ClobberFrom<TEnum>(Util::RemoveFlags<Int16>(source, flagsToRemove));
-					case UnderlyingKind::UInt32Kind: return MsilConvert::ClobberFrom<TEnum>(Util::RemoveFlags<UInt32>(source, flagsToRemove));
-					case UnderlyingKind::UInt64Kind: return MsilConvert::ClobberFrom<TEnum>(Util::RemoveFlags<UInt64>(source, flagsToRemove));
-					case UnderlyingKind::UInt16Kind: return MsilConvert::ClobberFrom<TEnum>(Util::RemoveFlags<UInt16>(source, flagsToRemove));
-					case UnderlyingKind::ByteKind:   return MsilConvert::ClobberFrom<TEnum>(Util::RemoveFlags<Byte>(source, flagsToRemove));
-					case UnderlyingKind::SByteKind:  return MsilConvert::ClobberFrom<TEnum>(Util::RemoveFlags<SByte>(source, flagsToRemove));
-				}
-				throw gcnew Exception("This should never throw. All underlying types are represented above.");
-			}
-
-			static TEnum AddFlag(TEnum sourceEnum, TEnum enumFlagToAdd)
-			{
-				pin_ptr<TEnum> source(&sourceEnum), flagToAdd(&enumFlagToAdd);
-				switch (s_kind)
-				{
-					case UnderlyingKind::Int32Kind:	 return MsilConvert::ClobberFrom<TEnum>(Util::AddFlagTo<Int32>(source, flagToAdd));
-					case UnderlyingKind::UInt32Kind: return MsilConvert::ClobberFrom<TEnum>(Util::AddFlagTo<UInt32>(source, flagToAdd));
-					case UnderlyingKind::Int64Kind:  return MsilConvert::ClobberFrom<TEnum>(Util::AddFlagTo<Int64>(source, flagToAdd));
-					case UnderlyingKind::UInt64Kind: return MsilConvert::ClobberFrom<TEnum>(Util::AddFlagTo<UInt64>(source, flagToAdd));
-					case UnderlyingKind::Int16Kind:  return MsilConvert::ClobberFrom<TEnum>(Util::AddFlagTo<Int16>(source, flagToAdd));
-					case UnderlyingKind::UInt16Kind: return MsilConvert::ClobberFrom<TEnum>(Util::AddFlagTo<UInt16>(source, flagToAdd));
-					case UnderlyingKind::ByteKind:   return MsilConvert::ClobberFrom<TEnum>(Util::AddFlagTo<Byte>(source, flagToAdd));
-					case UnderlyingKind::SByteKind:  return MsilConvert::ClobberFrom<TEnum>(Util::AddFlagTo<SByte>(source, flagToAdd));
-				}
+				EXECUTEALLTYPES(AddFlagTo, sourceEnum, target);
 				throw gcnew Exception("This should never throw. All underlying types are represented above.");
 			}
 
 			static TEnum RemoveFlag(TEnum sourceEnum, TEnum enumFlagToRemove)
 			{
-				pin_ptr<TEnum> source(&sourceEnum), flagToRemove(&enumFlagToRemove);
-
-				switch (s_kind)
-				{
-					case UnderlyingKind::Int32Kind:	 return MsilConvert::ClobberFrom<TEnum>(Util::RemoveFlag<Int32>(source, flagToRemove));
-					case UnderlyingKind::UInt32Kind: return MsilConvert::ClobberFrom<TEnum>(Util::RemoveFlag<UInt32>(source, flagToRemove));
-					case UnderlyingKind::Int64Kind:  return MsilConvert::ClobberFrom<TEnum>(Util::RemoveFlag<Int64>(source, flagToRemove));
-					case UnderlyingKind::UInt64Kind: return MsilConvert::ClobberFrom<TEnum>(Util::RemoveFlag<UInt64>(source, flagToRemove));
-					case UnderlyingKind::Int16Kind:  return MsilConvert::ClobberFrom<TEnum>(Util::RemoveFlag<Int16>(source, flagToRemove));
-					case UnderlyingKind::UInt16Kind: return MsilConvert::ClobberFrom<TEnum>(Util::RemoveFlag<UInt16>(source, flagToRemove));
-					case UnderlyingKind::ByteKind:   return MsilConvert::ClobberFrom<TEnum>(Util::RemoveFlag<Byte>(source, flagToRemove));
-					case UnderlyingKind::SByteKind:  return MsilConvert::ClobberFrom<TEnum>(Util::RemoveFlag<SByte>(source, flagToRemove));
-				}
+				EXECUTEALLTYPES(RemoveFlagFrom, sourceEnum, enumFlagToRemove);
 				throw gcnew Exception("This should never throw. All underlying types are represented above.");
+			}
+
+			static Boolean EqualsAny(array<TEnum>^ enumValuesToCheck, TEnum sourceEnum)
+			{
+				auto len = enumValuesToCheck->Length;
+				for (int i = 0; i < len; i++) {
+					if (enumValuesToCheck[i] == sourceEnum)
+						return true;
+				}
+				return false;
 			}
 		};
 }

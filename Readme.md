@@ -1,6 +1,8 @@
 Enums and Delegates in C++/CLI
 ==============================
 
+This project provides a set of highly performant generic methods for interacting with Enums.
+
 Enums and Delegates are a fundimental component of .Net, however, as of version 6.0 of the
 C# language, there's no way to (directly) constrain a generic parameter to System.Enum or 
 System.Delegate.  There's so many reasons to want to do so, not the least of which is the 
@@ -9,12 +11,6 @@ implementations.  This project does just that with a series of helpful static an
 methods that can be consumed by any .Net Language.
 
 Delegate support at this time should be considered "beta". Enum support is quite solid.
-
-A great deal of care was taken to ensure that this implementation is extremely fast.  Where
-trade-offs between memory and speed were possible, speed was preferred. Enums are small and
-the memory used is "per type" not per instance.  In addition to using high-performing casts,
-an MSIL project is included which rewrites the generic methods that convert from numeric
-values back to the generic TEnum in a "blind cast" sort of manner.
 
 See "Methodology.md" for more information
 
@@ -98,9 +94,35 @@ enum FlagsEnum : byte
 }
 ```
 
+Performance
+-----------
+
 Each of the conditional types (AddFlagIf/RemoveFlagIf/ModifyFlag) can be called with a boolean, a
 function that returns a boolean or a Predicate delegate which will have its original value passed in
 as the parameter.
+
+The library is micro-optimized for execution speed. Where trade-offs between memory utilization
+and performance existed, speed was preferred.  Enums are small and the memory used is "per enum type" 
+not per instance.  In addition to using high-performing casts, an MSIL project is included which 
+rewrites the generic methods that convert from numeric values back to the generic TEnum in a 
+"blind cast" sort of manner.
+
+Most of the static methods available in the System.Enum class were re-implemented and perform
+significantly faster than the built-in implementations (orders of magnitude in some cases), especially
+if a call is made to more than one of the methods in Diagonactic.Enums (there is a small initialization
+penalty but it rarely results in the first call taking longer than any of the static calls on 
+System.Enum).
+
+The convenience methods, such as AddFlags, are very performant but will never be able to perform as
+well (or even close to as well) as direct binary math due to call overhead.  If your code is extremely
+sensitive to performance, using the binary math versions will be a better choice.
+
+BenchmarkDotNet was used for performance profiling and the Console.Profile project includes the
+tests used to assist in micro-optimization.
+
+See "Performance.md" for the benchmark results and comparisons against identical calls using the static
+method versions (where appropriate).
+
 Compiling
 ---------
 

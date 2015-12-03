@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24606.1
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Enums", "Enums\Enums.vcxproj", "{042AC5EC-5CCF-4ABE-B976-81CA51DFA52B}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -24,10 +24,17 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{26BF5364-8860-4942-ABC0-20920A6CB3B9}"
 	ProjectSection(SolutionItems) = preProject
 		Methodology.md = Methodology.md
+		Performance.md = Performance.md
 		Readme.md = Readme.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSIL", "MSIL\MSIL.csproj", "{B925F328-A580-493A-955E-6EB8672B2D4F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "External Dependencies", "External Dependencies", "{45A1DD16-1878-4A98-84B9-CEA21F6CA46B}"
+	ProjectSection(SolutionItems) = preProject
+		External Dependencies\JetBrains.Annotations.PCL328.dll = External Dependencies\JetBrains.Annotations.PCL328.dll
+		External Dependencies\JetBrains.Annotations.PCL328.xml = External Dependencies\JetBrains.Annotations.PCL328.xml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

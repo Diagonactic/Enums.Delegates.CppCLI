@@ -1,6 +1,8 @@
 #pragma once
 
+#include "Stdafx.h"
 #include "GenericEnumValues.h"
+#include "EqualityComparers.h"
 
 ref class GenericEnumValues;
 enum UnderlyingKind : char;
@@ -21,9 +23,54 @@ namespace Diagonactic {
 	{
 
 	private:
-
+		
 		static GenericEnumCore()
-		{			
+		{	
+			//s_enumMap = gcnew Dictionary<TEnum, String^>(s_length);
+			
+			switch (s_kind) {
+			case UnderlyingKind::ByteKind: {
+				auto comparer = gcnew ByteEnumEqualityComparer<TEnum>();
+				s_enumMap = gcnew Dictionary<TEnum, String^>(s_length, comparer);
+				break;
+			}
+			case UnderlyingKind::SByteKind: {
+				auto comparer = gcnew SByteEnumEqualityComparer<TEnum>();
+				s_enumMap = gcnew Dictionary<TEnum, String^>(s_length, comparer);
+				break;
+			}
+			case UnderlyingKind::Int16Kind: {
+				auto comparer = gcnew Int16EnumEqualityComparer<TEnum>();
+				s_enumMap = gcnew Dictionary<TEnum, String^>(s_length, comparer);
+				break;
+			}
+			case UnderlyingKind::UInt16Kind: {
+				auto comparer = gcnew UInt16EnumEqualityComparer<TEnum>();
+				s_enumMap = gcnew Dictionary<TEnum, String^>(s_length, comparer);
+				break;
+			}
+			case UnderlyingKind::Int32Kind: {
+				auto comparer = gcnew Int32EnumEqualityComparer<TEnum>();
+				s_enumMap = gcnew Dictionary<TEnum, String^>(s_length, comparer);
+				break;
+			}
+			case UnderlyingKind::UInt32Kind: {
+				auto comparer = gcnew UInt32EnumEqualityComparer<TEnum>();
+				s_enumMap = gcnew Dictionary<TEnum, String^>(s_length, comparer);
+				break;
+			}
+			case UnderlyingKind::Int64Kind: {
+				auto comparer = gcnew Int64EnumEqualityComparer<TEnum>();
+				s_enumMap = gcnew Dictionary<TEnum, String^>(s_length, comparer);
+				break;
+			}
+			case UnderlyingKind::UInt64Kind: {
+				auto comparer = gcnew UInt64EnumEqualityComparer<TEnum>();
+				s_enumMap = gcnew Dictionary<TEnum, String^>(s_length, comparer);
+				break;
+			}
+			}
+			
 			array<String^>^ names = Enum::GetNames(s_type);
 			for (Int32 i = 0; i < s_length; i++)
 			{
@@ -69,11 +116,14 @@ namespace Diagonactic {
 			return ThrowOrDefaultEnum(throwOnFail);
 		}
 		
+		
+
+
 	internal:				
-		static Dictionary<TEnum, String^> ^s_enumMap = gcnew Dictionary<TEnum, String^>(s_length);
+		static Dictionary<TEnum, String^> ^s_enumMap;// = gcnew Dictionary<TEnum, String^>(s_length);
 		static Dictionary<String^, TEnum> ^s_nameMap = gcnew Dictionary<String^, TEnum>(s_length);
 		static Dictionary<String^, String^> ^s_caseMap = gcnew Dictionary<String^, String^>(s_length, StringComparer::OrdinalIgnoreCase);		
-		
+				
 		static array<String^>^ GetNames()
 		{			
 			return Enumerable::ToArray(s_enumMap->Values);
@@ -113,65 +163,42 @@ namespace Diagonactic {
 			return retVal;
 		}
 
+#define PARSEPART(type) case UnderlyingKind::type##Kind: {\
+	##type value##type = 0;\
+	do {\
+		i--;\
+		String ^part = parts[i];\
+		bool needsTrim = (Char::IsWhiteSpace(part[0]) || Char::IsWhiteSpace(part[part->Length - 1]));\
+		if (!GetValueFromString(needsTrim ? part->Trim() : part, ignoreCase, throwOnFail, valToAdd)) \
+		{\
+			result = s_defaultValue;\
+			return ThrowOrDefaultEnum(throwOnFail);\
+		}\
+		value##type |= Util::ClobberTo##type(valToAdd);\
+	} while(i!=0);\
+	result = MsilConvert::ClobberFrom<TEnum>(value##type);\
+	return true;\
+}
+	
 		static Boolean ParseEnum(String ^value, Boolean ignoreCase, Boolean throwOnFail, [Out] TEnum %result)
 		{
 			if (!value->Contains(","))
 				return GetValueFromString(value, ignoreCase, throwOnFail, result);				
 			
 			array<String^> ^parts = value->Split(Util::s_Split, StringSplitOptions::RemoveEmptyEntries);
-
-			SByte sbVal = 0;
-			Byte bVal = 0;
-			Int32 i32Val = 0;
-			Int64 i64Val = 0;
-			UInt32 ui32Val = 0;
-			UInt64 ui64Val = 0;
-			Int16 i16Val = 0;
-			UInt16 ui16Val = 0;
-
 			TEnum valToAdd;
-			int endTest = parts->Length;
-			for (int i = 0; i != endTest; i++)
-			{
-				String ^part = parts[i];
-				bool needsTrim = (Char::IsWhiteSpace(part[0]) || Char::IsWhiteSpace(part[part->Length - 1]));
+			int i = parts->Length;
 
-				if (!GetValueFromString(needsTrim ? part->Trim() : part, ignoreCase, throwOnFail, valToAdd))
-				{
-					result = s_defaultValue;
-					return ThrowOrDefaultEnum(throwOnFail);
-				}
-
-				switch(s_kind)
-				{
-					case UnderlyingKind::Int32Kind:	 i32Val  |= Util::ClobberToInt32(valToAdd);  break;
-					case UnderlyingKind::UInt32Kind: ui32Val |= Util::ClobberToUInt32(valToAdd); break;
-					case UnderlyingKind::Int64Kind:  i64Val  |= Util::ClobberToInt64(valToAdd);  break;
-					case UnderlyingKind::UInt64Kind: ui64Val |= Util::ClobberToUInt64(valToAdd); break;
-					case UnderlyingKind::Int16Kind:  i16Val  |= Util::ClobberToInt16(valToAdd);  break;
-					case UnderlyingKind::UInt16Kind: ui16Val |= Util::ClobberToUInt16(valToAdd); break;
-					case UnderlyingKind::ByteKind:   bVal    |= Util::ClobberToByte(valToAdd);   break;
-					case UnderlyingKind::SByteKind:  sbVal   |= Util::ClobberToSByte(valToAdd);  break;
-
-					default: throw gcnew Exception("This should never throw. All underlying types are represented above.");
-				}				
+			switch (s_kind) {
+				PARSEPART(Int32)
+				PARSEPART(Int64)
+				PARSEPART(Int16)
+				PARSEPART(UInt32)
+				PARSEPART(UInt64)
+				PARSEPART(UInt16)
+				PARSEPART(Byte)
+				PARSEPART(SByte)
 			}
-
-			switch (s_kind)
-			{
-				case UnderlyingKind::Int32Kind:	 result = MsilConvert::ClobberFrom<TEnum>(i32Val);    break;
-				case UnderlyingKind::UInt32Kind: result = MsilConvert::ClobberFrom<TEnum>(ui32Val); break;
-				case UnderlyingKind::Int64Kind:  result = MsilConvert::ClobberFrom<TEnum>(i64Val);  break;
-				case UnderlyingKind::UInt64Kind: result = MsilConvert::ClobberFrom<TEnum>(ui64Val); break;
-				case UnderlyingKind::Int16Kind:  result = MsilConvert::ClobberFrom<TEnum>(i16Val);  break;
-				case UnderlyingKind::UInt16Kind: result = MsilConvert::ClobberFrom<TEnum>(ui16Val); break;
-				case UnderlyingKind::ByteKind:   result = MsilConvert::ClobberFrom<TEnum>(bVal);    break;
-				case UnderlyingKind::SByteKind:  result = MsilConvert::ClobberFrom<TEnum>(sbVal);   break;
-
-				default: throw gcnew Exception("This should never throw. All underlying types are represented above.");
-			}
-
-			return true;
 		}
 	};
 }

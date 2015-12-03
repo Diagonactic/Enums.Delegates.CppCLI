@@ -16,7 +16,7 @@ namespace Diagonactic {
 	/// <typeparam name="TEnum">An <see langword="enum"/> (<see cref="System::Enum"/>)</typeparam>
 	/// <returns>The <paramref name="source"/> with <paramref name="flagsToRemove"/> removed.</returns>
 	generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
-		TEnum EnumExtensions::RemoveFlags(TEnum source, ...array<TEnum>^ flagsToRemove)
+		TEnum EnumExtensions::RemoveFlags(TEnum source, [NotNull] ...array<TEnum>^ flagsToRemove)
 	{
 		// Ok, so if this stupid damn method is moved to the EnumExtensions.h file below AddFlags, it won't compile (put it above and AddFlags won't compile).
 		// So this is a kludge and it's driving me crazy.

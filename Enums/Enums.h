@@ -4,6 +4,7 @@
 using namespace System;
 using namespace System::Collections::Generic;
 using namespace System::Runtime::InteropServices;
+using namespace JetBrains::Annotations;
 
 namespace Diagonactic
 {
@@ -169,17 +170,15 @@ namespace Diagonactic
 		/// </summary>
 		/// <returns>An array of the enum names</returns>
 		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
-		static array<String^>^ GetNamesArray()
+		[NotNull] static array<String^>^ GetNamesArray()
 		{ // This had to be defined here due to compiler problem
 			return Enumerable::ToArray<String^>(GenericEnumCore<TEnum>::s_nameMap->Keys);
 		}
 
-		/// <summary>
-		/// Gets the values of the enum as an array
-		/// </summary>
+		/// <summary>Gets the values of the enum as an array</summary>
 		/// <returns>An array of values of the enum</returns>
 		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
-			static array<TEnum>^ GetValuesArray()
+			[NotNull] static array<TEnum>^ GetValuesArray()
 		{ // This had to be defined here due to compiler problem
 			int len = GenericEnumValues<TEnum>::s_length;
 			// A copy of the internal representation is made to ensure the internal representaion cannot be changed.

@@ -1,6 +1,8 @@
 #pragma once
 #include "GenericEnumCoreDescriptions.h"
 
+using namespace JetBrains::Annotations;
+
 namespace Diagonactic {
 
 	/// <summary>
@@ -20,10 +22,10 @@ namespace Diagonactic {
 			[Extension] static Boolean EqualsAny(TEnum source, ...array<TEnum>^ valuesToTest);
 		
 		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
-			[Extension] static List<TEnum>^ ToList(TEnum source);
+			[Extension, NotNull] static List<TEnum>^ ToList(TEnum source);
 
 		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
-			[Extension]	static String^ GetDescription(TEnum source);
+			[Extension, CanBeNull]	static String^ GetDescription(TEnum source);
 
 		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
 			[Extension]	static TEnum RemoveFlag(TEnum source, TEnum flagToRemove);
@@ -32,16 +34,16 @@ namespace Diagonactic {
 			[Extension]	static TEnum ModifyFlag(TEnum source, TEnum flagToRemove, Func<bool>^ condition);
 
 		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
-			[Extension]	static TEnum ModifyFlag(TEnum source, TEnum flagToRemove, Predicate<TEnum>^ condition);
+			[Extension]	static TEnum ModifyFlag(TEnum source, TEnum flagToRemove, [NotNull] Predicate<TEnum>^ condition);
 
 		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
 			[Extension]	static TEnum ModifyFlag(TEnum source, TEnum flagToRemove, bool condition);
 
 		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
-			[Extension]	static TEnum RemoveFlagIf(TEnum source, TEnum flagToRemove, Func<bool>^ condition);
+			[Extension]	static TEnum RemoveFlagIf(TEnum source, TEnum flagToRemove, [NotNull] Func<bool>^ condition);
 
 		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
-			[Extension]	static TEnum RemoveFlagIf(TEnum source, TEnum flagToRemove, Predicate<TEnum>^ condition);
+			[Extension]	static TEnum RemoveFlagIf(TEnum source, TEnum flagToRemove, [NotNull] Predicate<TEnum>^ condition);
 
 		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
 			[Extension]	static TEnum RemoveFlagIf(TEnum source, TEnum flagToRemove, bool condition);
@@ -50,16 +52,16 @@ namespace Diagonactic {
 			[Extension]	static TEnum AddFlags(TEnum source, array<TEnum>^ flagsToAdd);
 	
 		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
-			[Extension]	static TEnum RemoveFlags(TEnum source, ...array<TEnum>^ flagsToRemove);
+			[Extension]	static TEnum RemoveFlags(TEnum source, [NotNull]  ...array<TEnum>^ flagsToRemove);
 
 		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
-			[Extension]	static String^ AsString(TEnum source);
+			[Extension, NotNull]	static String^ AsString(TEnum source);
 
 		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
-			[Extension]	static String^ Format(TEnum source, String^ format);
+			[Extension, NotNull]	static String^ Format(TEnum source, [NotNull] String^ format);
 
 		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
-			[Extension]	static Object^ AsObject(TEnum value);
+			[Extension, NotNull]	static Object^ AsObject(TEnum value);
 
 		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
 			[Extension]	static Boolean IsFlagSet(TEnum source, TEnum flagToTest);
@@ -68,10 +70,10 @@ namespace Diagonactic {
 			[Extension]	static TEnum AddFlag(TEnum source, TEnum flagToSet);
 
 		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
-			[Extension]	static TEnum AddFlagIf(TEnum source, TEnum flagToSet, Func<bool>^ condition);
+			[Extension]	static TEnum AddFlagIf(TEnum source, TEnum flagToSet, [NotNull] Func<bool>^ condition);
 
 		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
-			[Extension]	static TEnum AddFlagIf(TEnum source, TEnum flagToSet, Predicate<TEnum>^ condition);
+			[Extension]	static TEnum AddFlagIf(TEnum source, TEnum flagToSet, [NotNull] Predicate<TEnum>^ condition);
 
 		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
 			[Extension]	static TEnum AddFlagIf(TEnum source, TEnum flagToSet, bool condition);;

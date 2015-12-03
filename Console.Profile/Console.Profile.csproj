@@ -73,13 +73,17 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BenchmarkDotNet, Version=0.7.8.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\BenchmarkDotNet.0.7.8\lib\net40\BenchmarkDotNet.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Condition="'$(Configuration)' == 'Debug'" Include="Enums, Version=1.0.5776.28388, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\x64\Debug\Enums.dll</HintPath>
+    </Reference>
     <Reference Condition="'$(Configuration)' == 'Release'" Include="Enums, Version=1.0.5776.28388, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\x64\Release\Enums.dll</HintPath>
-    </Reference>
-	<Reference Condition="'$(Configuration)' == 'Debug'" Include="Enums, Version=1.0.5776.28388, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\x64\Debug\Enums.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -91,11 +95,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Performance\AddFlagComp.cs" />
+    <Compile Include="Performance\AddFlagPerf.cs" />
+    <Compile Include="Performance\AreAllFlagsSetPerf.cs" />
+    <Compile Include="Performance\AreAnyFlagsSetPerf.cs" />
+    <Compile Include="Performance\AsStringIntPerf.cs" />
+    <Compile Include="Performance\AsStringPerf.cs" />
+    <Compile Include="Performance\EqualsAnyPerf.cs" />
+    <Compile Include="Performance\IsFlagSetComp.cs" />
+    <Compile Include="Performance\IsFlagSetPerf.cs" />
+    <Compile Include="Performance\ParsePerf.cs" />
+    <Compile Include="Performance\ParseUncasedPerf.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Performance\RemoveFlagPerf.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EnumCppTests\EnumCppTests.csproj">
@@ -104,7 +121,7 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
