@@ -1,33 +1,36 @@
 <!DOCTYPE html>
 <html>
+
   <head>
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Enums.delegates.cppcli : High performance enum library for C# written generically with System.Enum constraint (in C++/CLI since C# doesn&#39;t support that!)">
 
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
-    <title>Enums.delegates.cppcli by Diagonactic</title>
+    <title>Enums.delegates.cppcli</title>
   </head>
 
   <body>
 
-    <header>
-      <div class="container">
-        <h1>Enums.delegates.cppcli</h1>
-        <h2>High performance enum library for C# written generically with System.Enum constraint (in C++/CLI since C# doesn&#39;t support that!)</h2>
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/Diagonactic/Enums.Delegates.CppCLI">View on GitHub</a>
 
-        <section id="downloads">
-          <a href="https://github.com/Diagonactic/Enums.Delegates.CppCLI/zipball/master" class="btn">Download as .zip</a>
-          <a href="https://github.com/Diagonactic/Enums.Delegates.CppCLI/tarball/master" class="btn">Download as .tar.gz</a>
-          <a href="https://github.com/Diagonactic/Enums.Delegates.CppCLI" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
-        </section>
-      </div>
-    </header>
+          <h1 id="project_title">Enums.delegates.cppcli</h1>
+          <h2 id="project_tagline">High performance enum library for C# written generically with System.Enum constraint (in C++/CLI since C# doesn&#39;t support that!)</h2>
 
-    <div class="container">
-      <section id="main_content">
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/Diagonactic/Enums.Delegates.CppCLI/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/Diagonactic/Enums.Delegates.CppCLI/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
         <h1>
 <a id="enums-and-delegates-in-ccli" class="anchor" href="#enums-and-delegates-in-ccli" aria-hidden="true"><span class="octicon octicon-link"></span></a>Enums and Delegates in C++/CLI</h1>
 
@@ -108,15 +111,15 @@ Enums.ToEnum(<span class="pl-c1">3</span>); <span class="pl-c">// MyEnum.Val1 | 
 <h2>
 <a id="enum-tools" class="anchor" href="#enum-tools" aria-hidden="true"><span class="octicon octicon-link"></span></a>Enum Tools</h2>
 
-<p><em>Enum_Equality_Comparer</em> Unfortunately, when using an enum as a dictionary key or within a HashSet, lookups incur a boxing/unboxing penalty
+<p><em>Enum Equality Comparer</em> Unfortunately, when using an enum as a dictionary key or within a HashSet, lookups incur a boxing/unboxing penalty
 due to System.Enum not implementing IEquatable.  This makes their use in a HashSet, where performance is often an
 important factor, less than ideal.  Once again, the usual solution requires an enum generic constraint that isn't
 available in C#.  The generic static method Enum.EqualityComparer() will return a suitable EqualityComparer for
 any enum type.  Its implementation uses the underlying type for generating the HashCode.</p>
 
-<div class="highlight highlight-source-cs"><pre>    <span class="pl-k">var</span> MyDictionary = <span class="pl-k">new</span> Dictionary&lt;MyEnum, SomeOtherType&gt;(Enums.EqualityComparer&lt;MyEnum&gt;());</pre></div>
+<div class="highlight highlight-source-cs"><pre><span class="pl-k">var</span> MyDictionary = <span class="pl-k">new</span> Dictionary&lt;MyEnum, SomeOtherType&gt;(Enums.EqualityComparer&lt;MyEnum&gt;());</pre></div>
 
-<p><em>Flags_Enum_Definitions</em> There are many ways to define a flags enum ranging from the messy decimal based integer to somewhat more
+<p><em>Flags Enum Definitions</em> There are many ways to define a flags enum ranging from the messy decimal based integer to somewhat more
 readable hex and shift notations.  With "using static Enums.Flag;" added to your using statement, there's now a third way that's
 more readable than any of those.  Each is defined as a constant value using a type that makes them compatible with most of the
 allowed underlying enum types.</p>
@@ -181,6 +184,14 @@ code can be fully represented in MSIL.  Yay! No Side-by-Side nonsense.</p>
       </section>
     </div>
 
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Enums.delegates.cppcli maintained by <a href="https://github.com/Diagonactic">Diagonactic</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
               <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
             document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
@@ -191,6 +202,7 @@ code can be fully represented in MSIL.  Yay! No Side-by-Side nonsense.</p>
             pageTracker._trackPageview();
             } catch(err) {}
           </script>
+
 
   </body>
 </html>
