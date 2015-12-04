@@ -82,17 +82,17 @@ Enums.ToEnum(3); // MyEnum.Val1 | mMynum.Val2
 
 Enum Tools
 ----------
-_Enum_Equality_Comparer_ Unfortunately, when using an enum as a dictionary key or within a HashSet, lookups incur a boxing/unboxing penalty
+_Enum Equality Comparer_ Unfortunately, when using an enum as a dictionary key or within a HashSet, lookups incur a boxing/unboxing penalty
 due to System.Enum not implementing IEquatable.  This makes their use in a HashSet, where performance is often an
 important factor, less than ideal.  Once again, the usual solution requires an enum generic constraint that isn't
 available in C#.  The generic static method Enum.EqualityComparer() will return a suitable EqualityComparer for
 any enum type.  Its implementation uses the underlying type for generating the HashCode.
 
 ```c#
-	var MyDictionary = new Dictionary<MyEnum, SomeOtherType>(Enums.EqualityComparer<MyEnum>());
+var MyDictionary = new Dictionary<MyEnum, SomeOtherType>(Enums.EqualityComparer<MyEnum>());
 ```
 
-_Flags_Enum_Definitions_ There are many ways to define a flags enum ranging from the messy decimal based integer to somewhat more
+_Flags Enum Definitions_ There are many ways to define a flags enum ranging from the messy decimal based integer to somewhat more
 readable hex and shift notations.  With "using static Enums.Flag;" added to your using statement, there's now a third way that's
 more readable than any of those.  Each is defined as a constant value using a type that makes them compatible with most of the
 allowed underlying enum types.
