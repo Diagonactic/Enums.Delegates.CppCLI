@@ -187,6 +187,18 @@ namespace Diagonactic
 			return newVals;
 		}
 
+		/// <summary>Returns an equality comparer for <typeparamref name="TEnum"/> based on the underlying type of the TEnum</summary>
+		/// <remarks><see cref="System::Enum"/> does not implement IEquatable and as a result, HashSet, Dictionary and anything else that relies on
+		/// GetHashCode calls route them through <see cref="System::Object"/> resulting in a boxing/unboxing of the value.  This implementation performs
+		/// the call to GetHashCode directly on the underlying type and when passed in as the comparer parameter, will result in faster hash lookups</remarks>
+		/// <typeparam name="TEnum">An <see langword="enum"/> (<see cref="System::Enum"/>)</typeparam>
+		/// <returns></returns>
+		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
+			static IEqualityComparer<TEnum>^ EqualityComparer() 
+		{ 
+			return GenericEnumCore<TEnum>::s_comparer;
+		}
+
 		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum		
 		static Object^ AsObject(SByte value);
 

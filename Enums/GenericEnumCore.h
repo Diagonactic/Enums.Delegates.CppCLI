@@ -30,43 +30,43 @@ namespace Diagonactic {
 			
 			switch (s_kind) {
 			case UnderlyingKind::ByteKind: {
-				auto comparer = gcnew ByteEnumEqualityComparer<TEnum>();
-				s_enumMap = gcnew Dictionary<TEnum, String^>(s_length, comparer);
+				s_comparer = gcnew ByteEnumEqualityComparer<TEnum>();
+				s_enumMap = gcnew Dictionary<TEnum, String^>(s_length, s_comparer);
 				break;
 			}
 			case UnderlyingKind::SByteKind: {
-				auto comparer = gcnew SByteEnumEqualityComparer<TEnum>();
-				s_enumMap = gcnew Dictionary<TEnum, String^>(s_length, comparer);
+				s_comparer = gcnew SByteEnumEqualityComparer<TEnum>();
+				s_enumMap = gcnew Dictionary<TEnum, String^>(s_length, s_comparer);
 				break;
 			}
 			case UnderlyingKind::Int16Kind: {
-				auto comparer = gcnew Int16EnumEqualityComparer<TEnum>();
-				s_enumMap = gcnew Dictionary<TEnum, String^>(s_length, comparer);
+				s_comparer = gcnew Int16EnumEqualityComparer<TEnum>();
+				s_enumMap = gcnew Dictionary<TEnum, String^>(s_length, s_comparer);
 				break;
 			}
 			case UnderlyingKind::UInt16Kind: {
-				auto comparer = gcnew UInt16EnumEqualityComparer<TEnum>();
-				s_enumMap = gcnew Dictionary<TEnum, String^>(s_length, comparer);
+				s_comparer = gcnew UInt16EnumEqualityComparer<TEnum>();
+				s_enumMap = gcnew Dictionary<TEnum, String^>(s_length, s_comparer);
 				break;
 			}
 			case UnderlyingKind::Int32Kind: {
-				auto comparer = gcnew Int32EnumEqualityComparer<TEnum>();
-				s_enumMap = gcnew Dictionary<TEnum, String^>(s_length, comparer);
+				s_comparer = gcnew Int32EnumEqualityComparer<TEnum>();
+				s_enumMap = gcnew Dictionary<TEnum, String^>(s_length, s_comparer);
 				break;
 			}
 			case UnderlyingKind::UInt32Kind: {
-				auto comparer = gcnew UInt32EnumEqualityComparer<TEnum>();
-				s_enumMap = gcnew Dictionary<TEnum, String^>(s_length, comparer);
+				s_comparer = gcnew UInt32EnumEqualityComparer<TEnum>();
+				s_enumMap = gcnew Dictionary<TEnum, String^>(s_length, s_comparer);
 				break;
 			}
 			case UnderlyingKind::Int64Kind: {
-				auto comparer = gcnew Int64EnumEqualityComparer<TEnum>();
-				s_enumMap = gcnew Dictionary<TEnum, String^>(s_length, comparer);
+				s_comparer = gcnew Int64EnumEqualityComparer<TEnum>();
+				s_enumMap = gcnew Dictionary<TEnum, String^>(s_length, s_comparer);
 				break;
 			}
 			case UnderlyingKind::UInt64Kind: {
-				auto comparer = gcnew UInt64EnumEqualityComparer<TEnum>();
-				s_enumMap = gcnew Dictionary<TEnum, String^>(s_length, comparer);
+				s_comparer = gcnew UInt64EnumEqualityComparer<TEnum>();
+				s_enumMap = gcnew Dictionary<TEnum, String^>(s_length, s_comparer);
 				break;
 			}
 			}
@@ -121,9 +121,10 @@ namespace Diagonactic {
 
 	internal:				
 		static Dictionary<TEnum, String^> ^s_enumMap;// = gcnew Dictionary<TEnum, String^>(s_length);
-		static Dictionary<String^, TEnum> ^s_nameMap = gcnew Dictionary<String^, TEnum>(s_length);
+		static Dictionary<String^, TEnum> ^s_nameMap = gcnew Dictionary<String^, TEnum>(s_length, Comparers::s_stringComparer);
 		static Dictionary<String^, String^> ^s_caseMap = gcnew Dictionary<String^, String^>(s_length, StringComparer::OrdinalIgnoreCase);		
-				
+		static IEqualityComparer<TEnum>^ s_comparer;
+
 		static array<String^>^ GetNames()
 		{			
 			return Enumerable::ToArray(s_enumMap->Values);
@@ -169,12 +170,12 @@ namespace Diagonactic {
 		i--;\
 		String ^part = parts[i];\
 		bool needsTrim = (Char::IsWhiteSpace(part[0]) || Char::IsWhiteSpace(part[part->Length - 1]));\
-		if (!GetValueFromString(needsTrim ? part->Trim() : part, ignoreCase, throwOnFail, valToAdd)) \
+		if (!GetValueFromString(needsTrim ? part->Trim() : part, ignoreCase, throwOnFail, result)) \
 		{\
 			result = s_defaultValue;\
 			return ThrowOrDefaultEnum(throwOnFail);\
 		}\
-		value##type |= Util::ClobberTo##type(valToAdd);\
+		value##type |= Util::ClobberTo##type(result);\
 	} while(i!=0);\
 	result = MsilConvert::ClobberFrom<TEnum>(value##type);\
 	return true;\
@@ -186,7 +187,7 @@ namespace Diagonactic {
 				return GetValueFromString(value, ignoreCase, throwOnFail, result);				
 			
 			array<String^> ^parts = value->Split(Util::s_Split, StringSplitOptions::RemoveEmptyEntries);
-			TEnum valToAdd;
+			
 			int i = parts->Length;
 
 			switch (s_kind) {

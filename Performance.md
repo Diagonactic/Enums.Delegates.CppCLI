@@ -23,8 +23,8 @@ After Optimization
  AreAllFlagsSetTrue   | 9.5706 ns   | 0.0292 ns | 104,486,763.65 |
  AreAnyFlagsSetFalse  | 8.3757 ns   | 0.0085 ns | 119,393,244.10 |
  AreAnyFlagsSetTrue   | 7.3773 ns   | 0.0137 ns | 135,550,237.90 |
- ParseOneValue        | 109.8468 ns | 0.6706 ns | 9,103,589.27   | 
- ParseTwoValues       | 282.6036 ns | 0.3789 ns | 3,538,525.96   | 
+ ParseOneValue        | 105.3243 ns | 0.1368 ns | 9,494,484.03   |
+ ParseTwoValues       | 277.1396 ns | 0.4245 ns | 3,608,290.22   |
  OneFlagAsString      |  15.6660 ns | 0.0435 ns | 63,832,603.64  |
  TwoFlagsAsString     | 257.0831 ns | 2.2237 ns |  3,889,792.23  |
 

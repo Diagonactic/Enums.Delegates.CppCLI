@@ -107,7 +107,7 @@ namespace Diagonactic
 
 			static TEnum s_defaultValue = TEnum();
 			static Type^ s_type = TEnum::typeid;
-			static UnderlyingKind s_kind = Util::GetKind(s_defaultValue);
+			static UnderlyingKind s_kind = Util::GetKind(s_defaultValue);			
 
 			static Boolean HasFlag(TEnum source, TEnum testVal)
 			{				
