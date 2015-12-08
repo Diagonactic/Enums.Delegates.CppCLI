@@ -7,13 +7,8 @@ namespace Diagonactic {
 	
 	private ref class FastStringComparer : public IEqualityComparer<String^> {
 	public:
-		virtual bool Equals(String^ left, String^ right) { return left == right; }
+		virtual bool Equals(String^ left, String^ right) { return left->Equals(right); }
 		virtual int GetHashCode(String^ value) { return value->GetHashCode(); }
-	};
-
-	private ref class Comparers {
-	internal:
-		static FastStringComparer^ s_stringComparer = gcnew FastStringComparer();
 	};
 
 	/// <summary>
@@ -101,6 +96,11 @@ namespace Diagonactic {
 	public:
 		virtual bool Equals(TEnum left, TEnum right) sealed { return left == right; }
 		virtual int GetHashCode(TEnum value) sealed { return Util::ClobberToSByte(value); }
+	};
+
+	private ref class Comparers {
+	internal:
+		static FastStringComparer^ s_stringComparer = gcnew FastStringComparer();		
 	};
 }
 

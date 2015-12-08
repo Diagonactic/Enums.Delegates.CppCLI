@@ -21,6 +21,20 @@ ref class MsilConvert;
 	} while(true);\
 }
 
+/*
+#define AREALLFLAGSSET(type, sourceEnum, enumFlagsToCheck) case UnderlyingKind::type##Kind:\
+{\
+	auto i = enumFlagsToCheck->Length;\
+	pin_ptr<TEnum> elemPtr = &enumFlagsToCheck[i-1];\
+	do {\
+		i--;\
+		if (!(Util::IsFlagSet(Util::ClobberTo##type(sourceEnum), Util::ClobberTo##type(*elemPtr))))\
+			return false;\
+		if (i == 0) return true;\
+		elemPtr--;\
+	} while(true);\
+}
+*/
 #define AREANYFLAGSSET(type, sourceEnum, enumFlagsToCheck) case UnderlyingKind::type##Kind:\
 {\
 	auto i = enumFlagsToCheck->Length;\
@@ -125,13 +139,13 @@ namespace Diagonactic
 				EXECUTEFOREACHALLTYPES(AddFlagTo, sourceEnum, enumFlagsToAdd)
 				throw gcnew Exception("This should never throw. All underlying types are represented above.");
 			}
-
+#pragma warning(disable:4958)
 			static Boolean AreAllFlagsSet(array<TEnum>^ enumFlagsToCheck, TEnum sourceEnum)
 			{
 				AREALLFLAGSSETALL(sourceEnum, enumFlagsToCheck);				
 				throw gcnew Exception("This should never throw. All underlying types are represented above.");
 			}
-
+#pragma warning(default:4958)
 			static Boolean AreAnyFlagsSet(array<TEnum>^ enumFlagsToCheck, TEnum sourceEnum)
 			{
 				AREANYFLAGSSETALL(sourceEnum, enumFlagsToCheck);

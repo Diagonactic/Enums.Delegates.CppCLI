@@ -104,6 +104,7 @@
     <ClInclude Include="GenericEnumCore.h" />
     <ClInclude Include="GenericEnumCoreDescriptions.h" />
     <ClInclude Include="GenericEnumValues.h" />
+    <ClInclude Include="GenericNumericEnumCore.h" />
     <ClInclude Include="InterlockedEnum.h" />
     <ClInclude Include="MsilConvert.h" />
     <ClInclude Include="resource.h" />
@@ -122,6 +123,7 @@
     <ClCompile Include="EnumExtensions.ToList.cpp" />
     <ClCompile Include="Enums.cpp" />
     <ClCompile Include="EqualityComparers.cpp" />
+    <ClCompile Include="GenericNumericEnumCore.cpp" />
     <ClCompile Include="InterlockedEnum.cpp" />
     <ClCompile Include="Stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

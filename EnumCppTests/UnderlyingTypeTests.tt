@@ -42,14 +42,17 @@ namespace EnumCppUnderlyingTypeTests {
 	public class Test" + flagsType + @"EnumUnderlyingKind
 	{
 		[Flags]
-		private enum TestEnum : " + typekw + @"	{ One = " + GetHex(startingNumber, (ulong)Enums.Flag.F1) + 
+		private enum TestEnum : " + typekw + @"	{ 
+		Zero = 0,
+		One = " + GetHex(startingNumber, (ulong)Enums.Flag.F1) + 
 		@", Two = " + GetHex(startingNumber, (ulong)Enums.Flag.F2) + 
 		@",	Four = " + GetHex(startingNumber, (ulong)Enums.Flag.F3) + 
 		@", Eight = " + GetHex(startingNumber, (ulong)Enums.Flag.F4) + 
 		@", Ten = " + GetHex(startingNumber, (ulong)Enums.Flag.F5) + 
 		@"	}
 
-		private const TestEnum Flag1           = TestEnum.One, 
+		private const TestEnum None            = TestEnum.Zero,
+							   Flag1           = TestEnum.One, 
 							   Flag2           = TestEnum.Two,
 							   Flag4           = TestEnum.Four,
 							   Flag8           = TestEnum.Eight,
@@ -61,6 +64,8 @@ namespace EnumCppUnderlyingTypeTests {
 		private const string Flag2StringValue = ""Two"";
 		private const string FlagsAllStringValue = ""One, Two, Four, Eight, Ten"";
 		private const string Flag2Flag10StringValue = ""Two, Ten"";
+		
+
 
 		[TestMethod, EnumTest]
         public void Test" + enumType + @"ToString()
@@ -79,6 +84,7 @@ namespace EnumCppUnderlyingTypeTests {
 		{
             Flag1Flag2.RemoveFlag(Flag1).ShouldBeEquivalentTo(Flag2);
 			Flag1Flag2.RemoveFlag(Flag2).ShouldBeEquivalentTo(Flag1);
+			Flag1Flag2.RemoveFlag(None).ShouldBeEquivalentTo(Flag1Flag2);
 		}
 
 		[TestMethod, EnumTest]
@@ -118,6 +124,8 @@ namespace EnumCppUnderlyingTypeTests {
 		{
 			Flag1Flag2.AreAllFlagsSet(Flag1, Flag2).Should().BeTrue();
 			Flag1Flag2.AreAllFlagsSet(Flag1, Flag2, Flag4).Should().BeFalse();
+			None.AreAllFlagsSet(Flag1, Flag2).Should().BeFalse();
+			None.AreAllFlagsSet(None).Should().BeTrue();
 		}
 
 		[TestMethod, EnumTest]
@@ -126,6 +134,9 @@ namespace EnumCppUnderlyingTypeTests {
             Flag1Flag2.AreAnyFlagsSet(Flag1).Should().BeTrue();
 			Flag1Flag2.AreAnyFlagsSet(Flag4).Should().BeFalse();
 			Flag1Flag2.AreAnyFlagsSet(Flag1, Flag4).Should().BeTrue();
+			Flag1Flag2.AreAnyFlagsSet(None, Flag1).Should().BeTrue();
+			None.AreAnyFlagsSet(None, Flag1).Should().BeTrue();
+			None.AreAnyFlagsSet(Flag1, Flag2).Should().BeFalse();
 		}
 
 		[TestMethod, EnumTest]
@@ -139,12 +150,15 @@ namespace EnumCppUnderlyingTypeTests {
 		[TestMethod, EnumTest]
         public void Test" + enumType + @"AddFlag()
         {
+			None.AddFlag(Flag1).ShouldBeEquivalentTo(Flag1);
             Flag1.AddFlag(Flag2).ShouldBeEquivalentTo(Flag1Flag2);
+			Flag1.AddFlag(None).ShouldBeEquivalentTo(Flag1);
 		}
 
 		[TestMethod, EnumTest]
         public void Test" + enumType + @"AddFlagIf()
         {
+			None.AddFlagIf(Flag1, true).ShouldBeEquivalentTo(Flag1);
 			Flag1.AddFlagIf(Flag2, false).ShouldBeEquivalentTo(Flag1);
 			Flag2.AddFlagIf(Flag1, true).ShouldBeEquivalentTo(Flag1Flag2);
 			Flag2.AddFlagIf(Flag1, () => true).ShouldBeEquivalentTo(Flag1Flag2);
@@ -156,6 +170,8 @@ namespace EnumCppUnderlyingTypeTests {
 		[TestMethod, EnumTest]
 		public void Test" + enumType + @"AddFlags()
 		{
+			None.AddFlags(Flag1, Flag2).ShouldBeEquivalentTo(Flag1Flag2);
+			Flag1Flag2.AddFlags(None).ShouldBeEquivalentTo(Flag1Flag2);
 			var result = Flag1.AddFlags(Flag2, Flag4, Flag8, Flag10);
             result.ShouldBeEquivalentTo(AllFlags);
 		}
@@ -163,33 +179,37 @@ namespace EnumCppUnderlyingTypeTests {
 		[TestMethod, EnumTest]
 		public void Test" + enumType + @"RemoveFlags()
 		{
+			None.RemoveFlags(Flag1, Flag2).ShouldBeEquivalentTo(None);
             AllFlags.RemoveFlags(Flag1, Flag2, Flag4, Flag8).ShouldBeEquivalentTo(Flag10);
 		}
 		
 		[TestMethod, EnumTest]
 		public void Test" + enumType + @"IsFlagSet()
 		{
+			None.IsFlagSet(Flag1).ShouldBeEquivalentTo(None.HasFlag(Flag1));
+			None.IsFlagSet(None).ShouldBeEquivalentTo(None.HasFlag(None));
 			Flag1Flag2.IsFlagSet(Flag1).Should().BeTrue();
             Flag1Flag2.IsFlagSet(Flag4).Should().BeFalse();
 		}
 
 		[TestMethod, EnumTest]
 		public void Test" + enumType + @"ParseOneValue()
-		{
-			Enums.Parse<TestEnum>(Flag1StringValue).ShouldBeEquivalentTo(Flag1);
-            Enums.Parse<TestEnum>(Flag2StringValue).ShouldBeEquivalentTo(Flag2);            
+		{				
+			Enums.Parse<TestEnum>(Flag1StringValue).ShouldBeEquivalentTo((TestEnum)Enum.Parse(typeof(TestEnum), Flag1StringValue));
+            Enums.Parse<TestEnum>(Flag2StringValue).ShouldBeEquivalentTo((TestEnum)Enum.Parse(typeof(TestEnum), Flag2StringValue));            
 		}
 
 		[TestMethod, EnumTest]
 		public void Test" + enumType + @"ParseMultipleValues()
 		{
-            Enums.Parse<TestEnum>($""{Flag1}, {Flag2}"").ShouldBeEquivalentTo(Flag1Flag2);
-            Enums.Parse<TestEnum>($""{Flag2}, {Flag1}"").ShouldBeEquivalentTo(Flag1Flag2);
+			Enums.Parse<TestEnum>($""{Flag1}, {Flag2}"").ShouldBeEquivalentTo((TestEnum)Enum.Parse(typeof(TestEnum), $""{Flag1}, {Flag2}""));
+            Enums.Parse<TestEnum>($""{Flag2}, {Flag1}"").ShouldBeEquivalentTo((TestEnum)Enum.Parse(typeof(TestEnum), $""{Flag2}, {Flag1}""));
 		}
 
 		[TestMethod, EnumTest]
 		public void Test" + enumType + @"ToEnum()
-		{						
+		{
+			Enums.ToEnum<TestEnum>((" + typekw + @")" + GetHex(startingNumber, 0) + @").ShouldBeEquivalentTo(None);
 			Enums.ToEnum<TestEnum>((" + typekw + @")" + GetHex(startingNumber, 1) + @").ShouldBeEquivalentTo(Flag1);
 			Enums.ToEnum<TestEnum>((" + typekw + @")" + GetHex(startingNumber, 1) + " | " + GetHex(startingNumber, 2) + @").ShouldBeEquivalentTo(Flag1Flag2);
 			Enums.ToEnum<TestEnum>((Object)" + GetHex(startingNumber, 1) + @").ShouldBeEquivalentTo(Flag1);
@@ -198,6 +218,7 @@ namespace EnumCppUnderlyingTypeTests {
 		[TestMethod, EnumTest]
 		public void Test" + enumType + @"ToAsObject()
 		{
+			None.AsObject().ShouldBeEquivalentTo((Object)None);
 			Flag1.AsObject().ShouldBeEquivalentTo((Object)Flag1);
 			Flag1Flag2.AsObject().ShouldBeEquivalentTo((Object)(Flag1 | Flag2));
 			var objResult = Enums.AsObject<TestEnum>((" + typekw +@")(" + GetHex(startingNumber, 1) + " | " + GetHex(startingNumber, 2) + @")) as TestEnum? ?? TestEnum.Ten;

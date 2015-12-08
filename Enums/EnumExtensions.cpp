@@ -54,6 +54,7 @@ namespace Diagonactic {
 	}
 
 	/// <summary>Determines if <paramref name="source"/> has the <paramref name="flagToTest"/></summary>	
+	/// <remarks>A flag value of "0" is considered "None", therefore a flag will not be considered set unless <paramref name="source"/> is 0.</remarks>
 	/// <param name="source">The value to test for a flag being set</param>
 	/// <param name="flagToTest"></param>
 	/// <typeparam name="TEnum">An <see langword="enum"/> (<see cref="System::Enum"/>)</typeparam>

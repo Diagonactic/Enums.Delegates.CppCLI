@@ -65,7 +65,7 @@ namespace Diagonactic
 		template <typename TNumber>
 		[MethodImpl(MethodImplOptions::AggressiveInlining)]
 		static TNumber AddFlagTo(TNumber enumValue, TNumber flagToAdd)
-		{
+		{						
 			return enumValue | flagToAdd;
 		}
 
@@ -77,8 +77,12 @@ namespace Diagonactic
 		}
 
 		template <typename TNumber>
-		[MethodImpl(MethodImplOptions::AggressiveInlining)] static Boolean IsFlagSet(TNumber enumValue, TNumber enumFlagToTest)
+		inline static Boolean IsFlagSet(TNumber enumValue, TNumber enumFlagToTest)
 		{
+			if (enumFlagToTest == enumValue)
+				return true;
+			if (enumFlagToTest == 0)
+				return false;
 			return (enumValue & enumFlagToTest) == enumFlagToTest;
 		}
 

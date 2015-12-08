@@ -3,6 +3,7 @@
 #include "Stdafx.h"
 #include "GenericEnumValues.h"
 #include "EqualityComparers.h"
+#include <cliext\hash_map>
 
 ref class GenericEnumValues;
 enum UnderlyingKind : char;
@@ -15,13 +16,14 @@ using namespace System::Runtime::CompilerServices;
 using namespace System::Diagnostics;
 using namespace System::Collections::ObjectModel;
 using namespace System::Linq;
+using namespace cliext;
 
 namespace Diagonactic {
-		
+	
 	generic<typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
 	private ref class GenericEnumCore : public GenericEnumValues<TEnum>
 	{
-
+		
 	private:
 		
 		static GenericEnumCore()
@@ -71,6 +73,7 @@ namespace Diagonactic {
 			}
 			}
 			
+			auto values = s_values;
 			array<String^>^ names = Enum::GetNames(s_type);
 			for (Int32 i = 0; i < s_length; i++)
 			{
@@ -115,12 +118,9 @@ namespace Diagonactic {
 
 			return ThrowOrDefaultEnum(throwOnFail);
 		}
-		
-		
 
-
-	internal:				
-		static Dictionary<TEnum, String^> ^s_enumMap;// = gcnew Dictionary<TEnum, String^>(s_length);
+	internal:
+		static Dictionary<TEnum, String^> ^s_enumMap;
 		static Dictionary<String^, TEnum> ^s_nameMap = gcnew Dictionary<String^, TEnum>(s_length, Comparers::s_stringComparer);
 		static Dictionary<String^, String^> ^s_caseMap = gcnew Dictionary<String^, String^>(s_length, StringComparer::OrdinalIgnoreCase);		
 		static IEqualityComparer<TEnum>^ s_comparer;

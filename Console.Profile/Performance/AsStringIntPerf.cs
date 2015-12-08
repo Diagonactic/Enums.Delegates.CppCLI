@@ -1,13 +1,14 @@
 ﻿using BenchmarkDotNet;
 using BenchmarkDotNet.Tasks;
 using Diagonactic;
+using static Diagonactic.Enums.Flag;
 
 namespace Console.Profile.Performance
 {
     public enum FlagsIntEnum : int
     {
-        One = Enums.Flag.F1,
-        Two = Enums.Flag.F2
+        One = F1,
+        Two = F2
     }
 
     [BenchmarkTask(1, BenchmarkMode.Throughput, BenchmarkPlatform.X64, BenchmarkJitVersion.RyuJit,

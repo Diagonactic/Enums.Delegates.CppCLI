@@ -156,3 +156,6 @@ code can be fully represented in MSIL.  Yay! No Side-by-Side nonsense.
 Documentation
 -------------
 It's well documented using XML docs and SandCastle (which produces a CHM, and web site).
+
+Release Notes
+-------------

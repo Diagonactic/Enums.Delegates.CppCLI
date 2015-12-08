@@ -54,6 +54,9 @@
     <ClInclude Include="EqualityComparers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GenericNumericEnumCore.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp">
@@ -93,6 +96,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="EqualityComparers.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GenericNumericEnumCore.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

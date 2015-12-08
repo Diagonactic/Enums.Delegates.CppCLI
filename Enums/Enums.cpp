@@ -1,5 +1,6 @@
 #include "Stdafx.h"
 #include "Enums.h"
+#include "GenericNumericEnumCore.h"
 
 #using <C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETCore\v4.5\System.Linq.Dll>
 
@@ -8,6 +9,7 @@ using namespace System::Runtime::CompilerServices;
 using namespace System::Linq;
 
 ref class GenericEnumCore;
+ref class GenericNumericEnumCore;
 ref class GenericEnumMinimal;
 ref class GenericEnumWithDescription;
 ref class GenericEnumValues;
@@ -26,7 +28,8 @@ namespace Diagonactic
 	TEnum Enums::Parse(String ^source)
 	{
 		TEnum result;
-		Diagonactic::GenericEnumCore<TEnum>::ParseEnum(source, false, true, result);
+		//Diagonactic::GenericEnumCore<TEnum>::ParseEnum(source, false, true, result);
+		GenericEnumCore<TEnum>::ParseEnum(source, false, true, result);
 		return result;
 	}	
 	
