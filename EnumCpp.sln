@@ -23,6 +23,7 @@ Project("{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}") = "Documentation", "Documentat
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{26BF5364-8860-4942-ABC0-20920A6CB3B9}"
 	ProjectSection(SolutionItems) = preProject
+		key.snk = key.snk
 		Methodology.md = Methodology.md
 		Performance.md = Performance.md
 		Readme.md = Readme.md

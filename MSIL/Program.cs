@@ -12,8 +12,21 @@ namespace MSIL
 {
     public class Program
     {
-        public static void Main()
+        public static int Main(string[] args)
         {
+            if (args.Length != 1)
+            {
+                Console.WriteLine("ERROR: No keyfile was included for signing the assembly");
+                return 1;
+            }
+            if (!File.Exists(args[0]))
+            {
+                Console.WriteLine("ERROR: Keyfile " + args[0] + " was not found");
+                return 1;
+            }
+
+            Console.WriteLine("Using Keyfile: " + args[0]);
+
             string programFiles = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86),
                    ildasm = Path.Combine(programFiles, @"Microsoft SDKs\Windows\v8.1A\bin\NETFX 4.5.1 Tools\ildasm.exe");
             if (!File.Exists(ildasm))
@@ -52,7 +65,8 @@ namespace MSIL
 
             ReWrite(ilPath);
 
-            Console.WriteLine(Launch(ilasm, $"/OUTPUT=\"{dllPath}\" /PDB /DLL \"{ilPath}\" /RES=\"{resPath}\""));
+            Console.WriteLine(Launch(ilasm, $"/OUTPUT=\"{dllPath}\" /PDB /DLL \"{ilPath}\" /RES=\"{resPath}\" /KEY=" + args[0]));
+            return 0;
         }
 
         private static void ReWrite(string path)

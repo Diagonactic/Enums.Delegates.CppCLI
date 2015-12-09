@@ -1,0 +1,1 @@
+"%1\MSIL\bin\Release\MSIL.exe" %2

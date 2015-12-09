@@ -54,6 +54,7 @@
     <IntDir>bin\$(PlatformTarget)\$(Configuration)\</IntDir>
     <CustomBuildBeforeTargets />
     <PostBuildEventUseInBuild>true</PostBuildEventUseInBuild>
+    <LinkKeyFile>$(SolutionDir)key.snk</LinkKeyFile>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -87,7 +88,7 @@
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>$(SolutionDir)MSIL\bin\Release\MSIL.exe</Command>
+      <Command>$(SolutionDir)MSIL\bin\Release\RewriteAndSign.cmd "$(SolutionDir)" "$(SolutionDir)key.snk"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
