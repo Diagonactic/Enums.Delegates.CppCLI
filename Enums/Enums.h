@@ -93,7 +93,8 @@ namespace Diagonactic
 		ref class Flag sealed abstract
 		{
 			
-		public:
+		public:			
+			literal Byte None = 0;
 			literal Byte F1 = 0x1;
 			literal Byte F2 = 0x2;
 			literal Byte F3 = 0x4;
@@ -159,25 +160,25 @@ namespace Diagonactic
 			literal Int64 F63 = 0x4000000000000000;
 		};
 
-		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
+		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
 		static IReadOnlyList<TEnum>^ GetValues();
 
-		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
+		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
 		static IReadOnlyList<String^>^ GetNames();
 		
 		/// <summary>
 		/// Gets an array of names of the enum
 		/// </summary>
 		/// <returns>An array of the enum names</returns>
-		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
+		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
 		[NotNull] static array<String^>^ GetNamesArray()
 		{ // This had to be defined here due to compiler problem
-			return Enumerable::ToArray<String^>(GenericEnumCore<TEnum>::s_nameMap->Keys);
+			return Enumerable::ToArray<String^>(GenericNumericEnumCore<TEnum>::s_nameMap->Keys);
 		}
 
 		/// <summary>Gets the values of the enum as an array</summary>
 		/// <returns>An array of values of the enum</returns>
-		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
+		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
 			[NotNull] static array<TEnum>^ GetValuesArray()
 		{ // This had to be defined here due to compiler problem
 			int len = GenericEnumValues<TEnum>::s_length;
@@ -193,76 +194,76 @@ namespace Diagonactic
 		/// the call to GetHashCode directly on the underlying type and when passed in as the comparer parameter, will result in faster hash lookups</remarks>
 		/// <typeparam name="TEnum">An <see langword="enum"/> (<see cref="System::Enum"/>)</typeparam>
 		/// <returns></returns>
-		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
+		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
 			static IEqualityComparer<TEnum>^ EqualityComparer() 
 		{ 
-			return GenericEnumCore<TEnum>::s_comparer;
+			return GenericNumericEnumCore<TEnum>::s_comparer;
 		}
 
-		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum		
+		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class		
 		static Object^ AsObject(SByte value);
 
-		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
+		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
 		static Object^ AsObject(Byte value);
 
-		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
+		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
 		static Object^ AsObject(Int16 value);
 
-		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
+		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
 		static Object^ AsObject(UInt16 value);
 
-		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
+		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
 		static Object^ AsObject(Int32 value);
 
-		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
+		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
 		static Object^ AsObject(UInt32 value);
 
-		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
+		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
 		static Object^ AsObject(Int64 value);
 
-		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
+		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
 		static Object^ AsObject(UInt64 value);
 
-		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
+		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
 		static TEnum ToEnum(Object^ value);
 
-		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum		
+		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class		
 		static TEnum ToEnum(SByte value);
 
-		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
+		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
 		static TEnum ToEnum(Byte value);
 
-		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
+		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
 		static TEnum ToEnum(Int16 value);
 
-		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
+		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
 		static TEnum ToEnum(UInt16 value);
 
-		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
+		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
 		static TEnum ToEnum(Int32 value);
 
-		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
+		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
 		static TEnum ToEnum(UInt32 value);
 
-		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
+		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
 		static TEnum ToEnum(Int64 value);
 
-		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
+		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
 		static TEnum ToEnum(UInt64 value);
 				
-		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum			
+		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class			
 		static TEnum Parse(String ^source, Boolean ignoreCase);
 
-		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
+		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
 		static TEnum Parse(String ^source);
 
-		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
+		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
 		static Boolean TryParse(String ^source, [Out] TEnum %result);
 
-		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
+		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
 		static Boolean TryParse(String ^source, Boolean ignoreCase, [Out] TEnum %result);
 		
-		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
+		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
 		static Boolean TryGetFromDescription(String ^source, [Out] TEnum %result);
 
 	};

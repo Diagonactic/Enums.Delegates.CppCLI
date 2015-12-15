@@ -1,17 +1,17 @@
 #pragma once
-#include "GenericEnumCore.h"
+#include "GenericNumericEnumCore.h"
 
 using namespace System;
 using namespace System::Collections::Generic;
 using namespace System::Reflection;
 using namespace System::ComponentModel;
 
-ref class GenericEnumCore;
+ref class GenericNumericEnumCore;
 
 namespace Diagonactic
 {
-	generic<typename TEnum>	where TEnum : IComparable, IFormattable, IConvertible, System::Enum
-	private ref class GenericEnumCoreDescriptions sealed : public GenericEnumCore<TEnum>
+	generic<typename TEnum>	where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
+	private ref class GenericEnumCoreDescriptions sealed : public GenericNumericEnumCore<TEnum>
 	{
 	private:
 		static Dictionary<String^, TEnum> ^s_descriptionToEnum = gcnew Dictionary<String^, TEnum>(s_length);
@@ -23,7 +23,7 @@ namespace Diagonactic
 			
 			for (Int32 i = 0; i < s_length; i++)
 			{
-				TEnum value = GenericEnumCore<TEnum>::s_values[i];
+				TEnum value = GenericNumericEnumCore<TEnum>::s_values[i];
 				String ^description = GetDescriptionFromAttribute(names[i]);
 				if (description == nullptr)
 					continue;

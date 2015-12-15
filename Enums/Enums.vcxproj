@@ -102,10 +102,10 @@
     <ClInclude Include="Enums.h" />
     <ClInclude Include="EqualityComparers.h" />
     <ClInclude Include="GenericEnumMinimal.h" />
-    <ClInclude Include="GenericEnumCore.h" />
+    <ClInclude Include="GenericNumericEnumCore.h" />
     <ClInclude Include="GenericEnumCoreDescriptions.h" />
     <ClInclude Include="GenericEnumValues.h" />
-    <ClInclude Include="GenericNumericEnumCore.h" />
+    <ClInclude Include="NumberMap.h" />
     <ClInclude Include="InterlockedEnum.h" />
     <ClInclude Include="MsilConvert.h" />
     <ClInclude Include="resource.h" />

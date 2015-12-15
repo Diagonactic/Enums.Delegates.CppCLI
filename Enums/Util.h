@@ -64,7 +64,7 @@ namespace Diagonactic
 		
 		template <typename TNumber>
 		[MethodImpl(MethodImplOptions::AggressiveInlining)]
-		static TNumber AddFlagTo(TNumber enumValue, TNumber flagToAdd)
+		static TNumber AddFlagTo(TNumber %enumValue, TNumber %flagToAdd)
 		{						
 			return enumValue | flagToAdd;
 		}
@@ -83,26 +83,7 @@ namespace Diagonactic
 				return true;
 			if (enumFlagToTest == 0)
 				return false;
-			return (enumValue & enumFlagToTest) == enumFlagToTest;
-		}
-
-		generic <typename TEnum>
-			where TEnum:IComparable, IFormattable, IConvertible, System::Enum
-		static Boolean IsFlagSet(TEnum enumSource, TEnum enumFlagToTest, UnderlyingKind kind)
-		{
-			switch(kind)
-			{
-				case UnderlyingKind::Int32Kind:  return IsFlagSet(ClobberToInt32<TEnum>(enumSource), ClobberToInt32<TEnum>(enumFlagToTest));
-				case UnderlyingKind::SByteKind:  return IsFlagSet(ClobberToSByte<TEnum>(enumSource), ClobberToSByte<TEnum>(enumFlagToTest));
-				case UnderlyingKind::ByteKind:   return IsFlagSet(ClobberToByte<TEnum>(enumSource), ClobberToByte<TEnum>(enumFlagToTest));
-				case UnderlyingKind::UInt32Kind: return IsFlagSet(ClobberToUInt32<TEnum>(enumSource), ClobberToUInt32<TEnum>(enumFlagToTest));
-				case UnderlyingKind::Int64Kind:  return IsFlagSet(ClobberToInt64<TEnum>(enumSource), ClobberToInt64<TEnum>(enumFlagToTest));
-				case UnderlyingKind::Int16Kind:  return IsFlagSet(ClobberToInt16<TEnum>(enumSource), ClobberToInt16<TEnum>(enumFlagToTest));
-				case UnderlyingKind::UInt16Kind: return IsFlagSet(ClobberToUInt16<TEnum>(enumSource), ClobberToUInt16<TEnum>(enumFlagToTest));
-				case UnderlyingKind::UInt64Kind: return IsFlagSet(ClobberToUInt64<TEnum>(enumSource), ClobberToUInt64<TEnum>(enumFlagToTest));
-			}
-				
-			throw gcnew InvalidOperationException("Failed to determine underlying type when detecting whether or not flag was set");
+			return ((enumValue & enumFlagToTest) == enumFlagToTest);
 		}
 	};
 }

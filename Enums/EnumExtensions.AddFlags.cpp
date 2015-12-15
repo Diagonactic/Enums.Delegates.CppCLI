@@ -16,7 +16,7 @@ namespace Diagonactic {
 	/// <param name="flagsToAdd">The flag to add to <paramref name="source"/></param>
 	/// <typeparam name="TEnum">An <see langword="enum"/> (<see cref="System::Enum"/>)</typeparam>
 	/// <returns><paramref name="source"/> with <paramref name="flagsToAdd"/> added.</returns>
-	generic <typename TEnum> where TEnum: IComparable, IFormattable, IConvertible, System::Enum
+	generic <typename TEnum> where TEnum: IComparable, IFormattable, IConvertible, System::Enum, value class
 		TEnum EnumExtensions::AddFlags(TEnum source, ...array<TEnum>^ flagsToAdd)
 	{
 		return GenericEnumMinimal<TEnum>::AddFlags(flagsToAdd, source);

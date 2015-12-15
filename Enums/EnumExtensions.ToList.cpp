@@ -1,6 +1,6 @@
 #pragma once
 #include "stdafx.h"
-#include "GenericEnumCore.h"
+#include "GenericNumericEnumCore.h"
 #include "EnumExtensions.h"
 
 ref class GenericEnumMinimal;
@@ -13,9 +13,9 @@ namespace Diagonactic {
 	/// <param name="source">A flags enum to convert to a list</param>
 	/// <typeparam name="TEnum">An enum.</typeparam>
 	/// <returns>Returns a list containing all of the flags contained in <paramref name="source"/></returns>
-	generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
+	generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
 		List<TEnum>^ EnumExtensions::ToList(TEnum source)
 	{
-		return Diagonactic::GenericEnumCore<TEnum>::ToList(source);
+		return Diagonactic::GenericNumericEnumCore<TEnum>::ToList(source);
 	}
 }

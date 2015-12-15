@@ -17,7 +17,7 @@ namespace Diagonactic {
 	/// <param name="flagsToTest">The flags to check against <paramref name="source"/></param>
 	/// <typeparam name="TEnum">An <see langword="enum"/> (<see cref="System::Enum"/>)</typeparam>
 	/// <returns><see langword="true"/> if all flags in <paramref name="flagsToTest"/> are set in <paramref name="source"/>.</returns>
-	generic <typename TEnum> where TEnum: IComparable, IFormattable, IConvertible, System::Enum
+	generic <typename TEnum> where TEnum: IComparable, IFormattable, IConvertible, System::Enum, value class
 		Boolean EnumExtensions::AreAllFlagsSet(TEnum source, ...array<TEnum>^ flagsToTest)
 	{
 		return GenericEnumMinimal<TEnum>::AreAllFlagsSet(flagsToTest, source);

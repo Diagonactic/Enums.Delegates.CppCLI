@@ -1,5 +1,8 @@
 #include "stdafx.h"
 #include "EnumExtensions.h"
+#include "GenericNumericEnumCore.h"
+
+ref class GenericNumericEnumCore;
 
 ref class GenericEnumMinimal;
 ref class GenericEnumCoreDescriptions;
@@ -14,17 +17,17 @@ namespace Diagonactic {
 	/// <param name="source"></param>
 	/// <typeparam name="TEnum">An <see langword="enum"/> (<see cref="System::Enum"/>)</typeparam>
 	/// <returns>Comma separated string version of <typeparamref name="TEnum"/></returns>
-	generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
+	generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
 		String^ EnumExtensions::AsString(TEnum source)
 	{
-		return Diagonactic::GenericEnumCore<TEnum>::AsString(source);
+		return Diagonactic::GenericNumericEnumCore<TEnum>::AsString(source);
 	}
 
 	/// <summary>Converts <paramref name="value"/> to an <see cref="System::Object"/></summary>
 	/// <param name="value">The value to convert to <see cref="System::Object"/></param>
 	/// <returns>An <see cref="System::Object"/> of <paramref name="value"/>.</returns>
 	/// <typeparam name="TEnum">An <see langword="enum"/> (<see cref="System::Enum"/>)</typeparam>
-	generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
+	generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
 		Object^ EnumExtensions::AsObject(TEnum value)
 	{
 		return Enum::ToObject(TEnum::typeid, value);
@@ -35,7 +38,7 @@ namespace Diagonactic {
 	/// <param name="source">The enum to get the description attribute from</param>
 	/// <typeparam name="TEnum">An <see langword="enum"/> (<see cref="System::Enum"/>)</typeparam>
 	/// <returns>The value of the description, or <see langword="null"/> if the value was not found.</returns>
-	generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
+	generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
 		String^ EnumExtensions::GetDescription(TEnum source)
 	{
 		return GenericEnumCoreDescriptions<TEnum>::TryGetDescription(source);
@@ -47,7 +50,7 @@ namespace Diagonactic {
 	/// <param name="format">A format string to apply</param>
 	/// <typeparam name="TEnum">An <see langword="enum"/> (<see cref="System::Enum"/>)</typeparam>
 	/// <returns>A formatted representation of <paramref name="source"/></returns>
-	generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
+	generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
 		String^ EnumExtensions::Format(TEnum source, String^ format)
 	{
 		return Enum::Format(TEnum::typeid, source, format);
@@ -59,10 +62,10 @@ namespace Diagonactic {
 	/// <param name="flagToTest"></param>
 	/// <typeparam name="TEnum">An <see langword="enum"/> (<see cref="System::Enum"/>)</typeparam>
 	/// <returns><see langword="true"/> if <paramref name="source"/> contains <paramref name="flagToTest"/></returns>
-	generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
+	generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
 		Boolean EnumExtensions::IsFlagSet(TEnum source, TEnum flagToTest)
 	{
-		return Diagonactic::GenericEnumMinimal<TEnum>::HasFlag(source, flagToTest);
+		return Diagonactic::GenericEnumMinimal<TEnum>::IsFlagSet(source, flagToTest);
 	}
 
 	/// <summary>
@@ -73,7 +76,7 @@ namespace Diagonactic {
 	/// <param name="flagToSet">The flag to add to <paramref name="source"/></param>
 	/// <typeparam name="TEnum">An <see langword="enum"/> (<see cref="System::Enum"/>)</typeparam>
 	/// <returns><paramref name="source"/> with <paramref name="flagToSet"/> added.</returns>
-	generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
+	generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
 		TEnum EnumExtensions::AddFlag(TEnum source, TEnum flagToSet)
 	{
 		return Diagonactic::GenericEnumMinimal<TEnum>::AddFlag(source, flagToSet);
@@ -88,7 +91,7 @@ namespace Diagonactic {
 	/// <typeparam name="TEnum">An <see langword="enum"/> (<see cref="System::Enum"/>)</typeparam>
 	/// <exception cref="ArgumentNullException"><paramref name="condition"/> cannot be <see langword="null"/></exception>
 	/// <returns>If <paramref name="condition"/> evaluates to true, <paramref name="source"/> with <paramref name="flagToSet"/> added; otherwise <paramref name="source"/> is returned.</returns>
-	generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
+	generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
 		TEnum EnumExtensions::AddFlagIf(TEnum source, TEnum flagToSet, Func<bool>^ condition)
 	{
 		if (condition == nullptr) throw gcnew ArgumentNullException("condition");
@@ -108,7 +111,7 @@ namespace Diagonactic {
 	/// <typeparam name="TEnum">An <see langword="enum"/> (<see cref="System::Enum"/>)</typeparam>
 	/// <exception cref="ArgumentNullException"><paramref name="condition"/> cannot be <see langword="null"/></exception>
 	/// <returns>If <paramref name="condition"/> evaluates to true, <paramref name="source"/> with <paramref name="flagToSet"/> added; otherwise <paramref name="source"/> is returned.</returns>
-	generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
+	generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
 		TEnum EnumExtensions::AddFlagIf(TEnum source, TEnum flagToSet, Predicate<TEnum>^ condition)
 	{
 		if (condition == nullptr) throw gcnew ArgumentNullException("condition");
@@ -127,7 +130,7 @@ namespace Diagonactic {
 	/// <param name="condition">A delegate to evaluate to determine if <paramref name="flagToSet"/> should be set.</param>
 	/// <typeparam name="TEnum">An <see langword="enum"/> (<see cref="System::Enum"/>)</typeparam>
 	/// <returns>If <paramref name="condition"/> evaluates to true, <paramref name="source"/> with <paramref name="flagToSet"/> added; otherwise <paramref name="source"/> is returned.</returns>
-	generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
+	generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
 		TEnum EnumExtensions::AddFlagIf(TEnum source, TEnum flagToSet, bool condition)
 	{
 		if (!condition)
@@ -145,7 +148,7 @@ namespace Diagonactic {
 	/// <typeparam name="TEnum">An <see langword="enum"/> (<see cref="System::Enum"/>)</typeparam>
 	/// <exception cref="ArgumentNullException"><paramref name="condition"/> cannot be <see langword="null"/></exception>
 	/// <returns>If <paramref name="condition"/> evaluates to true, <paramref name="source"/> with <paramref name="flagToRemove"/> removed; otherwise <paramref name="source"/> is returned.</returns>
-	generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
+	generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
 		TEnum EnumExtensions::RemoveFlagIf(TEnum source, TEnum flagToRemove, Func<bool>^ condition)
 	{
 		if (condition == nullptr) throw gcnew ArgumentNullException("condition");
@@ -165,7 +168,7 @@ namespace Diagonactic {
 	/// <typeparam name="TEnum">An <see langword="enum"/> (<see cref="System::Enum"/>)</typeparam>
 	/// <exception cref="ArgumentNullException"><paramref name="condition"/> cannot be <see langword="null"/></exception>
 	/// <returns>If <paramref name="condition"/> evaluates to true, <paramref name="source"/> with <paramref name="flagToRemove"/> removed; otherwise <paramref name="source"/> is returned.</returns>
-	generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
+	generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
 		TEnum EnumExtensions::RemoveFlagIf(TEnum source, TEnum flagToRemove, Predicate<TEnum>^ condition)
 	{
 		if (condition == nullptr) throw gcnew ArgumentNullException("condition");
@@ -183,7 +186,7 @@ namespace Diagonactic {
 	/// <param name="condition">A delegate to evaluate to determine if <paramref name="flagToSet"/> should be set.</param>
 	/// <typeparam name="TEnum">An <see langword="enum"/> (<see cref="System::Enum"/>)</typeparam>
 	/// <returns>If <paramref name="condition"/> evaluates to true, <paramref name="source"/> with <paramref name="flagToRemove"/> removed; otherwise <paramref name="source"/> is returned.</returns>
-	generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
+	generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
 		TEnum EnumExtensions::RemoveFlagIf(TEnum source, TEnum flagToRemove, bool condition)
 	{
 		if (!condition)
@@ -201,7 +204,7 @@ namespace Diagonactic {
 	/// <typeparam name="TEnum">An <see langword="enum"/> (<see cref="System::Enum"/>)</typeparam>
 	/// <exception cref="ArgumentNullException"><paramref name="condition"/> cannot be <see langword="null"/></exception>
 	/// <returns>If <paramref name="condition"/> evaluates to true, <paramref name="source"/> with <paramref name="flagToRemove"/> removed; otherwise <paramref name="source"/> is returned.</returns>
-	generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
+	generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
 		TEnum EnumExtensions::ModifyFlag(TEnum source, TEnum flagToModify, Func<bool>^ condition)
 	{
 		if (condition == nullptr) throw gcnew ArgumentNullException("condition");
@@ -222,7 +225,7 @@ namespace Diagonactic {
 	/// <typeparam name="TEnum">An <see langword="enum"/> (<see cref="System::Enum"/>)</typeparam>
 	/// <exception cref="ArgumentNullException"><paramref name="condition"/> cannot be <see langword="null"/></exception>
 	/// <returns>If <paramref name="condition"/> evaluates to true, <paramref name="source"/> with <paramref name="flagToRemove"/> removed; otherwise <paramref name="source"/> is returned.</returns>
-	generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
+	generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
 		TEnum EnumExtensions::ModifyFlag(TEnum source, TEnum flagToModify, Predicate<TEnum>^ condition)
 	{
 		if (condition == nullptr) throw gcnew ArgumentNullException("condition");
@@ -241,7 +244,7 @@ namespace Diagonactic {
 	/// <param name="condition">A delegate to evaluate to determine if <paramref name="flagToSet"/> should be set.</param>
 	/// <typeparam name="TEnum">An <see langword="enum"/> (<see cref="System::Enum"/>)</typeparam>
 	/// <returns>If <paramref name="condition"/> evaluates to true, <paramref name="source"/> with <paramref name="flagToRemove"/> removed; otherwise <paramref name="source"/> is returned.</returns>
-	generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
+	generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
 		TEnum EnumExtensions::ModifyFlag(TEnum source, TEnum flagToModify, bool condition)
 	{
 		if (condition)
@@ -254,7 +257,7 @@ namespace Diagonactic {
 	/// <param name="flagToRemove">The flag to remove from <paramref name="source"/></param>
 	/// <typeparam name="TEnum">An <see langword="enum"/> (<see cref="System::Enum"/>)</typeparam>
 	/// <returns>The <paramref name="source"/> with <paramref name="flagToRemove"/> added.</returns>
-	generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
+	generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
 		TEnum EnumExtensions::RemoveFlag(TEnum source, TEnum flagToRemove)
 	{
 		return Diagonactic::GenericEnumMinimal<TEnum>::RemoveFlag(source, flagToRemove);

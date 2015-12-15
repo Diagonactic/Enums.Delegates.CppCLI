@@ -10,6 +10,18 @@ enum UnderlyingKind : char;
 ref class Util;
 ref class MsilConvert;
 
+#define CaseKind(macroName, kind, source, target) switch (kind) {\
+			macroName(Int32, source, target);\
+			macroName(Int64, source, target);\
+			macroName(Int16, source, target);\
+			macroName(Byte, source, target);\
+			macroName(UInt32, source, target);\
+			macroName(UInt64, source, target);\
+			macroName(UInt16, source, target);\
+			macroName(SByte, source, target);\
+	}
+
+
 #define AREALLFLAGSSET(type, sourceEnum, enumFlagsToCheck) case UnderlyingKind::type##Kind:\
 {\
 	auto i = enumFlagsToCheck->Length;\
@@ -21,20 +33,6 @@ ref class MsilConvert;
 	} while(true);\
 }
 
-/*
-#define AREALLFLAGSSET(type, sourceEnum, enumFlagsToCheck) case UnderlyingKind::type##Kind:\
-{\
-	auto i = enumFlagsToCheck->Length;\
-	pin_ptr<TEnum> elemPtr = &enumFlagsToCheck[i-1];\
-	do {\
-		i--;\
-		if (!(Util::IsFlagSet(Util::ClobberTo##type(sourceEnum), Util::ClobberTo##type(*elemPtr))))\
-			return false;\
-		if (i == 0) return true;\
-		elemPtr--;\
-	} while(true);\
-}
-*/
 #define AREANYFLAGSSET(type, sourceEnum, enumFlagsToCheck) case UnderlyingKind::type##Kind:\
 {\
 	auto i = enumFlagsToCheck->Length;\
@@ -66,14 +64,7 @@ ref class MsilConvert;
 	AREALLFLAGSSET(SByte, sourceEnum, enumFlagsToCheck)\
 }
 
-#define TYPECASEEXECUTEFOREACH(type, enumMethod, enumVal, enumArray) case UnderlyingKind::type##Kind:\
-{\
-Int32 len = enumArray->Length;\
-auto retVal = Util::ClobberTo##type(enumVal);\
-for (int i = 0; i < len; i++)\
-	retVal = Util::enumMethod(retVal, Util::ClobberTo##type(enumArray[i]));\
-return MsilConvert::ClobberFrom<TEnum>(retVal);\
-}
+
 
 #define TYPECASECALLRETURN(type, callPart, p1, p2) case UnderlyingKind::type##Kind: return MsilConvert::ClobberFrom<TEnum>(Util::##callPart(Util::ClobberTo##type(p1), Util::ClobberTo##type(p2)))
 #define EXECUTEFOREACHALLTYPES(enumMethod, enumVal, enumArray) switch(s_kind) {\
@@ -112,7 +103,7 @@ namespace Diagonactic
 {
 	
 	generic<typename TEnum>
-		where TEnum : IComparable, IFormattable, IConvertible, System::Enum
+		where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
 
 		private ref class GenericEnumMinimal abstract
 		{
@@ -122,12 +113,40 @@ namespace Diagonactic
 			static TEnum s_defaultValue = TEnum();
 			static Type^ s_type = TEnum::typeid;
 			static UnderlyingKind s_kind = Util::GetKind(s_defaultValue);			
+						
 
-			static Boolean HasFlag(TEnum source, TEnum testVal)
+#define IsFlagSetNumerically(type, source, target) case UnderlyingKind::type##Kind: return Util::IsFlagSet<type>(*reinterpret_cast<type*>(&source), *reinterpret_cast<type*>(&target));
+			static Boolean IsFlagSet(TEnum source, TEnum testVal)
 			{				
-				return Util::IsFlagSet(source, testVal, s_kind);
+				CaseKind(IsFlagSetNumerically, s_kind, source, testVal)
 			}
+#define AddFlagArrayMethod(type) static TEnum AddFlags##type(TEnum enumVal, array<TEnum>^ enumArray) {\
+	Int32 len = enumArray->Length;\
+	type retVal = *reinterpret_cast<type*>(&enumVal);\
+	TEnum flagToAdd;\
+	for (int i = 0; i < enumArray.Length; i++)\
+		retVal = retVal | (Util::ClobberTo##type(flagToAdd));\
+	return MsilConvert::ClobberFrom<TEnum>(retVal);\
+}
+#define AddFlagArray(type, source, targetArray) case UnderlyingKind::type##Kind: return AddFlags##type(source, targetArray);
 
+				AddFlagArrayMethod(Int32)
+				AddFlagArrayMethod(UInt32)
+				AddFlagArrayMethod(Int64)
+				AddFlagArrayMethod(UInt64)
+				AddFlagArrayMethod(Int16)
+				AddFlagArrayMethod(UInt16)
+				AddFlagArrayMethod(Byte)
+				AddFlagArrayMethod(SByte)
+
+#define TYPECASEEXECUTEFOREACH(type, enumMethod, enumVal, enumArray) case UnderlyingKind::type##Kind:\
+{\
+Int32 len = enumArray->Length;\
+auto retVal = Util::ClobberTo##type(enumVal);\
+for (int i = 0; i < len; i++)\
+	retVal = Util::enumMethod(retVal, Util::ClobberTo##type(enumArray[i]));\
+return MsilConvert::ClobberFrom<TEnum>(retVal);\
+}
 			static TEnum RemoveFlags(TEnum sourceEnum, ...array<TEnum>^ enumFlagsToRemove)
 			{
 				EXECUTEFOREACHALLTYPES(RemoveFlagFrom, sourceEnum, enumFlagsToRemove)
@@ -136,7 +155,8 @@ namespace Diagonactic
 
 			static TEnum AddFlags(array<TEnum>^ enumFlagsToAdd, TEnum sourceEnum)
 			{
-				EXECUTEFOREACHALLTYPES(AddFlagTo, sourceEnum, enumFlagsToAdd)
+				EXECUTEFOREACHALLTYPES(AddFlagTo, sourceEnum, enumFlagsToAdd);
+				//EXECUTEFOREACHALLTYPES(AddFlagTo, sourceEnum, enumFlagsToAdd)
 				throw gcnew Exception("This should never throw. All underlying types are represented above.");
 			}
 #pragma warning(disable:4958)
@@ -150,11 +170,12 @@ namespace Diagonactic
 			{
 				AREANYFLAGSSETALL(sourceEnum, enumFlagsToCheck);
 				throw gcnew Exception("This should never throw. All underlying types are represented above.");
-			}		
+			}
 
+#define CaseAddFlagNumerically(type, source, target) case UnderlyingKind::type##Kind: return MsilConvert::ClobberFrom<TEnum>((*reinterpret_cast<type*>(&source)) | (*reinterpret_cast<type*>(&target)))
 			static TEnum AddFlag(TEnum sourceEnum, TEnum target)
 			{
-				EXECUTEALLTYPES(AddFlagTo, sourceEnum, target);
+				CaseKind(CaseAddFlagNumerically, s_kind, sourceEnum, target)
 				throw gcnew Exception("This should never throw. All underlying types are represented above.");
 			}
 

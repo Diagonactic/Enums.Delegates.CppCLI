@@ -25,15 +25,14 @@ namespace MSIL
                 return 1;
             }
 
-            Console.WriteLine("Using Keyfile: " + args[0]);
+            Console.WriteLine("INFORMATION: Using Keyfile: " + args[0]);
 
             string programFiles = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86),
                    ildasm = Path.Combine(programFiles, @"Microsoft SDKs\Windows\v8.1A\bin\NETFX 4.5.1 Tools\ildasm.exe");
             if (!File.Exists(ildasm))
             {
-                var err = $"Windows 8.1A SDK or .Net Framework SDK 4.5.1 is required to build library - it was not found at '{ildasm}'";
-                Console.WriteLine(err);
-                throw new FileNotFoundException(err);
+                Console.WriteLine($"ERROR: Windows 8.1A SDK or .Net Framework SDK 4.5.1 is required to build library - it was not found at '{ildasm}'");
+                return 1;
             }
 
             string ilasm = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Windows), @"Microsoft.NET\Framework64\v4.0.30319\ilasm.exe");

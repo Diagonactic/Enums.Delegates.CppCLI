@@ -10,7 +10,7 @@ using namespace System::Collections::ObjectModel;
 
 namespace Diagonactic
 {
-	generic<typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum
+	generic<typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
 		private ref class GenericEnumValues abstract : public GenericEnumMinimal<TEnum>
 	{
 	internal:

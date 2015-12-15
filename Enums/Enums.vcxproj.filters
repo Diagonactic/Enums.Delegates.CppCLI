@@ -27,9 +27,6 @@
     <ClInclude Include="Util.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GenericEnumCore.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="EnumExtensions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -52,6 +49,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="EqualityComparers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NumberMap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GenericNumericEnumCore.h">

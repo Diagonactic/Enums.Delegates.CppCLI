@@ -105,7 +105,7 @@
     <Compile Include="Performance\IsFlagSetComp.cs" />
     <Compile Include="Performance\IsFlagSetPerf.cs" />
     <Compile Include="Performance\ParsePerf.cs" />
-    <Compile Include="Performance\ParseUncasedPerf.cs" />
+    <Compile Include="Performance\ParseCaseInsensitivePerf.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Performance\RemoveFlagPerf.cs" />
