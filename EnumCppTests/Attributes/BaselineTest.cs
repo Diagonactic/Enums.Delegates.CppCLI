@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace EnumCppTests.Attributes
 {
-    public sealed class BaselineTest : TestCategoryBaseAttribute
+    public sealed class BaselineTestAttribute : TestCategoryBaseAttribute
 
     {
         /// <summary>

@@ -6,19 +6,21 @@
 #include "NumberMap.h"
 #include <cliext\hash_map>
 
-#define AssignStaticMapField(type) {\
-s_comparer = type##EnumEqualityComparer<TEnum>::Default;\
-s_nameMap = gcnew Dictionary<String^, TEnum>(len, FastStringComparer::Default);\
-auto values = gcnew array<type>(len);\
-TEnum enumValue;\
-for (int i = 0; i < len; i++)\
-{\
-	enumValue = enumValues[i];\
-	values[i] = Util::ClobberTo##type(enumValue);\
-	s_nameMap->Add(names[i], enumValue);\
-}\
-s_caseMap = gcnew Dictionary<String^, TEnum>(s_nameMap, StringComparer::OrdinalIgnoreCase);\
-s_enum##type = gcnew NumberMap<type>(values, names, UnderlyingKind::type##Kind);\
+#define NumberMapField(typeName) <typeName>^ s_enum##typeName
+
+#define AssignStaticMapField(type) {															\
+	s_comparer = type##EnumEqualityComparer<TEnum>::Default;									\
+	s_nameMap = gcnew Dictionary<String^, TEnum>(len, FastStringComparer::Default);				\
+	auto values = gcnew array<type>(len);														\
+	TEnum enumValue;																			\
+	for (int i = 0; i < len; i++)																\
+	{																							\
+		enumValue = enumValues[i];																\
+		values[i] = Util::ClobberTo##type(enumValue);											\
+		s_nameMap->Add(names[i], enumValue);													\
+	}																							\
+	s_caseMap = gcnew Dictionary<String^, TEnum>(s_nameMap, StringComparer::OrdinalIgnoreCase);	\
+	s_enum##type = gcnew NumberMap<type>(values, names, UnderlyingKind::type##Kind);			\
 }
 
 
@@ -27,38 +29,39 @@ valueWithTypeParameter(Int32);\
 valueWithTypeParameter(Int64);\
 valueWithTypeParameter(Int16);\
 valueWithTypeParameter(Byte);\
-valueWithTypeParameter(UInt32); \
-valueWithTypeParameter(UInt64); \
-valueWithTypeParameter(UInt16); \
+valueWithTypeParameter(UInt32);\
+valueWithTypeParameter(UInt64);\
+valueWithTypeParameter(UInt16);\
 valueWithTypeParameter(SByte)
 
-#define ExecuteForType(targetEnumValue, valueWithTypeParameter)\
-switch (targetEnumValue) {\
-	case UnderlyingKind::Int32Kind:\
-		valueWithTypeParameter(Int32);\
-	break;\
-	case UnderlyingKind::UInt32Kind:\
-		valueWithTypeParameter(UInt32);\
-	break;\
-	case UnderlyingKind::Int64Kind:\
-		valueWithTypeParameter(Int64);\
-	break;\
-	case UnderlyingKind::UInt64Kind:\
-		valueWithTypeParameter(UInt64);\
-	break;\
-	case UnderlyingKind::Int16Kind:\
-		valueWithTypeParameter(Int16);\
-	break;\
-	case UnderlyingKind::UInt16Kind:\
-		valueWithTypeParameter(UInt16);\
-	break;\
-	case UnderlyingKind::ByteKind:\
-		valueWithTypeParameter(Byte);\
-	break;\
-	case UnderlyingKind::SByteKind:\
-		valueWithTypeParameter(SByte);\
-	break;\
+#define ExecuteForType(targetEnumValue, valueWithTypeParameter)		\
+switch (targetEnumValue) {											\
+	case UnderlyingKind::Int32Kind:									\
+		valueWithTypeParameter(Int32);								\
+	break;															\
+	case UnderlyingKind::UInt32Kind:								\
+		valueWithTypeParameter(UInt32);								\
+	break;															\
+	case UnderlyingKind::Int64Kind:									\
+		valueWithTypeParameter(Int64);								\
+	break;															\
+	case UnderlyingKind::UInt64Kind:								\
+		valueWithTypeParameter(UInt64);								\
+	break;															\
+	case UnderlyingKind::Int16Kind:									\
+		valueWithTypeParameter(Int16);								\
+	break;															\
+	case UnderlyingKind::UInt16Kind:								\
+		valueWithTypeParameter(UInt16);								\
+	break;															\
+	case UnderlyingKind::ByteKind:									\
+		valueWithTypeParameter(Byte);								\
+	break;															\
+	case UnderlyingKind::SByteKind:									\
+		valueWithTypeParameter(SByte);								\
+	break;															\
 }
+
 
 
 ref class GenericEnumValues;
@@ -76,8 +79,7 @@ using namespace cliext;
 
 namespace Diagonactic {
 
-	generic<typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
-		private ref class GenericNumericEnumCore abstract : GenericEnumValues<TEnum>
+	GenericEnumType	private ref class GenericNumericEnumCore abstract : GenericEnumValues<TEnum>
 	{
 	private:
 		static GenericNumericEnumCore() {
@@ -132,7 +134,18 @@ namespace Diagonactic {
 
 		static array<String^>^ GetNames()
 		{
-			return Enumerable::ToArray(s_nameMap->Keys	);
+			return Enumerable::ToArray(s_nameMap->Keys);
+		}
+
+		static array<TEnum>^ ToArray() 
+		{
+			array<TEnum>^ result = (array<TEnum>^)Array::CreateInstance(TEnum::typeid, s_values->Length);
+			int i = 0;
+			for each(auto val in s_nameMap->Values) {
+				result[i] = val;
+				i++;
+			}
+			return result;
 		}
 
 #define PARSEPART(type) case UnderlyingKind::type##Kind: {\
@@ -179,17 +192,19 @@ namespace Diagonactic {
 			return false;
 		}
 
+
+
 		static Dictionary<String^, TEnum>^ s_nameMap;
 		static Dictionary<String^, TEnum>^ s_caseMap;
 		static IEqualityComparer<TEnum>^ s_comparer;		
-		static NumberMap<Int16>^ s_enumInt16;
-		static NumberMap<UInt16>^ s_enumUInt16;
-		static NumberMap<Int32>^ s_enumInt32;
-		static NumberMap<UInt32>^ s_enumUInt32;
-		static NumberMap<Int64>^ s_enumInt64;
-		static NumberMap<UInt64>^ s_enumUInt64;
-		static NumberMap<Byte>^ s_enumByte;
-		static NumberMap<SByte>^ s_enumSByte;
+		static NumberMap NumberMapField(Int16);
+		static NumberMap NumberMapField(UInt16);
+		static NumberMap NumberMapField(Int32);
+		static NumberMap NumberMapField(UInt32);
+		static NumberMap NumberMapField(Int64);
+		static NumberMap NumberMapField(UInt64);
+		static NumberMap NumberMapField(Byte);
+		static NumberMap NumberMapField(SByte);
 	};
 
 

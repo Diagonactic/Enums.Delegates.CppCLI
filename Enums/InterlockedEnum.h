@@ -28,8 +28,7 @@ namespace Diagonactic
 	/// <para>Not all enum types are supported.  The underlying type must be a 32-bit or 64-bit signed integer</para>
 	/// <exception cref="NotSupportedException">Underlying type of enum must be a signed 32-bit or 64-bit integer.</exception>
 	/// </remarks>
-	generic <typename TEnum> where TEnum:IComparable, IFormattable, IConvertible, System::Enum, value class
-		public ref class InterlockedEnum
+	GenericEnumType	public ref class InterlockedEnum
 	{
 
 	private:

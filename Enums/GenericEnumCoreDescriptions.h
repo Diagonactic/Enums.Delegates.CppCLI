@@ -10,8 +10,7 @@ ref class GenericNumericEnumCore;
 
 namespace Diagonactic
 {
-	generic<typename TEnum>	where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
-	private ref class GenericEnumCoreDescriptions sealed : public GenericNumericEnumCore<TEnum>
+	GenericEnumType	private ref class GenericEnumCoreDescriptions sealed : public GenericNumericEnumCore<TEnum>
 	{
 	private:
 		static Dictionary<String^, TEnum> ^s_descriptionToEnum = gcnew Dictionary<String^, TEnum>(s_length);

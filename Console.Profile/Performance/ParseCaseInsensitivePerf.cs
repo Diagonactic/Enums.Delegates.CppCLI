@@ -8,10 +8,10 @@ namespace Console.Profile.Performance
     [BenchmarkTask(1, BenchmarkMode.Throughput, BenchmarkPlatform.X64, BenchmarkJitVersion.RyuJit, BenchmarkFramework.V452, 5, 5)]
     public class ParseCaseInsensitivePerf {
         [Benchmark]
-        public void ParseOneCaseInsensitive() => Enums.Parse<FlagsLongEnum>("one", true);
+        public void ParseOneCaseInsensitive() => Enums.Parse<LongFlags>("one", true);
 
         [Benchmark]
-        public void ParseTwoCaseInsensitive() => Enums.Parse<FlagsLongEnum>("one, two", true);
+        public void ParseTwoCaseInsensitive() => Enums.Parse<LongFlags>("one, two", true);
         
     }
 }

@@ -97,8 +97,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Delegates.GetInvocationsAsArray.h" />
     <ClInclude Include="Delegates.h" />
     <ClInclude Include="EnumExtensions.h" />
+    <ClInclude Include="EnumFunctionMap.h" />
     <ClInclude Include="Enums.h" />
     <ClInclude Include="EqualityComparers.h" />
     <ClInclude Include="GenericEnumMinimal.h" />
@@ -122,6 +124,7 @@
     <ClCompile Include="EnumExtensions.RemoveFlags.cpp" />
     <ClCompile Include="EnumExtensions.cpp" />
     <ClCompile Include="EnumExtensions.ToList.cpp" />
+    <ClCompile Include="EnumFunctionMap.cpp" />
     <ClCompile Include="Enums.cpp" />
     <ClCompile Include="EqualityComparers.cpp" />
     <ClCompile Include="GenericNumericEnumCore.cpp" />

@@ -12,36 +12,36 @@ namespace DiagonacticTests
         [TestMethod, PerformanceTest, MethodImpl(MethodImplOptions.NoOptimization)]
         public void FlagSmallEnumParsePerformance()
         {
-            FlagsLongEnum one, two, three;
+            LongFlags one, two, three;
             for (var i = 0; i < ParseRuns; i++)
             {
-                one = Enums.Parse<FlagsLongEnum>("One, Two");
-                two = Enums.Parse<FlagsLongEnum>("Seven, Four");
-                three = Enums.Parse<FlagsLongEnum>("Nine, Ten");
+                one = Enums.Parse<LongFlags>("One, Two");
+                two = Enums.Parse<LongFlags>("Seven, Four");
+                three = Enums.Parse<LongFlags>("Nine, Ten");
             }
         }
 
         [TestMethod, PerformanceTest, MethodImpl(MethodImplOptions.NoOptimization)]
         public void FlagSmallEnumManyValuesParsePerformance()
         {
-            FlagsLongEnum one, two, three;
+            LongFlags one, two, three;
             for (var i = 0; i < ParseRuns; i++)
             {
-                one = Enums.Parse<FlagsLongEnum>("One, Two, Three, Four, Five");
-                two = Enums.Parse<FlagsLongEnum>("Onea, Twoa, Threea, Foura");
-                three = Enums.Parse<FlagsLongEnum>("One, Two, Three, Four, Five, Six, Seven, Eight, Nine");
+                one = Enums.Parse<LongFlags>("One, Two, Three, Four, Five");
+                two = Enums.Parse<LongFlags>("Onea, Twoa, Threea, Foura");
+                three = Enums.Parse<LongFlags>("One, Two, Three, Four, Five, Six, Seven, Eight, Nine");
             }
         }
 
         [TestMethod, BaselineTest, MethodImpl(MethodImplOptions.NoOptimization)]
         public void FlagSmallEnumManyValuesParseNativePerformance()
         {
-            FlagsLongEnum one, two, three;
+            LongFlags one, two, three;
             for (var i = 0; i < ParseRuns; i++)
             {
-                one = (FlagsLongEnum)Enum.Parse(typeof(FlagsLongEnum), "One, Two, Three, Four, Five");
-                two = (FlagsLongEnum)Enum.Parse(typeof(FlagsLongEnum), "Onea, Twoa, Threea, Foura");
-                three = (FlagsLongEnum)Enum.Parse(typeof(FlagsLongEnum), "One, Two, Three, Four, Five, Six, Seven, Eight, Nine");
+                one = (LongFlags)Enum.Parse(typeof(LongFlags), "One, Two, Three, Four, Five");
+                two = (LongFlags)Enum.Parse(typeof(LongFlags), "Onea, Twoa, Threea, Foura");
+                three = (LongFlags)Enum.Parse(typeof(LongFlags), "One, Two, Three, Four, Five, Six, Seven, Eight, Nine");
             }
         }
 
@@ -49,12 +49,12 @@ namespace DiagonacticTests
         [TestMethod, PerformanceTest, MethodImpl(MethodImplOptions.NoOptimization)]
         public void FlagSmallEnumSpacelessParsePerformance()
         {
-            FlagsLongEnum one, two, three;
+            LongFlags one, two, three;
             for (var i = 0; i < ParseRuns; i++)
             {
-                one = Enums.Parse<FlagsLongEnum>("One,Two");
-                two = Enums.Parse<FlagsLongEnum>("Seven,Four");
-                three = Enums.Parse<FlagsLongEnum>("Nine,Ten");
+                one = Enums.Parse<LongFlags>("One,Two");
+                two = Enums.Parse<LongFlags>("Seven,Four");
+                three = Enums.Parse<LongFlags>("Nine,Ten");
             }
         }
 
@@ -64,21 +64,21 @@ namespace DiagonacticTests
             string one, two, three;
             for (var i = 0; i < Runs; i++)
             {
-                one = (FlagsLongEnum.One | FlagsLongEnum.Eight).AsString();
-                two = (FlagsLongEnum.Seven | FlagsLongEnum.Ten).AsString();
-                three = (FlagsLongEnum.Zero | FlagsLongEnum.Two).AsString();
+                one = (LongFlags.One | LongFlags.Eight).AsString();
+                two = (LongFlags.Seven | LongFlags.Ten).AsString();
+                three = (LongFlags.Zero | LongFlags.Two).AsString();
             }
         }
 
         [TestMethod, BaselineTest, MethodImpl(MethodImplOptions.NoOptimization)]
         public void FlagSmallEnumParseNativePerformance()
         {
-            FlagsLongEnum one, two, three;
+            LongFlags one, two, three;
             for (var i = 0; i < ParseRuns; i++)
             {
-                one = (FlagsLongEnum)Enum.Parse(typeof(FlagsLongEnum), "One, Two");
-                two = (FlagsLongEnum)Enum.Parse(typeof(FlagsLongEnum), "Seven, Four");
-                three = (FlagsLongEnum)Enum.Parse(typeof(FlagsLongEnum), "Nine , Ten");
+                one = (LongFlags)Enum.Parse(typeof(LongFlags), "One, Two");
+                two = (LongFlags)Enum.Parse(typeof(LongFlags), "Seven, Four");
+                three = (LongFlags)Enum.Parse(typeof(LongFlags), "Nine , Ten");
             }
         }
 
@@ -88,9 +88,9 @@ namespace DiagonacticTests
             string one, two, three;
             for (var i = 0; i < Runs; i++)
             {
-                one = (FlagsLongEnum.One).AsString();
-                two = (FlagsLongEnum.Seven).AsString();
-                three = (FlagsLongEnum.Zero).AsString();
+                one = (LongFlags.One).AsString();
+                two = (LongFlags.Seven).AsString();
+                three = (LongFlags.Zero).AsString();
             }
         }
 
@@ -100,9 +100,9 @@ namespace DiagonacticTests
             string one, two, three;
             for (var i = 0; i < Runs; i++)
             {
-                one = (FlagsLongEnum.One).AsString();
-                two = (FlagsLongEnum.Seven).AsString();
-                three = (FlagsLongEnum.Zero).AsString();
+                one = (LongFlags.One).AsString();
+                two = (LongFlags.Seven).AsString();
+                three = (LongFlags.Zero).AsString();
             }
         }
 
@@ -112,9 +112,9 @@ namespace DiagonacticTests
             string one, two, three;
             for (var i = 0; i < Runs; i++)
             {
-                one = (FlagsLongEnum.One | FlagsLongEnum.Eight).ToString();
-                two = (FlagsLongEnum.Seven | FlagsLongEnum.Ten).ToString();
-                three = (FlagsLongEnum.Zero | FlagsLongEnum.Two).ToString();
+                one = (LongFlags.One | LongFlags.Eight).ToString();
+                two = (LongFlags.Seven | LongFlags.Ten).ToString();
+                three = (LongFlags.Zero | LongFlags.Two).ToString();
             }
         }
 
@@ -124,9 +124,9 @@ namespace DiagonacticTests
             string one, seven, five;
             for (var i = 0; i < Runs; i++)
             {
-                one = SmallEnum.One.AsString();
-                seven = SmallEnum.Seven.AsString();
-                five = SmallEnum.Five.AsString();
+                one = SmallNonFlags.One.AsString();
+                seven = SmallNonFlags.Seven.AsString();
+                five = SmallNonFlags.Five.AsString();
             }
         }
 
@@ -136,9 +136,9 @@ namespace DiagonacticTests
             string one, seven, five;
             for (var i = 0; i < Runs; i++)
             {
-                one = SmallEnum.One.ToString();
-                seven = SmallEnum.Seven.ToString();
-                five = SmallEnum.Five.AsString();
+                one = SmallNonFlags.One.ToString();
+                seven = SmallNonFlags.Seven.ToString();
+                five = SmallNonFlags.Five.AsString();
             }
         }
 

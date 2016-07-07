@@ -32,7 +32,8 @@ namespace Diagonactic {
 
 			do {
 				len--;
-				s_valueMap->Add(values[len], names[len]);
+				if (!s_valueMap->ContainsKey(values[len]))
+					s_valueMap->Add(values[len], names[len]);
 			} while (len != 0);
 		}
 

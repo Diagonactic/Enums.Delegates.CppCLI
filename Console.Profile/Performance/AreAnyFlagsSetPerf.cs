@@ -8,12 +8,12 @@ namespace Console.Profile.Performance
     [BenchmarkTask(1, BenchmarkMode.Throughput, BenchmarkPlatform.X64, BenchmarkJitVersion.RyuJit, BenchmarkFramework.V452, 5, 5)]
     public class AreAnyFlagsSetPerf
     {
-        const FlagsLongEnum Compare = FlagsLongEnum.Eight | FlagsLongEnum.Five;
+        const LongFlags Compare = LongFlags.Eight | LongFlags.Five;
 
         [Benchmark]
-        public void AreAnyFlagsSetTrue() => Compare.AreAnyFlagsSet(FlagsLongEnum.Five, FlagsLongEnum.Eight);
+        public void AreAnyFlagsSetTrue() => Compare.AreAnyFlagsSet(LongFlags.Five, LongFlags.Eight);
 
         [Benchmark]
-        public void AreAnyFlagsSetFalse() => Compare.AreAnyFlagsSet(FlagsLongEnum.Five, FlagsLongEnum.Four);
+        public void AreAnyFlagsSetFalse() => Compare.AreAnyFlagsSet(LongFlags.Five, LongFlags.Four);
     }
 }

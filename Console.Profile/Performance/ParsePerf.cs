@@ -10,25 +10,25 @@ namespace Console.Profile.Performance
     public class ParsePerf
     {
         [Benchmark]
-        public void ParseOneValue() => Enums.Parse<FlagsLongEnum>("One");
+        public void ParseOneValue() => Enums.Parse<LongFlags>("One");
 
         [Benchmark]
-        public void ParseTwoValues() => Enums.Parse<FlagsLongEnum>("One, Two");
+        public void ParseTwoValues() => Enums.Parse<LongFlags>("One, Two");
     }
 
     [BenchmarkTask(1, BenchmarkMode.Throughput, BenchmarkPlatform.X64, BenchmarkJitVersion.RyuJit, BenchmarkFramework.V452, 5, 5)]
     public class ParseComp
     {
         [Benchmark]
-        public void ParseOneValue() => Enums.Parse<FlagsLongEnum>("One");
+        public void ParseOneValue() => Enums.Parse<LongFlags>("One");
 
         [Benchmark]
-        public void ParseTwoValues() => Enums.Parse<FlagsLongEnum>("One, Two");
+        public void ParseTwoValues() => Enums.Parse<LongFlags>("One, Two");
 
         [Benchmark]
-        public void ParseOneValueNative() => System.Enum.Parse(typeof (FlagsLongEnum), "One");
+        public void ParseOneValueNative() => System.Enum.Parse(typeof (LongFlags), "One");
 
         [Benchmark]
-        public void ParseTwoValuesNative() => System.Enum.Parse(typeof(FlagsLongEnum), "One, Two");
+        public void ParseTwoValuesNative() => System.Enum.Parse(typeof(LongFlags), "One, Two");
     }
 }

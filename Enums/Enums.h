@@ -6,6 +6,8 @@ using namespace System::Collections::Generic;
 using namespace System::Runtime::InteropServices;
 using namespace JetBrains::Annotations;
 
+
+
 namespace Diagonactic
 {
 	/// <summary>A set of extension and static methods for working with <see langword="enum"/> types generically.</summary>
@@ -158,6 +160,7 @@ namespace Diagonactic
 			literal Int64 F61 = 0x1000000000000000;
 			literal Int64 F62 = 0x2000000000000000;
 			literal Int64 F63 = 0x4000000000000000;
+			literal UInt64 F64 = 0x8000000000000000;
 		};
 
 		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
@@ -171,7 +174,7 @@ namespace Diagonactic
 		/// </summary>
 		/// <returns>An array of the enum names</returns>
 		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
-		[NotNull] static array<String^>^ GetNamesArray()
+		 static array<String^>^ GetNamesArray()
 		{ // This had to be defined here due to compiler problem
 			return Enumerable::ToArray<String^>(GenericNumericEnumCore<TEnum>::s_nameMap->Keys);
 		}
@@ -179,7 +182,7 @@ namespace Diagonactic
 		/// <summary>Gets the values of the enum as an array</summary>
 		/// <returns>An array of values of the enum</returns>
 		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
-			[NotNull] static array<TEnum>^ GetValuesArray()
+			static array<TEnum>^ GetValuesArray()
 		{ // This had to be defined here due to compiler problem
 			int len = GenericEnumValues<TEnum>::s_length;
 			// A copy of the internal representation is made to ensure the internal representaion cannot be changed.

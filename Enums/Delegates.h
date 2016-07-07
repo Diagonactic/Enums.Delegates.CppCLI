@@ -124,7 +124,7 @@ public:
 	if (source->GetInvocationList()->Length > 1)
 			throw gcnew ArgumentException("Multicast delegates cannot safely be converted", "source");
 	}
-
+	/*
 	/// <summary>
 	/// Returns the invocation list of <paramref name="source"/>
 	/// </summary>
@@ -141,7 +141,7 @@ public:
 		delegates->CopyTo(tDelegates, 0);
 		return tDelegates;
 	}
-
+	*/
 	/// <summary>Creates a <typeparamref name="TDelegate"/> that represents <paramref name="targetMethod"/> static or instance method with the specified <paramref name="firstArgument"/>. </summary>
 	/// <param name="firstArgument">The object to which the delegate is bound, or <see langword="null" /> to treat method as <see langword="static" />.</param>
 	/// <param name="targetMethod">The <see cref="MethodInfo"/> describing the static or instance method the delegate is to represent.</param>

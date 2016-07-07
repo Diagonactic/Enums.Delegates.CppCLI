@@ -15,9 +15,18 @@ namespace EnumCppUnderlyingTypeTests {
 	public class TestFlagsSByteEnumEnumUnderlyingKind
 	{
 		[Flags]
-		private enum TestEnum : sbyte	{ 
-		Zero = 0,
-		One = 0x000000001, Two = 0x000000002,	Too = 0x000000004, Eight = 0x000000008, Ten = 0x000000010	}
+		private enum TestEnum : sbyte	
+		{ 
+			All = unchecked((sbyte)~0),
+			Invalid = -1,			
+			Zero = 0,
+			One = 0x000000001,
+			Two = 0x000000002,
+			Too = 0x000000004,
+			Eight = 0x000000008,
+			Ten = 0x000000010,
+			TenAndTwelve = 0x000000030,			
+		}
 
 		private const TestEnum None            = TestEnum.Zero,
 							   Flag1           = TestEnum.One, 
@@ -34,6 +43,15 @@ namespace EnumCppUnderlyingTypeTests {
 		private const string Flag2Flag10StringValue = "Two, Ten";
 		private const string Flag2Flag10StringValueLowerCase = "two, ten";
 		
+		[TestMethod, EnumTest]
+		public void TestAllDefinedFlags()
+		{
+			var allFlags = TestEnum.Zero.AddAllDefinedFlags();
+			var asNumeric = (sbyte)allFlags;
+			allFlags.ShouldBeEquivalentTo(TestEnum.One | TestEnum.Two | TestEnum.Too | TestEnum.Eight | TestEnum.Ten);
+			TestEnum.Zero.AddAllDefinedFlags().Should().NotBe(TestEnum.All);
+
+		}
 
 		[TestMethod, EnumTest]
         public void TestSByteAsString()
@@ -227,9 +245,17 @@ namespace EnumCppUnderlyingTypeTests {
 	public class TestFlagsByteEnumEnumUnderlyingKind
 	{
 		[Flags]
-		private enum TestEnum : byte	{ 
-		Zero = 0,
-		One = 0x000000001, Two = 0x000000002,	Too = 0x000000004, Eight = 0x000000008, Ten = 0x000000010	}
+		private enum TestEnum : byte	
+		{ 
+			All = unchecked((byte)~0),			
+			Zero = 0,
+			One = 0x000000001,
+			Two = 0x000000002,
+			Too = 0x000000004,
+			Eight = 0x000000008,
+			Ten = 0x000000010,
+						
+		}
 
 		private const TestEnum None            = TestEnum.Zero,
 							   Flag1           = TestEnum.One, 
@@ -246,6 +272,15 @@ namespace EnumCppUnderlyingTypeTests {
 		private const string Flag2Flag10StringValue = "Two, Ten";
 		private const string Flag2Flag10StringValueLowerCase = "two, ten";
 		
+		[TestMethod, EnumTest]
+		public void TestAllDefinedFlags()
+		{
+			var allFlags = TestEnum.Zero.AddAllDefinedFlags();
+			var asNumeric = (byte)allFlags;
+			allFlags.ShouldBeEquivalentTo(TestEnum.One | TestEnum.Two | TestEnum.Too | TestEnum.Eight | TestEnum.Ten);
+			TestEnum.Zero.AddAllDefinedFlags().Should().NotBe(TestEnum.All);
+
+		}
 
 		[TestMethod, EnumTest]
         public void TestByteAsString()
@@ -439,9 +474,18 @@ namespace EnumCppUnderlyingTypeTests {
 	public class TestFlagsInt16EnumEnumUnderlyingKind
 	{
 		[Flags]
-		private enum TestEnum : short	{ 
-		Zero = 0,
-		One = 0x000000008, Two = 0x000000010,	Too = 0x000000020, Eight = 0x000000040, Ten = 0x000000080	}
+		private enum TestEnum : short	
+		{ 
+			All = unchecked((short)~0),
+			Invalid = -1,			
+			Zero = 0,
+			One = 0x000000008,
+			Two = 0x000000010,
+			Too = 0x000000020,
+			Eight = 0x000000040,
+			Ten = 0x000000080,
+			TenAndTwelve = 0x000000180,			
+		}
 
 		private const TestEnum None            = TestEnum.Zero,
 							   Flag1           = TestEnum.One, 
@@ -458,6 +502,15 @@ namespace EnumCppUnderlyingTypeTests {
 		private const string Flag2Flag10StringValue = "Two, Ten";
 		private const string Flag2Flag10StringValueLowerCase = "two, ten";
 		
+		[TestMethod, EnumTest]
+		public void TestAllDefinedFlags()
+		{
+			var allFlags = TestEnum.Zero.AddAllDefinedFlags();
+			var asNumeric = (short)allFlags;
+			allFlags.ShouldBeEquivalentTo(TestEnum.One | TestEnum.Two | TestEnum.Too | TestEnum.Eight | TestEnum.Ten);
+			TestEnum.Zero.AddAllDefinedFlags().Should().NotBe(TestEnum.All);
+
+		}
 
 		[TestMethod, EnumTest]
         public void TestInt16AsString()
@@ -651,9 +704,17 @@ namespace EnumCppUnderlyingTypeTests {
 	public class TestFlagsUInt16EnumEnumUnderlyingKind
 	{
 		[Flags]
-		private enum TestEnum : ushort	{ 
-		Zero = 0,
-		One = 0x000000010, Two = 0x000000020,	Too = 0x000000040, Eight = 0x000000080, Ten = 0x000000100	}
+		private enum TestEnum : ushort	
+		{ 
+			All = unchecked((ushort)~0),			
+			Zero = 0,
+			One = 0x000000010,
+			Two = 0x000000020,
+			Too = 0x000000040,
+			Eight = 0x000000080,
+			Ten = 0x000000100,
+						
+		}
 
 		private const TestEnum None            = TestEnum.Zero,
 							   Flag1           = TestEnum.One, 
@@ -670,6 +731,15 @@ namespace EnumCppUnderlyingTypeTests {
 		private const string Flag2Flag10StringValue = "Two, Ten";
 		private const string Flag2Flag10StringValueLowerCase = "two, ten";
 		
+		[TestMethod, EnumTest]
+		public void TestAllDefinedFlags()
+		{
+			var allFlags = TestEnum.Zero.AddAllDefinedFlags();
+			var asNumeric = (ushort)allFlags;
+			allFlags.ShouldBeEquivalentTo(TestEnum.One | TestEnum.Two | TestEnum.Too | TestEnum.Eight | TestEnum.Ten);
+			TestEnum.Zero.AddAllDefinedFlags().Should().NotBe(TestEnum.All);
+
+		}
 
 		[TestMethod, EnumTest]
         public void TestUInt16AsString()
@@ -863,9 +933,18 @@ namespace EnumCppUnderlyingTypeTests {
 	public class TestFlagsInt32EnumEnumUnderlyingKind
 	{
 		[Flags]
-		private enum TestEnum : int	{ 
-		Zero = 0,
-		One = 0x000008000, Two = 0x000010000,	Too = 0x000020000, Eight = 0x000040000, Ten = 0x000080000	}
+		private enum TestEnum : int	
+		{ 
+			All = unchecked((int)~0),
+			Invalid = -1,			
+			Zero = 0,
+			One = 0x000008000,
+			Two = 0x000010000,
+			Too = 0x000020000,
+			Eight = 0x000040000,
+			Ten = 0x000080000,
+			TenAndTwelve = 0x000180000,			
+		}
 
 		private const TestEnum None            = TestEnum.Zero,
 							   Flag1           = TestEnum.One, 
@@ -882,6 +961,15 @@ namespace EnumCppUnderlyingTypeTests {
 		private const string Flag2Flag10StringValue = "Two, Ten";
 		private const string Flag2Flag10StringValueLowerCase = "two, ten";
 		
+		[TestMethod, EnumTest]
+		public void TestAllDefinedFlags()
+		{
+			var allFlags = TestEnum.Zero.AddAllDefinedFlags();
+			var asNumeric = (int)allFlags;
+			allFlags.ShouldBeEquivalentTo(TestEnum.One | TestEnum.Two | TestEnum.Too | TestEnum.Eight | TestEnum.Ten);
+			TestEnum.Zero.AddAllDefinedFlags().Should().NotBe(TestEnum.All);
+
+		}
 
 		[TestMethod, EnumTest]
         public void TestInt32AsString()
@@ -1075,9 +1163,17 @@ namespace EnumCppUnderlyingTypeTests {
 	public class TestFlagsUInt32EnumEnumUnderlyingKind
 	{
 		[Flags]
-		private enum TestEnum : uint	{ 
-		Zero = 0,
-		One = 0x000008000, Two = 0x000010000,	Too = 0x000020000, Eight = 0x000040000, Ten = 0x000080000	}
+		private enum TestEnum : uint	
+		{ 
+			All = unchecked((uint)~0),			
+			Zero = 0,
+			One = 0x000008000,
+			Two = 0x000010000,
+			Too = 0x000020000,
+			Eight = 0x000040000,
+			Ten = 0x000080000,
+						
+		}
 
 		private const TestEnum None            = TestEnum.Zero,
 							   Flag1           = TestEnum.One, 
@@ -1094,6 +1190,15 @@ namespace EnumCppUnderlyingTypeTests {
 		private const string Flag2Flag10StringValue = "Two, Ten";
 		private const string Flag2Flag10StringValueLowerCase = "two, ten";
 		
+		[TestMethod, EnumTest]
+		public void TestAllDefinedFlags()
+		{
+			var allFlags = TestEnum.Zero.AddAllDefinedFlags();
+			var asNumeric = (uint)allFlags;
+			allFlags.ShouldBeEquivalentTo(TestEnum.One | TestEnum.Two | TestEnum.Too | TestEnum.Eight | TestEnum.Ten);
+			TestEnum.Zero.AddAllDefinedFlags().Should().NotBe(TestEnum.All);
+
+		}
 
 		[TestMethod, EnumTest]
         public void TestUInt32AsString()
@@ -1287,9 +1392,18 @@ namespace EnumCppUnderlyingTypeTests {
 	public class TestFlagsInt64EnumEnumUnderlyingKind
 	{
 		[Flags]
-		private enum TestEnum : long	{ 
-		Zero = 0,
-		One = 0x20000000000, Two = 0x40000000000,	Too = 0x80000000000, Eight = 0x100000000000, Ten = 0x200000000000	}
+		private enum TestEnum : long	
+		{ 
+			All = unchecked((long)~0),
+			Invalid = -1,			
+			Zero = 0,
+			One = 0x20000000000,
+			Two = 0x40000000000,
+			Too = 0x80000000000,
+			Eight = 0x100000000000,
+			Ten = 0x200000000000,
+			TenAndTwelve = 0x600000000000,			
+		}
 
 		private const TestEnum None            = TestEnum.Zero,
 							   Flag1           = TestEnum.One, 
@@ -1306,6 +1420,15 @@ namespace EnumCppUnderlyingTypeTests {
 		private const string Flag2Flag10StringValue = "Two, Ten";
 		private const string Flag2Flag10StringValueLowerCase = "two, ten";
 		
+		[TestMethod, EnumTest]
+		public void TestAllDefinedFlags()
+		{
+			var allFlags = TestEnum.Zero.AddAllDefinedFlags();
+			var asNumeric = (long)allFlags;
+			allFlags.ShouldBeEquivalentTo(TestEnum.One | TestEnum.Two | TestEnum.Too | TestEnum.Eight | TestEnum.Ten);
+			TestEnum.Zero.AddAllDefinedFlags().Should().NotBe(TestEnum.All);
+
+		}
 
 		[TestMethod, EnumTest]
         public void TestInt64AsString()
@@ -1499,9 +1622,17 @@ namespace EnumCppUnderlyingTypeTests {
 	public class TestFlagsUInt64EnumEnumUnderlyingKind
 	{
 		[Flags]
-		private enum TestEnum : ulong	{ 
-		Zero = 0,
-		One = 0x400000000000000, Two = 0x800000000000000,	Too = 0x1000000000000000, Eight = 0x2000000000000000, Ten = 0x4000000000000000	}
+		private enum TestEnum : ulong	
+		{ 
+			All = unchecked((ulong)~0),			
+			Zero = 0,
+			One = 0x400000000000000,
+			Two = 0x800000000000000,
+			Too = 0x1000000000000000,
+			Eight = 0x2000000000000000,
+			Ten = 0x4000000000000000,
+						
+		}
 
 		private const TestEnum None            = TestEnum.Zero,
 							   Flag1           = TestEnum.One, 
@@ -1518,6 +1649,15 @@ namespace EnumCppUnderlyingTypeTests {
 		private const string Flag2Flag10StringValue = "Two, Ten";
 		private const string Flag2Flag10StringValueLowerCase = "two, ten";
 		
+		[TestMethod, EnumTest]
+		public void TestAllDefinedFlags()
+		{
+			var allFlags = TestEnum.Zero.AddAllDefinedFlags();
+			var asNumeric = (ulong)allFlags;
+			allFlags.ShouldBeEquivalentTo(TestEnum.One | TestEnum.Two | TestEnum.Too | TestEnum.Eight | TestEnum.Ten);
+			TestEnum.Zero.AddAllDefinedFlags().Should().NotBe(TestEnum.All);
+
+		}
 
 		[TestMethod, EnumTest]
         public void TestUInt64AsString()

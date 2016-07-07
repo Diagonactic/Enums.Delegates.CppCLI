@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace EnumCppTests.Attributes
 {
-    public sealed class DelegateTest : TestCategoryBaseAttribute
+    public sealed class DelegateTestAttribute : TestCategoryBaseAttribute
     {
         /// <summary>
         /// Gets the test category that has been applied to the test.

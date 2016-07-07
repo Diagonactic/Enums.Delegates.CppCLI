@@ -8,12 +8,12 @@ namespace Console.Profile.Performance
     [BenchmarkTask(1, BenchmarkMode.Throughput, BenchmarkPlatform.X64, BenchmarkJitVersion.RyuJit, BenchmarkFramework.V452, 5, 5)]
     public class RemoveFlagPerf
     {
-        const FlagsLongEnum TwoFlags = FlagsLongEnum.One | FlagsLongEnum.Two;
+        const LongFlags TwoFlags = LongFlags.One | LongFlags.Two;
 
         [Benchmark]
-        public void RemoveFlag() => TwoFlags.RemoveFlag(FlagsLongEnum.One);
+        public void RemoveFlag() => TwoFlags.RemoveFlag(LongFlags.One);
 
         [Benchmark]
-        public void RemoveFlags() => TwoFlags.RemoveFlags(FlagsLongEnum.One, FlagsLongEnum.Two);
+        public void RemoveFlags() => TwoFlags.RemoveFlags(LongFlags.One, LongFlags.Two);
     }
 }

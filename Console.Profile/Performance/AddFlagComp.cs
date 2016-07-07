@@ -8,18 +8,18 @@ namespace Console.Profile.Performance
     [BenchmarkTask(1, BenchmarkMode.Throughput, BenchmarkPlatform.X64, BenchmarkJitVersion.RyuJit, BenchmarkFramework.V452, 5, 5)]
     public class AddFlagComp
     {
-        private static readonly FlagsLongEnum TwoFlags = Enums.Parse<FlagsLongEnum>("One");
+        private static readonly LongFlags s_TwoLongFlags = Enums.Parse<LongFlags>("One");
 
         [Benchmark("One flag via AddFlag")]
-        public void AddFlag() => TwoFlags.AddFlag(FlagsLongEnum.Eight);
+        public void AddFlag() => s_TwoLongFlags.AddFlag(LongFlags.Eight);
 
         [Benchmark("Two flags via AddFlags")]
-        public void AddFlags() => TwoFlags.AddFlags(FlagsLongEnum.Eight, FlagsLongEnum.Five);
+        public void AddFlags() => s_TwoLongFlags.AddFlags(LongFlags.Eight, LongFlags.Five);
 
         [Benchmark("One flag via Binary Math")]
-        public FlagsLongEnum AddFlagNative() => TwoFlags | FlagsLongEnum.Eight;
+        public LongFlags AddFlagNative() => s_TwoLongFlags | LongFlags.Eight;
 
         [Benchmark("Two flag via Binary Math")]
-        public FlagsLongEnum AddFlagsNative() => TwoFlags | FlagsLongEnum.Eight | FlagsLongEnum.Five;
+        public LongFlags AddFlagsNative() => s_TwoLongFlags | LongFlags.Eight | LongFlags.Five;
     }
 }

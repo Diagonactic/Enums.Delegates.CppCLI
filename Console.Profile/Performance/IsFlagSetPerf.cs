@@ -10,9 +10,9 @@ namespace Console.Profile.Performance
     public class IsFlagSetPerf
     {
         [Benchmark]
-        public bool IsFlagSetFalse() => FlagsLongEnum.One.IsFlagSet(FlagsLongEnum.Eight);
+        public bool IsFlagSetFalse() => LongFlags.One.IsFlagSet(LongFlags.Eight);
 
         [Benchmark]
-        public bool IsFlagSetTrue() => FlagsLongEnum.One.IsFlagSet(FlagsLongEnum.One);
+        public bool IsFlagSetTrue() => LongFlags.One.IsFlagSet(LongFlags.One);
     }
 }

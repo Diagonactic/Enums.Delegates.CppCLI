@@ -9,8 +9,8 @@ namespace Console.Profile.Performance
         BenchmarkFramework.V452, 5, 5)]
     public class AsStringPerf
     {
-        const FlagsLongEnum TwoFlags = FlagsLongEnum.One | FlagsLongEnum.Two;
-        const FlagsLongEnum OneFlag = FlagsLongEnum.One;
+        const LongFlags TwoFlags = LongFlags.One | LongFlags.Two;
+        const LongFlags OneFlag = LongFlags.One;
 
         [Benchmark("One long Flag AsString")]
         public void OneFlagAsString() => OneFlag.AsString();
@@ -23,8 +23,8 @@ namespace Console.Profile.Performance
         BenchmarkFramework.V452, 5, 5)]
     public class AsStringComp
     {
-        const FlagsLongEnum TwoFlags = FlagsLongEnum.One | FlagsLongEnum.Two;
-        const FlagsLongEnum OneFlag = FlagsLongEnum.One;
+        const LongFlags TwoFlags = LongFlags.One | LongFlags.Two;
+        const LongFlags OneFlag = LongFlags.One;
 
         [Benchmark("One long Flag AsString")]
         public void OneFlagAsString() => OneFlag.AsString();

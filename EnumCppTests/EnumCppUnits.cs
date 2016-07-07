@@ -12,7 +12,7 @@ namespace DiagonacticTests
 {
     
     [Flags]
-    public enum FlagsLongEnum : long
+    public enum LongFlags : long
     {
         Oned   = F32,
         Twod   = F33,
@@ -44,7 +44,7 @@ namespace DiagonacticTests
     }
 
     [Flags]
-    public enum FlagsULongEnum : ulong
+    public enum ULongFlags : ulong
     {
         Oned = F8,
         Twod = F40,
@@ -73,7 +73,7 @@ namespace DiagonacticTests
         Eight = F63
     }
 
-    public enum DescriptionEnum
+    public enum DescriptionNonFlags
     {
         FooBarBaz,
         [System.ComponentModel.Description("The Number One")]
@@ -93,7 +93,7 @@ namespace DiagonacticTests
         Ten
     }
 
-    public enum SmallEnum
+    public enum SmallNonFlags
     {
         Zero,
         [System.ComponentModel.Description("The Number One")]
@@ -111,7 +111,7 @@ namespace DiagonacticTests
     }
 
     [Flags]
-    enum FlagsSByteEnum : sbyte
+    enum SByteFlags : sbyte
     {
         Five = (sbyte)F1,
         Six = (sbyte)F2,
@@ -123,19 +123,72 @@ namespace DiagonacticTests
     public class EnumUnitTests
     {
         [TestMethod, EnumTest]
+        public void TestCanExecuteExactMatch()
+        {
+            var fm = new EnumDelegateMap<LongFlags, int>();
+            fm.AssignToExactValue(LongFlags.Eight, () => 9);
+            fm.ExecuteExactMatch(LongFlags.Eight).ShouldBeEquivalentTo(9);
+            fm.AssignToExactValue(LongFlags.Eight | LongFlags.Five, () => 10);
+            fm.ExecuteExactMatch(LongFlags.Eight | LongFlags.Five).ShouldBeEquivalentTo(10);
+            fm.ExecuteExactMatch(LongFlags.Four).ShouldBeEquivalentTo(default(LongFlags));
+            fm = new EnumDelegateMap<LongFlags, int>();
+            fm.AssignToEachFlag(LongFlags.Eight | LongFlags.Five, () => 42);
+            fm.ExecuteExactMatch(LongFlags.Eight).ShouldBeEquivalentTo(42);
+            fm.ExecuteExactMatch(LongFlags.Five).ShouldBeEquivalentTo(42);
+            fm.ExecuteExactMatch(LongFlags.Eight | LongFlags.Five).ShouldBeEquivalentTo(default(LongFlags));
+        }
+
+        [TestMethod, EnumTest]
+        public void TestCanExecuteExactMatchWithDefault()
+        {
+            var fm = new EnumDelegateMap<LongFlags, int>(() => 11);
+            fm.ExecuteExactMatch(LongFlags.Nine).ShouldBeEquivalentTo(11);
+            fm.AssignToExactValue(LongFlags.Nine, () => 10);
+            fm.ExecuteExactMatch(LongFlags.Nine).ShouldBeEquivalentTo(10);
+            fm.ExecuteExactMatch(LongFlags.Five).ShouldBeEquivalentTo(11);
+            fm.ExecuteExactMatch(LongFlags.Nine, () => 12).ShouldBeEquivalentTo(10);
+            fm.ExecuteExactMatch(LongFlags.One, () => 13).ShouldBeEquivalentTo(13);
+        }
+        
+        [TestMethod, EnumTest]
+        public void TestCanExecuteFlags()
+        {
+            var fm = new EnumDelegateMap<LongFlags, int>();
+
+            fm.AssignToEachFlag(LongFlags.Eight | LongFlags.Five, () => 42);
+
+            var dic = fm.ExecuteFlagsMatches(LongFlags.Five);
+            dic.Count.ShouldBeEquivalentTo(1);
+            dic[LongFlags.Five].ShouldBeEquivalentTo(42);
+            dic = fm.ExecuteFlagsMatches(LongFlags.Eight | LongFlags.Five);
+            dic.Count.ShouldBeEquivalentTo(2);
+            dic[LongFlags.Five].ShouldBeEquivalentTo(42);
+            dic[LongFlags.Eight].ShouldBeEquivalentTo(42);
+
+            LongFlags.Nine.EqualsAny(LongFlags.Five, LongFlags.Eight).Should().BeFalse();
+            fm.AssignToExactValue(LongFlags.Nine, () => 41);
+            dic = fm.ExecuteFlagsMatches(LongFlags.Eight | LongFlags.Five | LongFlags.Nine);
+            dic.Count.ShouldBeEquivalentTo(3);
+            dic[LongFlags.Five].ShouldBeEquivalentTo(42);
+            dic[LongFlags.Eight].ShouldBeEquivalentTo(42);
+            dic[LongFlags.Nine].ShouldBeEquivalentTo(41);
+            fm.ExecuteExactMatch(LongFlags.Four).ShouldBeEquivalentTo(default(LongFlags));
+        }
+
+        [TestMethod, EnumTest]
         public void TestDescription()
         {
-            SmallEnum.One.GetDescription().ShouldBeEquivalentTo("The Number One");
-            SmallEnum.Five.GetDescription().ShouldBeEquivalentTo("The Number Five");
-            SmallEnum result;
+            SmallNonFlags.One.GetDescription().ShouldBeEquivalentTo("The Number One");
+            SmallNonFlags.Five.GetDescription().ShouldBeEquivalentTo("The Number Five");
+            SmallNonFlags result;
             Enums.TryGetFromDescription("The Number One", out result).Should().BeTrue();
             Enums.TryGetFromDescription("Foo", out result).Should().BeFalse();
-            result.ShouldBeEquivalentTo(default(SmallEnum));
-            DescriptionEnum.FooBarBaz.GetDescription().ShouldBeEquivalentTo("Foo Bar Baz");
-            DescriptionEnum.FooBarBaz.GetDescription().ShouldBeEquivalentTo("Foo Bar Baz");
-            DescriptionEnum.Foo_Bar_FORTY_Two.GetDescription().ShouldBeEquivalentTo("Foo Bar Forty Two");
-            DescriptionEnum.LifeUniverseEVERYTHING.GetDescription().ShouldBeEquivalentTo("Life Universe EVERYTHING");
-            DescriptionEnum.restaurant_end_of_universe.GetDescription().ShouldBeEquivalentTo("Restaurant End Of Universe");
+            result.ShouldBeEquivalentTo(default(SmallNonFlags));
+            DescriptionNonFlags.FooBarBaz.GetDescription().ShouldBeEquivalentTo("Foo Bar Baz");
+            DescriptionNonFlags.FooBarBaz.GetDescription().ShouldBeEquivalentTo("Foo Bar Baz");
+            DescriptionNonFlags.Foo_Bar_FORTY_Two.GetDescription().ShouldBeEquivalentTo("Foo Bar Forty Two");
+            DescriptionNonFlags.LifeUniverseEVERYTHING.GetDescription().ShouldBeEquivalentTo("Life Universe EVERYTHING");
+            DescriptionNonFlags.restaurant_end_of_universe.GetDescription().ShouldBeEquivalentTo("Restaurant End Of Universe");
         }
 
         [TestMethod, EnumTest]
@@ -148,7 +201,7 @@ namespace DiagonacticTests
         [TestMethod, EnumTest]
         public void TestFormat()
         {
-            FlagsULongEnum.Eight.Format("G").ShouldBeEquivalentTo("Eight");
+            ULongFlags.Eight.Format("G").ShouldBeEquivalentTo("Eight");
         }
         [TestMethod, EnumTest]
         public void TestTryParse()
@@ -180,18 +233,18 @@ namespace DiagonacticTests
         [TestMethod, EnumTest]
         public void TestAsString()
         {
-            SmallEnum.Eight.AsString().ShouldBeEquivalentTo(SmallEnum.Eight.ToString());
+            SmallNonFlags.Eight.AsString().ShouldBeEquivalentTo(SmallNonFlags.Eight.ToString());
         }
 
         [TestMethod, EnumTest]
         public void TestGetNames()
         {
-            IReadOnlyCollection<string> names = Enums.GetNames<FlagsSByteEnum>();
+            IReadOnlyCollection<string> names = Enums.GetNames<SByteFlags>();
             names.Count.ShouldBeEquivalentTo(3);
             names.First().ShouldBeEquivalentTo("Five");
             names.Last().ShouldBeEquivalentTo("Seven");
             names.Any(x => x == "Six").Should().BeTrue();
-            var asArray = Enums.GetNamesArray<FlagsSByteEnum>();
+            var asArray = Enums.GetNamesArray<SByteFlags>();
             asArray.Length.ShouldBeEquivalentTo(3);
             asArray.First().ShouldBeEquivalentTo("Five");
             asArray.Last().ShouldBeEquivalentTo("Seven");
@@ -202,48 +255,48 @@ namespace DiagonacticTests
         public void TestGetValuesAsArray()
         {
             /*
-            FlagsSByteEnum[] values = Enums.GetValuesAsArray<FlagsSByteEnum>();
+            SByteFlags[] values = Enums.GetValuesAsArray<SByteFlags>();
             values.Length.ShouldBeEquivalentTo(3);
-            values.First().ShouldBeEquivalentTo(FlagsSByteEnum.Five);
-            values.Last().ShouldBeEquivalentTo(FlagsSByteEnum.Seven);
-            values.Any(x => x == FlagsSByteEnum.Six).Should().BeTrue();
+            values.First().ShouldBeEquivalentTo(SByteFlags.Five);
+            values.Last().ShouldBeEquivalentTo(SByteFlags.Seven);
+            values.Any(x => x == SByteFlags.Six).Should().BeTrue();
             */
         }
 
         [TestMethod, EnumTest]
         public void TestGetValues()
         {
-            IReadOnlyCollection<FlagsSByteEnum> names = Enums.GetValues<FlagsSByteEnum>();
+            IReadOnlyCollection<SByteFlags> names = Enums.GetValues<SByteFlags>();
             names.Count.ShouldBeEquivalentTo(3);
-            names.First().ShouldBeEquivalentTo(FlagsSByteEnum.Five);
-            names.Last().ShouldBeEquivalentTo(FlagsSByteEnum.Seven);
-            names.Any(x => x == FlagsSByteEnum.Six).Should().BeTrue();
-            var asArray = Enums.GetValuesArray<FlagsSByteEnum>();
+            names.First().ShouldBeEquivalentTo(SByteFlags.Five);
+            names.Last().ShouldBeEquivalentTo(SByteFlags.Seven);
+            names.Any(x => x == SByteFlags.Six).Should().BeTrue();
+            var asArray = Enums.GetValuesArray<SByteFlags>();
             asArray.Length.ShouldBeEquivalentTo(3);
-            asArray.First().ShouldBeEquivalentTo(FlagsSByteEnum.Five);
-            asArray.Last().ShouldBeEquivalentTo(FlagsSByteEnum.Seven);
-            names.Any(x => x == FlagsSByteEnum.Six).Should().BeTrue();
+            asArray.First().ShouldBeEquivalentTo(SByteFlags.Five);
+            asArray.Last().ShouldBeEquivalentTo(SByteFlags.Seven);
+            names.Any(x => x == SByteFlags.Six).Should().BeTrue();
         }
 
         
         [TestMethod, EnumTest]
         public void TestAddFlag()
         {
-            FlagsLongEnum.Eight.AddFlag(FlagsLongEnum.One).ShouldBeEquivalentTo(FlagsLongEnum.Eight | FlagsLongEnum.One);
+            LongFlags.Eight.AddFlag(LongFlags.One).ShouldBeEquivalentTo(LongFlags.Eight | LongFlags.One);
         }
 
         [TestMethod, EnumTest]
         public void TestRemoveFlag()
         {
-            (FlagsLongEnum.Five | FlagsLongEnum.Two).RemoveFlag(FlagsLongEnum.Five).ShouldBeEquivalentTo(FlagsLongEnum.Two);
+            (LongFlags.Five | LongFlags.Two).RemoveFlag(LongFlags.Five).ShouldBeEquivalentTo(LongFlags.Two);
         }
 
         [TestMethod, EnumTest]
         public void TestFlagsAsString()
         {
-            FlagsLongEnum flagVal = FlagsLongEnum.Eight | FlagsLongEnum.Five;
+            LongFlags longFlagVal = LongFlags.Eight | LongFlags.Five;
 
-            flagVal.AsString().ShouldBeEquivalentTo(flagVal.ToString());
+            longFlagVal.AsString().ShouldBeEquivalentTo(longFlagVal.ToString());
         }
 
         [TestMethod,EnumTest]
@@ -256,30 +309,30 @@ namespace DiagonacticTests
 
         public void TestParseFlagsEnum(string enumVal, bool ignoreCase = false)
         {
-            FlagsLongEnum ourResult = !ignoreCase ? Enums.Parse<FlagsLongEnum>(enumVal) : Enums.Parse<FlagsLongEnum>(enumVal, true);
+            LongFlags ourResult = !ignoreCase ? Enums.Parse<LongFlags>(enumVal) : Enums.Parse<LongFlags>(enumVal, true);
 
-            var theirResult = (FlagsLongEnum)Enum.Parse(typeof(FlagsLongEnum), enumVal);
+            var theirResult = (LongFlags)Enum.Parse(typeof(LongFlags), enumVal);
 
             ourResult.ShouldBeEquivalentTo(theirResult);
         }
 
         public void TestParseSmallEnum(string enumVal, bool ignoreCase = false)
         {
-            SmallEnum ourResult = !ignoreCase ? Enums.Parse<SmallEnum>(enumVal) : Enums.Parse<SmallEnum>(enumVal, true);
-            SmallEnum theirResult = (SmallEnum)Enum.Parse(typeof(SmallEnum), enumVal, ignoreCase);
+            SmallNonFlags ourResult = !ignoreCase ? Enums.Parse<SmallNonFlags>(enumVal) : Enums.Parse<SmallNonFlags>(enumVal, true);
+            SmallNonFlags theirResult = (SmallNonFlags)Enum.Parse(typeof(SmallNonFlags), enumVal, ignoreCase);
 
             ourResult.ShouldBeEquivalentTo(theirResult);
         }
 
         public void TestTryParseFlagsEnum(string enumVal, bool expectedValue, bool ignoreCase = false)
         {
-            FlagsLongEnum ourResult;
+            LongFlags ourResult;
             if (!ignoreCase)
                 Enums.TryParse(enumVal, out ourResult).ShouldBeEquivalentTo(expectedValue);
             else
                 Enums.TryParse(enumVal, true, out ourResult).ShouldBeEquivalentTo(expectedValue);
 
-            FlagsLongEnum theirResult;
+            LongFlags theirResult;
             Enum.TryParse(enumVal, ignoreCase, out theirResult);
 
             if (expectedValue)
@@ -288,13 +341,13 @@ namespace DiagonacticTests
 
         public void TestTryParseSmallEnum(string enumVal, bool expectedResult, bool ignoreCase = false)
         {
-            SmallEnum ourResult;
+            SmallNonFlags ourResult;
             if (!ignoreCase)
                 Enums.TryParse(enumVal, out ourResult).ShouldBeEquivalentTo(expectedResult);
             else
                 Enums.TryParse(enumVal, true, out ourResult).ShouldBeEquivalentTo(expectedResult);
 
-            SmallEnum theirResult;
+            SmallNonFlags theirResult;
             Enum.TryParse(enumVal, ignoreCase, out theirResult);
             
             if (expectedResult)

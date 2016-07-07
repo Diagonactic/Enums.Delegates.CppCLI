@@ -95,6 +95,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Performance\AddFlagComp.cs" />
     <Compile Include="Performance\AddFlagPerf.cs" />
     <Compile Include="Performance\AreAllFlagsSetPerf.cs" />

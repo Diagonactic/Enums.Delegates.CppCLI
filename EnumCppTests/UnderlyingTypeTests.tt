@@ -37,20 +37,24 @@ namespace EnumCppUnderlyingTypeTests {
 	string WriteMethod(string enumType, string typekw, ulong startingNumber) 
 	{
 		var flagsType = "Flags" + enumType + "Enum";
+	    bool isSigned = typekw == "sbyte" || typekw == "int" || typekw == "long" || typekw == "short";
 		string one = startingNumber.ToString("10X");
 		return @"
 	[TestClass]
 	public class Test" + flagsType + @"EnumUnderlyingKind
 	{
 		[Flags]
-		private enum TestEnum : " + typekw + @"	{ 
-		Zero = 0,
-		One = " + GetHex(startingNumber, (ulong)Enums.Flag.F1) + 
-		@", Two = " + GetHex(startingNumber, (ulong)Enums.Flag.F2) + 
-		@",	Too = " + GetHex(startingNumber, (ulong)Enums.Flag.F3) + 
-		@", Eight = " + GetHex(startingNumber, (ulong)Enums.Flag.F4) + 
-		@", Ten = " + GetHex(startingNumber, (ulong)Enums.Flag.F5) + 
-		@"	}
+		private enum TestEnum : " + typekw + @"	
+		{ 
+			All = unchecked((" + typekw + ")~0)," + (isSigned ? "\r\n\t\t\tInvalid = -1," : "")+@"			
+			Zero = 0,
+			One = " + GetHex(startingNumber, (ulong)Enums.Flag.F1) + @",
+			Two = " + GetHex(startingNumber, (ulong)Enums.Flag.F2) + @",
+			Too = " + GetHex(startingNumber, (ulong)Enums.Flag.F3) + @",
+			Eight = " + GetHex(startingNumber, (ulong)Enums.Flag.F4) + @",
+			Ten = " + GetHex(startingNumber, (ulong)Enums.Flag.F5) + @",
+			" + (isSigned ? ("TenAndTwelve = " + GetHex(startingNumber, (ulong)Enums.Flag.F5 | (ulong)Enums.Flag.F6) + @",") : "") + @"			
+		}
 
 		private const TestEnum None            = TestEnum.Zero,
 							   Flag1           = TestEnum.One, 
@@ -67,6 +71,15 @@ namespace EnumCppUnderlyingTypeTests {
 		private const string Flag2Flag10StringValue = ""Two, Ten"";
 		private const string Flag2Flag10StringValueLowerCase = ""two, ten"";
 		
+		[TestMethod, EnumTest]
+		public void TestAllDefinedFlags()
+		{
+			var allFlags = TestEnum.Zero.AddAllDefinedFlags();
+			var asNumeric = (" + typekw + @")allFlags;
+			allFlags.ShouldBeEquivalentTo(TestEnum.One | TestEnum.Two | TestEnum.Too | TestEnum.Eight | TestEnum.Ten);
+			TestEnum.Zero.AddAllDefinedFlags().Should().NotBe(TestEnum.All);
+
+		}
 
 		[TestMethod, EnumTest]
         public void Test" + enumType + @"AsString()
