@@ -30,8 +30,8 @@ namespace Diagonactic {
 	{
 	private:
 		static IEqualityComparer<TEnum>^ s_comparer = Enums::EqualityComparer<TEnum>();
-		Dictionary<TEnum, Func<TReturn>^>^ s_functionMap = gcnew Dictionary<TEnum, Func<TReturn>^>(s_comparer);
-		Func<TReturn>^ s_default = nullptr;
+		Dictionary<TEnum, Func<TEnum, TReturn>^>^ s_functionMap = gcnew Dictionary<TEnum, Func<TEnum, TReturn>^>(s_comparer);
+		Func<TEnum, TReturn>^ s_default = nullptr;
 
 	public:
 
@@ -39,7 +39,7 @@ namespace Diagonactic {
 
 		}
 
-		EnumDelegateMap(Func<TReturn>^ defaultDelegate) {
+		EnumDelegateMap(Func<TEnum, TReturn>^ defaultDelegate) {
 			s_default = defaultDelegate;
 		}
 
@@ -51,7 +51,7 @@ namespace Diagonactic {
 		/// <param name="delegateFunction">The function to assign to the exact value of <paramref name="value"/>.</param>
 		/// <exception cref="ArgumentNullException"><paramref name="delegateFunction"/> is null</exception>
 		/// <exception cref="ArgumentException"><paramref name="value"/> already has a method assigned.</exception>
-		void AssignToExactValue(TEnum value, Func<TReturn>^ delegateFunction) {
+		void AssignToExactValue(TEnum value, Func<TEnum, TReturn>^ delegateFunction) {
 			if (delegateFunction == nullptr) throw gcnew ArgumentNullException("delegateFunction");
 			if (s_functionMap->ContainsKey(value)) throw gcnew ArgumentException("A method is already assigned to provided value of " + EnumExtensions::AsString(value), "value");
 
@@ -65,7 +65,7 @@ namespace Diagonactic {
 		/// <param name="delegateFunction">The delegate to assign to each <paramref name="delegateFunction"/>.</param>
 		/// <exception cref="ArgumentNullException"><paramref name="delegateFunction"/> is null.</exception>
 		/// <exception cref="ArgumentException">A flag value in <paramref name="value"/> already has a method assigned.</exception>
-		void AssignToEachFlag(TEnum value, Func<TReturn>^ delegateFunction) {
+		void AssignToEachFlag(TEnum value, Func<TEnum, TReturn>^ delegateFunction) {
 			array<TEnum>^ values = (array<TEnum>^)Enum::GetValues(TEnum::typeid);
 
 			if (values == nullptr || values->Length == 0)
@@ -85,7 +85,7 @@ namespace Diagonactic {
 		/// Executes assigned delegates for each flag assigned to <paramref name="value"/> and any exact matches assigned to the value.
 		/// </summary>
 		/// <remarks>
-		/// For flags matches, this will execute each matched flags along with any values that match the exact value of <paramref name="value"/>
+		/// For flags matches, this will execute each matched flags along with any values that match the exact value of <paramref name="value"/>.  It will also pass in the value passed into the method, not the matched value.
 		/// </remarks>
 		/// <param name="value">The flags enum value to search for delegates to execute</param>
 		/// <returns>A dictionary containing a mapping of enums to delegates</returns>
@@ -93,7 +93,7 @@ namespace Diagonactic {
 			auto retVal = gcnew Dictionary<TEnum, TReturn>(s_comparer);
 
 			if (s_functionMap->ContainsKey(value)) {
-				retVal->Add(value, s_functionMap[value]());
+				retVal->Add(value, s_functionMap[value](value));
 			}
 			
 			auto containedValues = (array<TEnum>^)Enum::GetValues(TEnum::typeid);
@@ -101,7 +101,7 @@ namespace Diagonactic {
 			for each (TEnum val in containedValues) {
 
 				if (val != value && EnumExtensions::IsFlagSet(value, val) && s_functionMap->ContainsKey(val)) {
-					retVal->Add(val, s_functionMap[val]());
+					retVal->Add(val, s_functionMap[val](value));
 				}
 			}
 
@@ -123,15 +123,15 @@ namespace Diagonactic {
 		/// <param name="value">The value of the enum to search for a <see langword="delegate"/> to execute.</param>
 		/// <param name="defaultDelegate">The default delegate to execute if a match is not found (ignors assigned default)</param>
 		/// <returns>The value returned from the matched <see cref="Func{TReturn}"/>, the result of <paramref name="defualtDelegate"/> if parameter is not <see langword="null"/>, or <see langword="default"/>(<typeparamref name="TReturn"/>).</returns>
-		TReturn ExecuteExactMatch(TEnum value, Func<TReturn>^ defaultDelegate) {
+		TReturn ExecuteExactMatch(TEnum value, Func<TEnum, TReturn>^ defaultDelegate) {
 			if (!s_functionMap->ContainsKey(value) && defaultDelegate == nullptr)
 				return TReturn();
 
 			if (s_functionMap->ContainsKey(value)) {
-				return s_functionMap[value]();
+				return s_functionMap[value](value);
 			}
 
-			return defaultDelegate();
+			return defaultDelegate(value);
 		}
 		
 		/// <summary>

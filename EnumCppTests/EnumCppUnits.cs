@@ -126,28 +126,38 @@ namespace DiagonacticTests
         public void TestCanExecuteExactMatch()
         {
             var fm = new EnumDelegateMap<LongFlags, int>();
-            fm.AssignToExactValue(LongFlags.Eight, () => 9);
+            fm.AssignToExactValue(LongFlags.Eight, (f) =>
+                                  {
+                                      f.ShouldBeEquivalentTo(LongFlags.Eight);
+                                      return 9;
+                                  });
             fm.ExecuteExactMatch(LongFlags.Eight).ShouldBeEquivalentTo(9);
-            fm.AssignToExactValue(LongFlags.Eight | LongFlags.Five, () => 10);
+            fm.AssignToExactValue(LongFlags.Eight | LongFlags.Five, (f) => 10);
             fm.ExecuteExactMatch(LongFlags.Eight | LongFlags.Five).ShouldBeEquivalentTo(10);
             fm.ExecuteExactMatch(LongFlags.Four).ShouldBeEquivalentTo(default(LongFlags));
             fm = new EnumDelegateMap<LongFlags, int>();
-            fm.AssignToEachFlag(LongFlags.Eight | LongFlags.Five, () => 42);
+            fm.AssignToEachFlag(LongFlags.Eight | LongFlags.Five, (f) => 42);
             fm.ExecuteExactMatch(LongFlags.Eight).ShouldBeEquivalentTo(42);
             fm.ExecuteExactMatch(LongFlags.Five).ShouldBeEquivalentTo(42);
+            fm.ExecuteExactMatch(LongFlags.Eight | LongFlags.Five).ShouldBeEquivalentTo(default(LongFlags));
+            fm = new EnumDelegateMap<LongFlags, int>();
+            fm.AssignToEachFlag(LongFlags.Eight | LongFlags.Five, (f) =>
+                                {
+                                    return 42;
+                                });
             fm.ExecuteExactMatch(LongFlags.Eight | LongFlags.Five).ShouldBeEquivalentTo(default(LongFlags));
         }
 
         [TestMethod, EnumTest]
         public void TestCanExecuteExactMatchWithDefault()
         {
-            var fm = new EnumDelegateMap<LongFlags, int>(() => 11);
+            var fm = new EnumDelegateMap<LongFlags, int>((f) => 11);
             fm.ExecuteExactMatch(LongFlags.Nine).ShouldBeEquivalentTo(11);
-            fm.AssignToExactValue(LongFlags.Nine, () => 10);
+            fm.AssignToExactValue(LongFlags.Nine, (f) => 10);
             fm.ExecuteExactMatch(LongFlags.Nine).ShouldBeEquivalentTo(10);
             fm.ExecuteExactMatch(LongFlags.Five).ShouldBeEquivalentTo(11);
-            fm.ExecuteExactMatch(LongFlags.Nine, () => 12).ShouldBeEquivalentTo(10);
-            fm.ExecuteExactMatch(LongFlags.One, () => 13).ShouldBeEquivalentTo(13);
+            fm.ExecuteExactMatch(LongFlags.Nine, (f) => 12).ShouldBeEquivalentTo(10);
+            fm.ExecuteExactMatch(LongFlags.One, (f) => 13).ShouldBeEquivalentTo(13);
         }
         
         [TestMethod, EnumTest]
@@ -155,7 +165,7 @@ namespace DiagonacticTests
         {
             var fm = new EnumDelegateMap<LongFlags, int>();
 
-            fm.AssignToEachFlag(LongFlags.Eight | LongFlags.Five, () => 42);
+            fm.AssignToEachFlag(LongFlags.Eight | LongFlags.Five, (f) => 42);
 
             var dic = fm.ExecuteFlagsMatches(LongFlags.Five);
             dic.Count.ShouldBeEquivalentTo(1);
@@ -166,7 +176,11 @@ namespace DiagonacticTests
             dic[LongFlags.Eight].ShouldBeEquivalentTo(42);
 
             LongFlags.Nine.EqualsAny(LongFlags.Five, LongFlags.Eight).Should().BeFalse();
-            fm.AssignToExactValue(LongFlags.Nine, () => 41);
+            fm.AssignToExactValue(LongFlags.Nine, (f) =>
+                                  {
+                                      f.ShouldBeEquivalentTo(LongFlags.Eight | LongFlags.Five | LongFlags.Nine);
+                                      return 41;
+                                  });
             dic = fm.ExecuteFlagsMatches(LongFlags.Eight | LongFlags.Five | LongFlags.Nine);
             dic.Count.ShouldBeEquivalentTo(3);
             dic[LongFlags.Five].ShouldBeEquivalentTo(42);

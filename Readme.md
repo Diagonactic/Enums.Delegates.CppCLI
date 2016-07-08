@@ -148,18 +148,18 @@ idea to add this to the library.
 
 ```c#
 var fm = new EnumDelegateMap<LongFlags, int>(); // Declares that a match will allow assignment of functions that return int values
-fm.AssignToExactValue(LongFlags.Eight, () => 9); // When Eight is matched, return the value 9
+fm.AssignToExactValue(LongFlags.Eight, (f) => 9); // When Eight is matched, return the value 9 (the "f" parameter is assigned to whatever the value is that's passed in on execution, not the matching value)
 Console.WriteLine(fm.ExecuteExactMatch(LongFlags.Eight)); // Writes 9
 
-var fm = new EnumDelegateMap<LongFlags, int>(() => -1); // Declares that a match will allow assignment of functions that return int values. When no match is found, return -1
-fm.AssignToExactValue(LongFlags.Eight, () => 9); // When Eight is matched, return the value 9
+var fm = new EnumDelegateMap<LongFlags, int>((f) => -1); // Declares that a match will allow assignment of functions that return int values. When no match is found, return -1
+fm.AssignToExactValue(LongFlags.Eight, (f) => 9); // When Eight is matched, return the value 9
 Console.WriteLine(fm.ExecuteExactMatch(LongFlags.Five)); // Writes -1
 
 // Advanced Usage
 
-var fm = new EnumDelegateMap<LongFlags, int>(() => -1); // Declares that a match will allow assignment of functions that return int values. When no match is found, return -1
-fm.AssignToEachFlag(LongFlags.Eight | LongFlags.Five, () => 42); // Assign 42 to both Eight and Five
-fm.AssignToEactValue(LongFlags.Eight | LongFlags.Five, () => 69); // Assigns 69 to the value of Eight combined with Five in a flags enum
+var fm = new EnumDelegateMap<LongFlags, int>((f) => -1); // Declares that a match will allow assignment of functions that return int values. When no match is found, return -1
+fm.AssignToEachFlag(LongFlags.Eight | LongFlags.Five, (f) => 42); // Assign 42 to both Eight and Five
+fm.AssignToEactValue(LongFlags.Eight | LongFlags.Five, (f) => 69); // Assigns 69 to the value of Eight combined with Five in a flags enum
 Console.WriteLine(fm.ExecuteExactMatch(LongFlags.Five)); // Writes 42
 Console.WriteLine(fm.ExecuteExactMatch(LongFlags.Eight)); // Writes 42
 Console.WriteLine(fm.ExecuteExactMatch(LongFlags.Five | LongFlags.Eight)); // Writes 69
