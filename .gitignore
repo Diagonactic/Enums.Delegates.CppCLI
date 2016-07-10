@@ -70,3 +70,4 @@ Documentation/Help/
 ipch/
 *.opendb
 EnumCpp.VC.db
+.vs/

@@ -1,6 +1,7 @@
-#pragma once
-#include "stdafx.h"
+#include "Stdafx.h"
+#include "GenericNumericEnumCore.h"
 #include "EnumExtensions.h"
+#include "GenericEnumCoreDescriptions.h"
 
 ref class GenericEnumMinimal;
 

@@ -1,7 +1,7 @@
-#include "stdafx.h"
-#include "EnumExtensions.h"
+#include "Stdafx.h"
 #include "GenericNumericEnumCore.h"
-#include "Enums.h"
+#include "EnumExtensions.h"
+#include "GenericEnumCoreDescriptions.h"
 
 ref class GenericNumericEnumCore;
 
@@ -10,6 +10,8 @@ ref class GenericEnumCoreDescriptions;
 using namespace System;
 
 namespace Diagonactic {
+
+
 
 	/// <summary>
 	/// Selectively sets all flags representing a single bit defined on <typeparam name="TEnum"/> (and only those flags), ignoring values that set multiple bits, no bits and all negative values on enums with signed types. Much slower than setting all bits directly (i.e. with <code><see langword="unchecked"/>((type)~0)</code>). See remarks.
@@ -253,6 +255,14 @@ namespace Diagonactic {
 		return Diagonactic::GenericEnumMinimal<TEnum>::RemoveFlag(source, flagToRemove);
 	}
 
+	/// <summary>Convert <paramref name="source"/> to a list</summary>
+	/// <param name="source">A flags enum to convert to a list</param>
+	/// <typeparam name="TEnum">An enum.</typeparam>
+	/// <returns>Returns a list containing all of the flags contained in <paramref name="source"/></returns>
+	GenericEnumType List<TEnum>^ EnumExtensions::ToList(TEnum source)
+	{
+		return Diagonactic::GenericNumericEnumCore<TEnum>::ToList(source);
+	}
 
-
+	
 }

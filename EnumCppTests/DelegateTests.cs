@@ -1,4 +1,5 @@
 ﻿using System;
+using Diagonactic;
 using EnumCppTests.Attributes;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

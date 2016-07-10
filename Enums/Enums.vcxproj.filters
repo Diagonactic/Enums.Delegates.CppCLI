@@ -60,7 +60,7 @@
     <ClInclude Include="Delegates.GetInvocationsAsArray.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="EnumFunctionMap.h">
+    <ClInclude Include="EnumDelegateMap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -89,9 +89,6 @@
     <ClCompile Include="EnumExtensions.AreAnyFlagsSet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="EnumExtensions.ToList.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Delegates.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -107,7 +104,22 @@
     <ClCompile Include="GenericNumericEnumCore.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="EnumFunctionMap.cpp">
+    <ClCompile Include="MsilConvert.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EnumDelegateMap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GenericEnumMinimal.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NumberMap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GenericEnumValues.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GenericEnumCoreDescriptions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

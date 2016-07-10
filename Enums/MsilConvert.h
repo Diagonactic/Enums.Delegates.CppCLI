@@ -18,58 +18,42 @@ namespace Diagonactic {
 		}
 
 		
-		generic <typename TEnum> where TEnum:IComparable, IFormattable, IConvertible, System::Enum
-			[MethodImpl(MethodImplOptions::NoInlining)]
-			static TEnum ClobberFrom(Byte val)
+		GenericEnumType	[MethodImpl(MethodImplOptions::NoInlining)]	static TEnum ClobberFrom(Byte val)
 		{
 			return (TEnum)Enum::ToObject(TEnum::typeid, val);
 		}
 
-		generic <typename TEnum> where TEnum:IComparable, IFormattable, IConvertible, System::Enum
-			[MethodImpl(MethodImplOptions::NoInlining)]
-			static TEnum ClobberFrom(SByte val)
+		GenericEnumType	[MethodImpl(MethodImplOptions::NoInlining)]	static TEnum ClobberFrom(SByte val)
 		{
 			return (TEnum)Enum::ToObject(TEnum::typeid, val);
 		}
 
-		generic <typename TEnum> where TEnum:IComparable, IFormattable, IConvertible, System::Enum
-			[MethodImpl(MethodImplOptions::NoInlining)]
-			static TEnum ClobberFrom(Int16 val)
+		GenericEnumType	[MethodImpl(MethodImplOptions::NoInlining)]	static TEnum ClobberFrom(Int16 val)
 		{
 			return (TEnum)Enum::ToObject(TEnum::typeid, val);
 		}
 
-		generic <typename TEnum> where TEnum:IComparable, IFormattable, IConvertible, System::Enum
-			[MethodImpl(MethodImplOptions::NoInlining)]
-			static TEnum ClobberFrom(UInt16 val)
+		GenericEnumType	[MethodImpl(MethodImplOptions::NoInlining)]	static TEnum ClobberFrom(UInt16 val)
 		{
 			return (TEnum)Enum::ToObject(TEnum::typeid, val);
 		}
 
-		generic <typename TEnum> where TEnum:IComparable, IFormattable, IConvertible, System::Enum
-			[MethodImpl(MethodImplOptions::NoInlining)]
-			static TEnum ClobberFrom(Int32 val)
+		GenericEnumType	[MethodImpl(MethodImplOptions::NoInlining)]	static TEnum ClobberFrom(Int32 val)
 		{
 			return (TEnum)Enum::ToObject(TEnum::typeid, val);
 		}
 
-		generic <typename TEnum> where TEnum:IComparable, IFormattable, IConvertible, System::Enum
-			[MethodImpl(MethodImplOptions::NoInlining)]
-			static TEnum ClobberFrom(UInt32 val)
+		GenericEnumType	[MethodImpl(MethodImplOptions::NoInlining)]	static TEnum ClobberFrom(UInt32 val)
 		{
 			return (TEnum)Enum::ToObject(TEnum::typeid, val);
 		}
 
-		generic <typename TEnum> where TEnum:IComparable, IFormattable, IConvertible, System::Enum
-			[MethodImpl(MethodImplOptions::NoInlining)]
-			static TEnum ClobberFrom(Int64 val)
+		GenericEnumType	[MethodImpl(MethodImplOptions::NoInlining)]	static TEnum ClobberFrom(Int64 val)
 		{
 			return (TEnum)Enum::ToObject(TEnum::typeid, val);
 		}
 
-		generic <typename TEnum> where TEnum:IComparable, IFormattable, IConvertible, System::Enum
-			[MethodImpl(MethodImplOptions::NoInlining)]
-			static TEnum ClobberFrom(UInt64 val)
+		GenericEnumType	[MethodImpl(MethodImplOptions::NoInlining)]	static TEnum ClobberFrom(UInt64 val)
 		{
 			return (TEnum)Enum::ToObject(TEnum::typeid, val);
 		}

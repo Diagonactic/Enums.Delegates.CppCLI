@@ -1,6 +1,4 @@
 #pragma once
-#include "EqualityComparers.h"
-#include "GenericEnumValues.h"
 
 enum UnderlyingKind : char;
 ref class Util;
@@ -10,10 +8,8 @@ using namespace System::Collections::Generic;
 using namespace System::Runtime::InteropServices;
 using namespace System::Text;
 
-
-
-
 namespace Diagonactic {
+
 	template <typename TNumber>
 	ref class NumberMap {
 	internal:
@@ -21,14 +17,12 @@ namespace Diagonactic {
 		Int32 s_length;
 		array<TNumber>^ s_values;
 
-		NumberMap(array<TNumber>^ values, array<String^>^ names, UnderlyingKind kind) {
+		NumberMap(array<TNumber>^ values, array<String^>^ names, UnderlyingKind kind) 
+		{
 			s_values = values;
 			s_length = values->Length;
 			auto len = s_length;
-			if (kind == UnderlyingKind::Int64Kind || kind == UnderlyingKind::UInt64Kind)
-				s_valueMap = gcnew Dictionary<TNumber, String^>(len, EqualityComparer<TNumber>::Default);
-			else
-				s_valueMap = gcnew Dictionary<TNumber, String^>(len, EqualityComparer<TNumber>::Default);
+			s_valueMap = gcnew Dictionary<TNumber, String^>(len, EqualityComparer<TNumber>::Default);				
 
 			do {
 				len--;
@@ -36,6 +30,7 @@ namespace Diagonactic {
 					s_valueMap->Add(values[len], names[len]);
 			} while (len != 0);
 		}
+		
 
 		inline Boolean GetValueFromString(String ^value, Boolean ignoreCase, Boolean throwOnFail, TNumber %result)
 		{
@@ -72,5 +67,7 @@ namespace Diagonactic {
 
 			return (result->Length > 2) ? result->ToString(2, result->Length - 2) : value.ToString();
 		}
+
 	};
+	
 }

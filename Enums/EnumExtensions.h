@@ -1,5 +1,5 @@
 #pragma once
-#include "GenericEnumCoreDescriptions.h"
+
 
 namespace Diagonactic {
 

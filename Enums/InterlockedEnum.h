@@ -1,14 +1,15 @@
 #pragma once
+#include "MsilConvert.h"
 #include "GenericEnumValues.h"
 
-#include <cliext/hash_map>
 ref class GenericEnumMinimal;
 ref class GenericEnumValues;
+ref class MsilConvert;
+
 enum UnderlyingKind : char;
 
 using namespace System;
 using namespace System::Threading;
-using namespace cliext;
 using namespace System::Linq;
 using namespace System::Collections::Generic;
 

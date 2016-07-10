@@ -14,6 +14,7 @@ namespace MSIL
     {
         public static int Main(string[] args)
         {
+            Console.WriteLine("Processing MSIL for Enums");
             if (args.Length != 1)
             {
                 Console.WriteLine("ERROR: No keyfile was included for signing the assembly");

@@ -80,6 +80,7 @@
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <GenerateXMLDocumentationFiles>true</GenerateXMLDocumentationFiles>
+      <PreprocessToFile>false</PreprocessToFile>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -100,7 +101,7 @@
     <ClInclude Include="Delegates.GetInvocationsAsArray.h" />
     <ClInclude Include="Delegates.h" />
     <ClInclude Include="EnumExtensions.h" />
-    <ClInclude Include="EnumFunctionMap.h" />
+    <ClInclude Include="EnumDelegateMap.h" />
     <ClInclude Include="Enums.h" />
     <ClInclude Include="EqualityComparers.h" />
     <ClInclude Include="GenericEnumMinimal.h" />
@@ -123,12 +124,16 @@
     <ClCompile Include="EnumExtensions.EqualsAny.cpp" />
     <ClCompile Include="EnumExtensions.RemoveFlags.cpp" />
     <ClCompile Include="EnumExtensions.cpp" />
-    <ClCompile Include="EnumExtensions.ToList.cpp" />
-    <ClCompile Include="EnumFunctionMap.cpp" />
+    <ClCompile Include="EnumDelegateMap.cpp" />
     <ClCompile Include="Enums.cpp" />
     <ClCompile Include="EqualityComparers.cpp" />
+    <ClCompile Include="GenericEnumMinimal.cpp" />
+    <ClCompile Include="GenericEnumValues.cpp" />
     <ClCompile Include="GenericNumericEnumCore.cpp" />
+    <ClCompile Include="GenericEnumCoreDescriptions.cpp" />
     <ClCompile Include="InterlockedEnum.cpp" />
+    <ClCompile Include="MsilConvert.cpp" />
+    <ClCompile Include="NumberMap.cpp" />
     <ClCompile Include="Stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
