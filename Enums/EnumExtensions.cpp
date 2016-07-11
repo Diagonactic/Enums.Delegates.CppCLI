@@ -1,11 +1,12 @@
 #include "Stdafx.h"
+#include "GenericEnumMinimal.h"
 #include "GenericNumericEnumCore.h"
 #include "EnumExtensions.h"
 #include "GenericEnumCoreDescriptions.h"
 
 ref class GenericNumericEnumCore;
 
-ref class GenericEnumMinimal;
+
 ref class GenericEnumCoreDescriptions;
 using namespace System;
 
@@ -263,6 +264,7 @@ namespace Diagonactic {
 	{
 		return Diagonactic::GenericNumericEnumCore<TEnum>::ToList(source);
 	}
-
 	
+	
+
 }

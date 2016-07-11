@@ -10,8 +10,6 @@ enum UnderlyingKind : char;
 ref class Util;
 ref class MsilConvert;
 
-
-
 namespace Diagonactic
 {
 	
@@ -51,7 +49,7 @@ namespace Diagonactic
 #pragma warning(default:4957)
 #pragma warning(default:4958)
 
-			static TEnum RemoveFlags(TEnum sourceEnum, ...array<TEnum>^ enumFlagsToRemove);
+			static TEnum RemoveFlags(TEnum sourceEnum, array<TEnum>^ enumFlagsToRemove);
 
 			static TEnum AddFlags(array<TEnum>^ enumFlagsToAdd, TEnum sourceEnum);
 

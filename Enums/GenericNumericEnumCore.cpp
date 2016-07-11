@@ -104,7 +104,7 @@ GenericNumericEnumCoreMethod(Boolean) ParseEnum(String ^value, Boolean ignoreCas
 
 	SwitchOnType(s_kind, ParseEnumPart)
 
-		throw gcnew Exception("Underlying Kind is not supported");
+	throw gcnew Exception("Underlying Kind is not supported");
 }
 
 GenericNumericEnumCoreMethod(Boolean) ThrowOrDefaultEnum(Boolean throwException)

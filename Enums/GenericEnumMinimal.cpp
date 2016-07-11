@@ -2,21 +2,16 @@
 #include "MsilConvert.h"
 #include "GenericEnumMinimal.h"
 
-#define GenericEnumMinimalMethod(returnType) GenericEnumType returnType Diagonactic::GenericEnumMinimal<TEnum>::
-
-#define CaseKind(macroName, kind, source, target) switch (kind) {\
-			macroName(Int32, source, target);\
-			macroName(Int64, source, target);\
-			macroName(Int16, source, target);\
-			macroName(Byte, source, target);\
-			macroName(UInt32, source, target);\
-			macroName(UInt64, source, target);\
-			macroName(UInt16, source, target);\
-			macroName(SByte, source, target);\
+#define ReturnConvertedFromUtilSourceTargetMethod(type, utilMethodName) return MsilConvert::ClobberFrom<TEnum>(Util::##utilMethodName(Util::ClobberTo##type(source), Util::ClobberTo##type(target)))
+#define FlagsOperationOnEnumArray(type, enumMethod)									\
+	{																				\
+		auto retVal = Util::ClobberTo##type(source);								\
+		for (int i = 0; i < enumArray->Length; i++)									\
+			retVal = Util::enumMethod(retVal, Util::ClobberTo##type(enumArray[i]));	\
+		return MsilConvert::ClobberFrom<TEnum>(retVal);								\
 	}
 
-
-#define AREALLFLAGSSET(type, sourceEnum, enumFlagsToCheck) case UnderlyingKind::type##Kind:\
+#define AreAllEnumFlagsToCheckSetOnSource(type) \
 {\
 	auto i = enumFlagsToCheck->Length;\
 	do {\
@@ -27,97 +22,36 @@
 	} while(true);\
 }
 
-#define AREANYFLAGSSET(type, sourceEnum, enumFlagsToCheck) case UnderlyingKind::type##Kind:\
-{\
-	auto i = enumFlagsToCheck->Length;\
-	do {\
-		i--;\
-		if (Util::IsFlagSet(Util::ClobberTo##type(sourceEnum), Util::ClobberTo##type(enumFlagsToCheck[i])))\
-			return true;\
-		if (i == 0) return false;\
-	} while(true);\
-}
-#define AREANYFLAGSSETALL(sourceEnum, enumFlagsToCheck) switch(s_kind) {\
-	AREANYFLAGSSET(Int32, sourceEnum, enumFlagsToCheck)\
-	AREANYFLAGSSET(Int64, sourceEnum, enumFlagsToCheck)\
-	AREANYFLAGSSET(Int16, sourceEnum, enumFlagsToCheck)\
-	AREANYFLAGSSET(UInt32, sourceEnum, enumFlagsToCheck)\
-	AREANYFLAGSSET(UInt64, sourceEnum, enumFlagsToCheck)\
-	AREANYFLAGSSET(UInt16, sourceEnum, enumFlagsToCheck)\
-	AREANYFLAGSSET(Byte, sourceEnum, enumFlagsToCheck)\
-	AREANYFLAGSSET(SByte, sourceEnum, enumFlagsToCheck)\
-}
-#define AREALLFLAGSSETALL(sourceEnum, enumFlagsToCheck) switch(s_kind) {\
-	AREALLFLAGSSET(Int32, sourceEnum, enumFlagsToCheck)\
-	AREALLFLAGSSET(Int64, sourceEnum, enumFlagsToCheck)\
-	AREALLFLAGSSET(Int16, sourceEnum, enumFlagsToCheck)\
-	AREALLFLAGSSET(UInt32, sourceEnum, enumFlagsToCheck)\
-	AREALLFLAGSSET(UInt64, sourceEnum, enumFlagsToCheck)\
-	AREALLFLAGSSET(UInt16, sourceEnum, enumFlagsToCheck)\
-	AREALLFLAGSSET(Byte, sourceEnum, enumFlagsToCheck)\
-	AREALLFLAGSSET(SByte, sourceEnum, enumFlagsToCheck)\
+#define AreAnyEnumFlagsToCheckSetOnSource(type)																\
+{																											\
+	auto i = enumFlagsToCheck->Length;																		\
+	do {																									\
+		i--;																								\
+		if (Util::IsFlagSet(Util::ClobberTo##type(sourceEnum), Util::ClobberTo##type(enumFlagsToCheck[i])))	\
+			return true;																					\
+		if (i == 0) return false;																			\
+	} while(true);																							\
 }
 
 
+#define RemoveTargetFromSource(type) ReturnConvertedFromUtilSourceTargetMethod(type, RemoveFlagFrom)
+#define AddEnumArrayToSource(type) FlagsOperationOnEnumArray(type, AddFlagTo)
+#define RemoveEnumArrayFromSource(type) FlagsOperationOnEnumArray(type, RemoveFlagFrom)
+#define AddSpecialEnumArrayToSource(type) FlagsOperationOnEnumArray(type, AddFlagToSpecial)
+#define IsFlagSetNumerically(type) return Util::IsFlagSet<type>(*reinterpret_cast<type*>(&source), *reinterpret_cast<type*>(&target));
+#define AddFlagNumerically(type) return MsilConvert::ClobberFrom<TEnum>((*reinterpret_cast<type*>(&source)) | (*reinterpret_cast<type*>(&target)));
 
-#define TYPECASECALLRETURN(type, callPart, p1, p2) case UnderlyingKind::type##Kind: return MsilConvert::ClobberFrom<TEnum>(Util::##callPart(Util::ClobberTo##type(p1), Util::ClobberTo##type(p2)))
-#define EXECUTEFOREACHALLTYPES(enumMethod, enumVal, enumArray) switch(s_kind) {\
-	TYPECASEEXECUTEFOREACH(Int32, enumMethod, enumVal, enumArray)\
-	TYPECASEEXECUTEFOREACH(Int64, enumMethod, enumVal, enumArray)\
-	TYPECASEEXECUTEFOREACH(Int16, enumMethod, enumVal, enumArray)\
-	TYPECASEEXECUTEFOREACH(UInt32, enumMethod, enumVal, enumArray)\
-	TYPECASEEXECUTEFOREACH(UInt64, enumMethod, enumVal, enumArray)\
-	TYPECASEEXECUTEFOREACH(UInt16, enumMethod, enumVal, enumArray)\
-	TYPECASEEXECUTEFOREACH(Byte, enumMethod, enumVal, enumArray)\
-	TYPECASEEXECUTEFOREACH(SByte, enumMethod, enumVal, enumArray)\
-}
-#define EXECUTEALLTYPES(callPart, p1, p2) switch (s_kind) { \
-	TYPECASECALLRETURN(Int32, callPart, p1, p2);\
-	TYPECASECALLRETURN(UInt32, callPart, p1, p2);\
-	TYPECASECALLRETURN(Int64, callPart, p1, p2);\
-	TYPECASECALLRETURN(UInt64, callPart, p1, p2);\
-	TYPECASECALLRETURN(Int16, callPart, p1, p2);\
-	TYPECASECALLRETURN(UInt16, callPart, p1, p2);\
-	TYPECASECALLRETURN(Byte, callPart, p1, p2);\
-	TYPECASECALLRETURN(SByte, callPart, p1, p2);\
-}
+#define GenericEnumMinimalMethod(returnType) GenericEnumType returnType Diagonactic::GenericEnumMinimal<TEnum>::
 
-#define EXECUTEALLTYPESARRAYTARGET(callPart, p1, p2) switch (s_kind) { \
-	TYPECASECALLRETURN(Int32,  ArrayInt32,  callPart, p1, p2);\
-	TYPECASECALLRETURN(UInt32, ArrayUInt32, callPart, p1, p2);\
-	TYPECASECALLRETURN(Int64,  ArrayInt64,  callPart, p1, p2);\
-	TYPECASECALLRETURN(UInt64, ArrayUInt64, callPart, p1, p2);\
-	TYPECASECALLRETURN(Int16,  ArrayInt16,  callPart, p1, p2);\
-	TYPECASECALLRETURN(UInt16, ArrayUInt16, callPart, p1, p2);\
-	TYPECASECALLRETURN(Byte,   ArrayByte,   callPart, p1, p2);\
-	TYPECASECALLRETURN(SByte,  ArraySByte,  callPart, p1, p2);\
-}
-
-#define IsFlagSetNumerically(type, source, target) case UnderlyingKind::type##Kind: return Util::IsFlagSet<type>(*reinterpret_cast<type*>(&source), *reinterpret_cast<type*>(&target));
-
-#define AddFlagArray(type, source, targetArray) case UnderlyingKind::type##Kind: return AddFlags##type(source, targetArray);
-
-#define TYPECASEEXECUTEFOREACH(type, enumMethod, enumVal, enumArray)				\
-	case UnderlyingKind::type##Kind:												\
-	{																				\
-		auto retVal = Util::ClobberTo##type(enumVal);								\
-		for (int i = 0; i < enumArray->Length; i++)									\
-			retVal = Util::enumMethod(retVal, Util::ClobberTo##type(enumArray[i]));	\
-		return MsilConvert::ClobberFrom<TEnum>(retVal);								\
+#define AddFlagArrayMethod(type)																			\
+	GenericEnumMinimalMethod(TEnum) AddFlags##type(TEnum enumVal, array<TEnum>^ enumArray) {				\
+		type retVal = *reinterpret_cast<type*>(&enumVal);													\
+		TEnum flagToAdd;																					\
+		for (int i = 0; i < enumArray->Length; i++)															\
+			retVal = retVal | (Util::ClobberTo##type(flagToAdd));											\
+		return MsilConvert::ClobberFrom<TEnum>(retVal);														\
 	}
 
-#define CaseAddFlagNumerically(type, source, target) \
-	case UnderlyingKind::type##Kind: \
-		return MsilConvert::ClobberFrom<TEnum>((*reinterpret_cast<type*>(&source)) | (*reinterpret_cast<type*>(&target)))
-
-
-#define AddFlagArrayMethod(type) GenericEnumMinimalMethod(TEnum) AddFlags##type(TEnum enumVal, array<TEnum>^ enumArray) {	\
-	type retVal = *reinterpret_cast<type*>(&enumVal);													\
-	TEnum flagToAdd;																					\
-	for (int i = 0; i < enumArray->Length; i++)															\
-		retVal = retVal | (Util::ClobberTo##type(flagToAdd));											\
-	return MsilConvert::ClobberFrom<TEnum>(retVal);														\
-}
 #pragma warning(disable:4958)
 #pragma warning(disable:4957)
 #pragma warning(disable:4956)
@@ -133,55 +67,52 @@ AddFlagArrayMethod(SByte)
 #pragma warning(default:4957)
 #pragma warning(default:4956)
 
-GenericEnumMinimalMethod(Boolean) IsFlagSet(TEnum source, TEnum testVal)
+GenericEnumMinimalMethod(Boolean) IsFlagSet(TEnum source, TEnum target)
 {
-	CaseKind(IsFlagSetNumerically, s_kind, source, testVal)
+	SwitchOnType(s_kind, IsFlagSetNumerically)	
 	throw gcnew Exception("This should never throw. All underlying types are represented above.");
 }
 
 GenericEnumMinimalMethod(Boolean) AreAllFlagsSet(array<TEnum>^ enumFlagsToCheck, TEnum sourceEnum)
 {
-	AREALLFLAGSSETALL(sourceEnum, enumFlagsToCheck);
+	SwitchOnType(s_kind, AreAllEnumFlagsToCheckSetOnSource)
 	throw gcnew Exception("This should never throw. All underlying types are represented above.");
 }
 
 GenericEnumMinimalMethod(Boolean) AreAnyFlagsSet(array<TEnum>^ enumFlagsToCheck, TEnum sourceEnum)
 {
-	AREANYFLAGSSETALL(sourceEnum, enumFlagsToCheck);
+	SwitchOnType(s_kind, AreAnyEnumFlagsToCheckSetOnSource)
 	throw gcnew Exception("This should never throw. All underlying types are represented above.");
 }
 
 
-GenericEnumMinimalMethod(TEnum) AddFlag(TEnum sourceEnum, TEnum target)
+GenericEnumMinimalMethod(TEnum) AddFlag(TEnum source, TEnum target)
 {
-	CaseKind(CaseAddFlagNumerically, s_kind, sourceEnum, target)
+	SwitchOnType(s_kind, AddFlagNumerically)
 	throw gcnew Exception("This should never throw. All underlying types are represented above.");
 }
 
-
-GenericEnumMinimalMethod(TEnum) RemoveFlags(TEnum sourceEnum, ...array<TEnum>^ enumFlagsToRemove)
+GenericEnumMinimalMethod(TEnum) RemoveFlags(TEnum source, array<TEnum>^ enumArray)
 {
-	EXECUTEFOREACHALLTYPES(RemoveFlagFrom, sourceEnum, enumFlagsToRemove)
+	SwitchOnType(s_kind, RemoveEnumArrayFromSource)
 	throw gcnew Exception("This should never throw. All underlying types are represented above.");
 }
 
-
-GenericEnumMinimalMethod(TEnum) AddFlags(array<TEnum>^ enumFlagsToAdd, TEnum sourceEnum)
+GenericEnumMinimalMethod(TEnum) AddFlags(array<TEnum>^ enumArray, TEnum source)
 {
-	EXECUTEFOREACHALLTYPES(AddFlagTo, sourceEnum, enumFlagsToAdd);
+	SwitchOnType(s_kind, AddEnumArrayToSource)
 	throw gcnew Exception("This should never throw. All underlying types are represented above.");
 }
 
-
-GenericEnumMinimalMethod(TEnum) RemoveFlag(TEnum sourceEnum, TEnum enumFlagToRemove)
+GenericEnumMinimalMethod(TEnum) RemoveFlag(TEnum source, TEnum target)
 {
-	EXECUTEALLTYPES(RemoveFlagFrom, sourceEnum, enumFlagToRemove);
+	SwitchOnType(s_kind, RemoveTargetFromSource)
 	throw gcnew Exception("This should never throw. All underlying types are represented above.");
 }
 
-GenericEnumMinimalMethod(TEnum) AddFlagsSpecial(array<TEnum>^ enumFlagsToAdd, TEnum sourceEnum)
+GenericEnumMinimalMethod(TEnum) AddFlagsSpecial(array<TEnum>^ enumArray, TEnum source)
 {
-	EXECUTEFOREACHALLTYPES(AddFlagToSpecial, sourceEnum, enumFlagsToAdd);
+	SwitchOnType(s_kind, AddSpecialEnumArrayToSource)
 	throw gcnew Exception("This should never throw. All underlying types are represented above.");
 }
 

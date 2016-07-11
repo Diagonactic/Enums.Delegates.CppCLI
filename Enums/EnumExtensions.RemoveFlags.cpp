@@ -3,11 +3,12 @@
 #include "EnumExtensions.h"
 #include "GenericEnumCoreDescriptions.h"
 
-ref class GenericEnumMinimal;
+
 
 using namespace System;
 
 namespace Diagonactic {
+
 	/// <summary>
 	///		Removes <paramref name="flagsToRemove"/> from <paramref name="source"/> flags enum using a binary math operation applied to the
 	///		underlying type of <typeparamref name="TEnum"/>.
@@ -21,5 +22,5 @@ namespace Diagonactic {
 		// Ok, so if this stupid damn method is moved to the EnumExtensions.h file below AddFlags, it won't compile (put it above and AddFlags won't compile).
  		// So this is a kludge and it's driving me crazy.
 		return GenericEnumMinimal<TEnum>::RemoveFlags(source, flagsToRemove);
-	};
+	}
 }
