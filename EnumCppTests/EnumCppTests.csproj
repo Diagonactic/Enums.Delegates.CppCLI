@@ -75,14 +75,6 @@
     <CodeAnalysisRuleSet>EnumCppTests.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Condition="'$(Configuration)' == 'Release'" Include="Enums, Version=1.0.5776.28388, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\x64\Release\Enums.dll</HintPath>
-    </Reference>
-    <Reference Condition="'$(Configuration)' == 'Debug'" Include="Enums, Version=1.0.5776.28388, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\x64\Debug\Enums.dll</HintPath>
-    </Reference>
     <Reference Include="FluentAssertions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
       <HintPath>..\EnumCpp\packages\FluentAssertions.4.0.0\lib\net45\FluentAssertions.dll</HintPath>
       <Private>True</Private>
@@ -138,6 +130,12 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Enums\Enums.vcxproj">
+      <Project>{042ac5ec-5ccf-4abe-b976-81ca51dfa52b}</Project>
+      <Name>Enums</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

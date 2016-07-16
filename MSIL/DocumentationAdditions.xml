@@ -1,0 +1,120 @@
+		<member name="M:Diagonactic.ParameterizedEnumDelegateMap`4.ExecuteExactMatch(`0,`1,`2,System.Boolean)">
+            <summary>Executes the delegate assigned to the exact value of <paramref name="value" /> or the assigned default delegate if <paramref name="useDefaultIfNotFound" /> is <see langword="true" />.</summary>
+            <remarks>This method will not execute delegates assigned to a flag component of <paramref name="value" /></remarks>
+            <param name="value">The value to look for assigned delegates</param>
+            <param name="param">The first parameter to pass into the delegate</param>
+            <param name="param1">The second parameter to pass into the delegate</param>
+            <param name="useDefaultIfNotFound">If <see langword="true" />, executes The default delegate if one is assigned to this instance.</param>
+            <returns>The result of the matched delegate or the result of the default if <paramref name="useDefaultIfNotFound" /> is <see langword="true" />; otherwise the default value of <typeparamref name="TReturn" /></returns>
+        </member>
+        <member name="M:Diagonactic.ParameterizedEnumDelegateMap`4.ExecuteExactMatch(`0,`1,`2,System.Func`4{`0,`1,`2,`3})">
+            <summary>Executes the delegate assigned to the exact value of <paramref name="value" /> or <paramref name="defaultDelegate" /> if it is not <see langword="null" />.</summary>
+            <remarks>This method will not execute delegates assigned to a flag component of <paramref name="value" /></remarks>
+            <param name="value">The value to look for assigned delegates</param>
+            <param name="param">The first parameter to pass into the delegate</param>
+            <param name="param1">The second parameter to pass into the delegate</param>
+            <param name="defaultDelegate">The default delegate to execute if a match is not found</param>
+            <returns>The result of the matched delegate or the result of <paramref name="defaultDelegate" /> if not <see langword="null" />; otherwise the default value of <typeparamref name="TReturn" /></returns>
+        </member>
+        <member name="M:Diagonactic.ParameterizedEnumDelegateMap`4.ExecuteExactMatch(`0,`1,`2)">
+            <summary>Executes the method if it exactly matches an assigned value or if one of the flags of <paramref name="value" /> matches a value assigned to a method.  Does not execute the default delegate if no matches are found.</summary>
+            <param name="value">The flags value to look for assigned delegates</param>
+            <param name="param">The first parameter to pass into the delegate for execution.</param>
+            <param name="param1">The second parameter to pass into the delegate for execution.</param>
+            <returns>A dictionary containing the matched flag and the value the delegate returned.</returns>
+        </member>
+        <member name="M:Diagonactic.ParameterizedEnumDelegateMap`4.ExecuteFlagsMatches(`0,`1,`2)">
+            <summary>Executes the method if it exactly matches an assigned value or if one of the flags of <paramref name="value" /> matches a value assigned to a method.  Does not execute the default delegate if no matches are found.</summary>
+            <param name="value">The flags value to look for assigned delegates</param>
+            <param name="param">The first parameter to pass into the delegate for execution.</param>
+            <param name="param1">The second parameter to pass into the delegate for execution.</param>
+			<returns>A dictionary containing the matched flag and the value the delegate returned.</returns>
+		</member>
+		<member name="M:Diagonactic.ParameterizedEnumDelegateMap`4.#ctor(System.Collections.Generic.IDictionary`2{`0,System.Func`3{`0,`1,`2}},System.Func`3{`0,`1,`2,`3})">
+            <summary>Creates a new instance with <paramref name="delegateMatches" /> that will call the delegate assigned to the value field when a key match occurs and a <paramref name="defaultDelegate" /> that will execute when a match is not found.</summary>
+            <param name="delegateMatches">A dictionary containing enum values and their matching delegates to execute</param>
+            <param name="defaultDelegate">The default delegate to execute when a match is not found</param>
+        </member>
+        <member name="M:Diagonactic.ParameterizedEnumDelegateMap`4.#ctor(System.Collections.Generic.IDictionary`2{`0,System.Func`3{`0,`1,`2,`3}})">
+            <summary>Creates a new instance with <paramref name="delegateMatches" /> that will call the delegate assigned to the value field when a key match occurs</summary>
+            <param name="delegateMatches">A dictionary containing enum values and their matching delegates to execute</param>
+        </member>
+        <member name="M:Diagonactic.ParameterizedEnumDelegateMap`4.#ctor(System.Func`3{`0,`1,`2,`3})">
+            <summary>Creates a new instance with <paramref name="defaultDelegate" /> that will execute when a match is not found.</summary>
+            <param name="defaultDelegate">The default delegate to execute when a match is not found</param>
+        </member>
+        <member name="M:Diagonactic.ParameterizedEnumDelegateMap`4.#ctor">
+            <summary>Creates a new instance without a default delegate.</summary>
+        </member>
+		
+        <member name="T:Diagonactic.ParameterizedEnumDelegateMap`4">
+            <summary>A utility class that Allows for assigning/executing delegates based on <typeparamref name="TEnum" />.</summary>
+            <typeparam name="TEnum">The enum class that will be used to evaluate values</typeparam>
+            <typeparam name="TParameter0">The first parameter to pass into each delegate</typeparam>
+            <typeparam name="TParameter1">The second parameter to pass into each delegate</typeparam>
+            <typeparam name="TReturn">The return value of the delegate</typeparam>
+        </member>
+        
+		<member name="M:Diagonactic.ParameterizedEnumDelegateMap`3.ExecuteExactMatch(`0,`1,System.Boolean)">
+            <summary>Executes the delegate assigned to the exact value of <paramref name="value" /> or the assigned default delegate if <paramref name="useDefaultIfNotFound" /> is <see langword="true" />.</summary>
+            <remarks>This method will not execute delegates assigned to a flag component of <paramref name="value" /></remarks>
+            <param name="value">The value to look for assigned delegates</param>
+            <param name="param">The first parameter to pass into the delegate</param>
+            <param name="useDefaultIfNotFound">If <see langword="true" />, executes The default delegate if one is assigned to this instance.</param>
+            <returns>The result of the matched delegate or the result of the default if <paramref name="useDefaultIfNotFound" /> is <see langword="true" />; otherwise the default value of <typeparamref name="TReturn" /></returns>
+        </member>
+        <member name="M:Diagonactic.ParameterizedEnumDelegateMap`3.ExecuteExactMatch(`0,`1,System.Func`3{`0,`1,`2})">
+            <summary>Executes the delegate assigned to the exact value of <paramref name="value" /> or <paramref name="defaultDelegate" /> if it is not <see langword="null" />.</summary>
+            <remarks>This method will not execute delegates assigned to a flag component of <paramref name="value" /></remarks>
+            <param name="value">The value to look for assigned delegates</param>
+            <param name="param">The first parameter to pass into the delegate</param>
+            <param name="defaultDelegate">The default delegate to execute if a match is not found</param>
+            <returns>The result of the matched delegate or the result of <paramref name="defaultDelegate" /> if not <see langword="null" />; otherwise the default value of <typeparamref name="TReturn" /></returns>
+        </member>
+        <member name="M:Diagonactic.ParameterizedEnumDelegateMap`3.ExecuteExactMatch(`0,`1)">
+            <summary>Executes the delegate assigned to <paramref name="value" /> or the default delegate if one is assigned to this instance.  This will not execute delegates that match parts of a flag value.</summary>
+            <param name="value">The value to evaluate for an exact match</param>
+            <param name="param">The parameter to pass into the delegate</param>
+            <returns>The result of the matched delegate or the result of the default delegate if one is assigned to this instance; otherwise the default value of TReturn</returns>
+        </member>
+        <member name="M:Diagonactic.ParameterizedEnumDelegateMap`3.ExecuteFlagsMatches(`0,`1)">
+            <summary>Executes the method if it exactly matches an assigned value or if one of the flags of <paramref name="value" /> matches a value assigned to a method.  Does not execute the default delegate if no matches are found.</summary>
+            <param name="value">The flags value to look for assigned delegates</param>
+            <param name="param">The first parameter to pass into the delegate for execution.</param>
+            <returns>A dictionary containing the matched flag and the value the delegate returned.</returns>
+        </member>
+        <member name="M:Diagonactic.ParameterizedEnumDelegateMap`3.AssignToEachFlag(`0,System.Func`3{`0,`1,`2})">
+            <summary>
+Assigns the <paramref name="delegateFunction" /> individually to each flag of <paramref name="value" /></summary>
+            <remarks>The match must either be an exact match of the individual flag (if ExecuteExactMatch is called) or match one of the flags passed in to ExecuteFlagsMatches.</remarks>
+            <param name="value">The value to match (see remarks)</param>
+            <param name="delegateFunction">The method to execute on a successful match</param>
+        </member>
+        <member name="M:Diagonactic.ParameterizedEnumDelegateMap`3.AssignToExactValue(`0,System.Func`3{`0,`1,`2})">
+            <summary>Assigns the <paramref name="delegateFunction" /> to a match <paramref name="value" /></summary>
+            <remarks>The match must either be an exact match (if ExecuteExactMatch is called) or match one of the flags passed in to ExecuteFlagsMatches.  If the value contains more than one flag, it will only execute if the call matches the flags exactly or a call to ExecuteFlagsMatches contains at least the flags provided.</remarks>
+            <param name="value">The value to match (see remarks)</param>
+            <param name="delegateFunction">The method to execute on a successful match</param>
+        </member>
+        <member name="M:Diagonactic.ParameterizedEnumDelegateMap`3.#ctor(System.Collections.Generic.IDictionary`2{`0,System.Func`3{`0,`1,`2}},System.Func`3{`0,`1,`2})">
+            <summary>Creates a new instance with <paramref name="delegateMatches" /> that will call the delegate assigned to the value field when a key match occurs and a <paramref name="defaultDelegate" /> that will execute when a match is not found.</summary>
+            <param name="delegateMatches">A dictionary containing enum values and their matching delegates to execute</param>
+            <param name="defaultDelegate">The default delegate to execute when a match is not found</param>
+        </member>
+        <member name="M:Diagonactic.ParameterizedEnumDelegateMap`3.#ctor(System.Collections.Generic.IDictionary`2{`0,System.Func`3{`0,`1,`2}})">
+            <summary>Creates a new instance with <paramref name="delegateMatches" /> that will call the delegate assigned to the value field when a key match occurs</summary>
+            <param name="delegateMatches">A dictionary containing enum values and their matching delegates to execute</param>
+        </member>
+        <member name="M:Diagonactic.ParameterizedEnumDelegateMap`3.#ctor(System.Func`3{`0,`1,`2})">
+            <summary>Creates a new instance with <paramref name="defaultDelegate" /> that will execute when a match is not found.</summary>
+            <param name="defaultDelegate">The default delegate to execute when a match is not found</param>
+        </member>
+        <member name="M:Diagonactic.ParameterizedEnumDelegateMap`3.#ctor">
+            <summary>Creates a new instance without a default delegate.</summary>
+        </member>
+        <member name="T:Diagonactic.ParameterizedEnumDelegateMap`3">
+            <summary>A utility class that Allows for assigning/executing delegates based on <typeparamref name="TEnum" />.</summary>
+            <typeparam name="TEnum">The enum class that will be used to evaluate values</typeparam>
+            <typeparam name="TParameter0">A parameter to pass into each delegate</typeparam>
+            <typeparam name="TReturn">The return value of the delegate</typeparam>
+        </member>

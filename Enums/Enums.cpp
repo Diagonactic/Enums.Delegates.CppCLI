@@ -1,5 +1,7 @@
 #include "Stdafx.h"
 #include "Enums.h"
+#include "Util.h"
+#include "MsilConvert.h"
 #include "GenericNumericEnumCore.h"
 
 #using <C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETCore\v4.5\System.Linq.Dll>
@@ -19,7 +21,9 @@ ref class GenericEnumValues;
 /// </summary>
 namespace Diagonactic
 {
-	/// <summary>Parses <paramref name="source"/> for values of <typeparamref name="TEnum"/>.</summary>
+
+	/// 
+	/// 	/// <summary>Parses <paramref name="source"/> for values of <typeparamref name="TEnum"/>.</summary>
 	/// <typeparam name="TEnum">An <see langword="enum"/> (<see cref="System::Enum"/>)</typeparam>
 	/// <param name="source">A string value of <typeparamref name="TEnum"/> or a comma separated list of values.</param>
 	/// <exception cref="ArgumentException">One (or more) of the values supplied in <paramref name="source"/> was not found.</exception>
@@ -27,7 +31,6 @@ namespace Diagonactic
 	GenericEnumType	TEnum Enums::Parse(String ^source)
 	{
 		TEnum result;
-		//Diagonactic::GenericEnumCore<TEnum>::ParseEnum(source, false, true, result);
 		GenericNumericEnumCore<TEnum>::ParseEnum(source, false, true, result);
 		return result;
 	}	
@@ -38,8 +41,31 @@ namespace Diagonactic
 	/// <typeparam name="TEnum">An <see langword="enum"/> (<see cref="System::Enum"/>)</typeparam>
 	/// <returns>The enum value represented by <typeparamref name="TEnum"/></returns>
 	GenericEnumType	TEnum Enums::ToEnum(Object^ value)
-	{
+	{	
 		return safe_cast<TEnum>(Enum::ToObject(TEnum::typeid, value));
+	}
+
+#define ConvertSigned(value)												\
+	auto enumType = Util::GetKind<TEnum>();									\
+	switch (enumType) {														\
+		case UnderlyingKind::SByteKind:										\
+		case UnderlyingKind::Int16Kind:										\
+		case UnderlyingKind::Int32Kind:										\
+		case UnderlyingKind::Int64Kind:										\
+			return MsilConvert::ClobberFrom<TEnum>(value);					\
+		default:															\
+			return safe_cast<TEnum>(Enum::ToObject(TEnum::typeid, value));	\
+	}
+#define ConvertUnsigned(value)												\
+	auto enumType = Util::GetKind<TEnum>();									\
+	switch (enumType) {														\
+		case UnderlyingKind::ByteKind:										\
+		case UnderlyingKind::UInt16Kind:									\
+		case UnderlyingKind::UInt32Kind:									\
+		case UnderlyingKind::UInt64Kind:									\
+			return MsilConvert::ClobberFrom<TEnum>(value);					\
+		default:															\
+			return safe_cast<TEnum>(Enum::ToObject(TEnum::typeid, value));	\
 	}
 
 	/// <summary>Converts <paramref name="value"/> to <typeparamref name="TEnum"/>.</summary>
@@ -49,7 +75,7 @@ namespace Diagonactic
 	/// <returns>The enum value represented by <typeparamref name="TEnum"/></returns>
 	GenericEnumType	TEnum Enums::ToEnum(SByte value)
 	{
-		return safe_cast<TEnum>(Enum::ToObject(TEnum::typeid, value));
+		ConvertSigned(value);
 	}
 
 	/// <summary>Converts <paramref name="value"/> to <typeparamref name="TEnum"/>.</summary>
@@ -59,7 +85,7 @@ namespace Diagonactic
 	/// <returns>The enum value represented by <typeparamref name="TEnum"/></returns>
 	GenericEnumType	TEnum Enums::ToEnum(Byte value)
 	{
-		return safe_cast<TEnum>(Enum::ToObject(TEnum::typeid, value));
+		ConvertUnsigned(value);
 	}
 
 	/// <summary>Converts <paramref name="value"/> to <typeparamref name="TEnum"/>.</summary>
@@ -69,7 +95,7 @@ namespace Diagonactic
 	/// <returns>The enum value represented by <typeparamref name="TEnum"/></returns>
 	GenericEnumType	TEnum Enums::ToEnum(Int16 value)
 	{
-		return safe_cast<TEnum>(Enum::ToObject(TEnum::typeid, value));
+		ConvertSigned(value);
 	}
 
 	/// <summary>Converts <paramref name="value"/> to <typeparamref name="TEnum"/>.</summary>
@@ -79,7 +105,7 @@ namespace Diagonactic
 	/// <returns>The enum value represented by <typeparamref name="TEnum"/></returns>
 	GenericEnumType	TEnum Enums::ToEnum(UInt16 value)
 	{
-		return safe_cast<TEnum>(Enum::ToObject(TEnum::typeid, value));
+		ConvertUnsigned(value);
 	}
 
 	/// <summary>Converts <paramref name="value"/> to <typeparamref name="TEnum"/>.</summary>
@@ -89,7 +115,7 @@ namespace Diagonactic
 	/// <returns>The enum value represented by <typeparamref name="TEnum"/></returns>
 	GenericEnumType	TEnum Enums::ToEnum(Int32 value)
 	{
-		return safe_cast<TEnum>(Enum::ToObject(TEnum::typeid, value));
+		ConvertSigned(value);
 	}
 
 	/// <summary>Converts <paramref name="value"/> to <typeparamref name="TEnum"/>.</summary>
@@ -99,7 +125,7 @@ namespace Diagonactic
 	/// <returns>The enum value represented by <typeparamref name="TEnum"/></returns>
 	GenericEnumType	TEnum Enums::ToEnum(UInt32 value)
 	{
-		return safe_cast<TEnum>(Enum::ToObject(TEnum::typeid, value));
+		ConvertUnsigned(value);
 	}
 
 	/// <summary>Converts <paramref name="value"/> to <typeparamref name="TEnum"/>.</summary>
@@ -109,7 +135,7 @@ namespace Diagonactic
 	/// <returns>The enum value represented by <typeparamref name="TEnum"/></returns>
 	GenericEnumType	TEnum Enums::ToEnum(Int64 value)
 	{	
-		return safe_cast<TEnum>(Enum::ToObject(TEnum::typeid, value));
+		ConvertSigned(value);
 	}
 
 	/// <summary>Converts <paramref name="value"/> to <typeparamref name="TEnum"/>.</summary>
@@ -119,7 +145,7 @@ namespace Diagonactic
 	/// <returns>The enum value represented by <typeparamref name="TEnum"/></returns>
 	GenericEnumType	TEnum Enums::ToEnum(UInt64 value)
 	{
-		return safe_cast<TEnum>(Enum::ToObject(TEnum::typeid, value));
+		ConvertUnsigned(value);
 	}
 
 	/// <summary>Converts <paramref name="value"/> to an <see cref="System::Object"/></summary>
@@ -128,7 +154,7 @@ namespace Diagonactic
 	/// <typeparam name="TEnum">An <see langword="enum"/> (<see cref="System::Enum"/>)</typeparam>
 	GenericEnumType	Object^ Enums::AsObject(SByte value)
 	{
-		return Enum::ToObject(TEnum::typeid, value);
+		ConvertSigned(value);
 	}
 
 	/// <summary>Converts <paramref name="value"/> to an <see cref="System::Object"/></summary>

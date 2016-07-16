@@ -3,9 +3,7 @@
 // but are changed infrequently
 
 #pragma once
-#include "Util.h"
 
-#using <C:\Src\EnumCpp\External Dependencies\JetBrains.Annotations.PCL328.dll>
 #using <C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETCore\v4.5\System.Linq.Dll>
 
 #define GenericEnumTypeConstraint(name) where name : IComparable, IFormattable, IConvertible, System::Enum, value class
@@ -14,30 +12,29 @@
 
 // http://stackoverflow.com/questions/13872586/macro-how-do-i-change-each-value-in-va-args - variation of this
 
-#define TYPENAME0 typename TParam0
-#define TYPENAME1 typename TParam1, TYPENAME0
-#define TYPENAME2 typename TParam2, TYPENAME1
-#define TYPENAME3 typename TParam3, TYPENAME2
-#define TYPENAME4 typename TParam4, TYPENAME3
-#define TYPENAME5 typename TParam5, TYPENAME4
-#define TYPENAME6 typename TParam6, TYPENAME5
-#define TYPENAME(i) TYPENAME##i
+#define CommaRepeat0(textToRepeat) textToRepeat
+#define CommaRepeat1(textToRepeat) textToRepeat##1, CommaRepeat0(textToRepeat)
+#define CommaRepeat2(textToRepeat) textToRepeat##2, CommaRepeat1(textToRepeat)
+#define CommaRepeat3(textToRepeat) textToRepeat##3, CommaRepeat2(textToRepeat)
+#define CommaRepeat4(textToRepeat) textToRepeat##4, CommaRepeat3(textToRepeat)
+#define CommaRepeat5(textToRepeat) textToRepeat##5, CommaRepeat4(textToRepeat)
+#define CommaRepeat6(textToRepeat) textToRepeat##6, CommaRepeat5(textToRepeat)
+#define CommaRepeat(numberOfTimes, textToRepeat) CommaRepeat##numberOfTimes(textToRepeat)
 
-// http://stackoverflow.com/questions/28231743/self-unrolling-macro-loop-in-c-c - Self Unrolling Macro Loop
+#define CommaRepeatTwoParams0(textLeftSideRepeat, textRightSideRepeat) textLeftSideRepeat textRightSideRepeat
+#define CommaRepeatTwoParams1(textLeftSideRepeat, textRightSideRepeat) textLeftSideRepeat##1 textRightSideRepeat##1, CommaRepeatTwoParams0(textLeftSideRepeat, textRightSideRepeat)
+#define CommaRepeatTwoParams2(textLeftSideRepeat, textRightSideRepeat) textLeftSideRepeat##2 textRightSideRepeat##2, CommaRepeatTwoParams1(textLeftSideRepeat, textRightSideRepeat)
+#define CommaRepeatTwoParams3(textLeftSideRepeat, textRightSideRepeat) textLeftSideRepeat##3 textRightSideRepeat##3, CommaRepeatTwoParams2(textLeftSideRepeat, textRightSideRepeat)
+#define CommaRepeatTwoParams4(textLeftSideRepeat, textRightSideRepeat) textLeftSideRepeat##4 textRightSideRepeat##4, CommaRepeatTwoParams3(textLeftSideRepeat, textRightSideRepeat)
+#define CommaRepeatTwoParams5(textLeftSideRepeat, textRightSideRepeat) textLeftSideRepeat##5 textRightSideRepeat##5, CommaRepeatTwoParams4(textLeftSideRepeat, textRightSideRepeat)
+#define CommaRepeatTwoParams6(textLeftSideRepeat, textRightSideRepeat) textLeftSideRepeat##6 textRightSideRepeat##6, CommaRepeatTwoParams5(textLeftSideRepeat, textRightSideRepeat)
+#define CommaRepeatTwoParams(numberOfTimes, textLeftSideRepeat, textRightSideRepeat) CommaRepeatTwoParams##numberOfTimes(textLeftSideRepeat, textRightSideRepeat)
 
-#define M_REPEAT_1(X) X
-#define M_REPEAT_2(X) X X
-#define M_REPEAT_3(X) X X X
-#define M_REPEAT_4(X) X X X X
-#define M_REPEAT_5(X) X M_REPEAT_4(X)
-#define M_REPEAT_6(X) M_REPEAT_3(X) M_REPEAT_3(X)
-
-#define M_EXPAND(...) __VA_ARGS__
-
-#define M_REPEAT__(N, X) M_EXPAND(M_REPEAT_ ## N)(X)
-#define M_REPEAT_(N, X) M_REPEAT__(N, X)
-#define M_REPEAT(N, X) M_REPEAT_(M_EXPAND(N), X)
-
+#define TParameterDeclaration(numberOfParameters) CommaRepeat(numberOfParameters, TParameter)
+#define TypenameTParameterName typename TParameter
+#define TParameterTypenameDeclaration(numberOfParameters) CommaRepeat(numberOfParameters, TypenameTParameterName)
+#define TParameterIdentifierNames(numberOfParameters) CommaRepeat(numberOfParameters, param)
+#define TParameterMethodParameters(numberOfParameters) CommaRepeatTwoParams(numberOfParameters, TParameter, param)
 
 #define SwitchOnType(targetEnumValue, valueWithTypeParameter)		\
 switch (targetEnumValue) {											\

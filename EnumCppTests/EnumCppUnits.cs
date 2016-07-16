@@ -237,11 +237,50 @@ namespace DiagonacticTests
             fm.ExecuteExactMatch(LongFlags.Two, "testString").ShouldBeEquivalentTo(42);
             fm.ExecuteExactMatch(LongFlags.Three, "noTestString").ShouldBeEquivalentTo(1);
         }
+        [TestMethod, EnumTest]
+        public void TestParameterisedCtors()
+        {
+            var fm = new ParameterizedEnumDelegateMap<LongFlags, string, int>(new Dictionary<LongFlags, Func<LongFlags, string, int>>
+                                                                              {
+                {
+                    LongFlags.Two,
+                    (flags, s) => 
+                    {
+                        s.ShouldBeEquivalentTo("testString");
+                    return 42;
+                    }
+                }
+                                                                              });
+            fm.ExecuteExactMatch(LongFlags.Two, "testString").ShouldBeEquivalentTo(42);
+            fm.ExecuteExactMatch(LongFlags.Three, "doesn't matter").ShouldBeEquivalentTo(default(LongFlags));
+            
+            fm = new ParameterizedEnumDelegateMap<LongFlags, string, int>(new Dictionary<LongFlags, Func<LongFlags, string, int>>
+                                                                          {
+                                                                              {
+                                                                                  LongFlags.Two,
+                                                                                  (flags, s) =>
+                                                                                  {
+                                                                                      s.ShouldBeEquivalentTo("testString");
+                                                                                      return 42;
+                                                                                  }
+                                                                              }
+                                                                          },
+                                                                          (f, s) => 13);
+            fm.ExecuteExactMatch(LongFlags.Two, "testString").ShouldBeEquivalentTo(42);
+            fm.ExecuteExactMatch(LongFlags.Three, "doesn't mater").ShouldBeEquivalentTo(13);
+        }
 
         [TestMethod, EnumTest]
         public void TestParameterisedCanExecuteFlags()
         {
             var fm = new ParameterizedEnumDelegateMap<LongFlags, string, int>();
+            var fm1 = new ParameterizedEnumDelegateMap<LongFlags, string, string, int>((a, b, c) =>
+                                                                                        {
+                                                                                            b.ShouldBeEquivalentTo("b");
+                                                                                            c.ShouldBeEquivalentTo("c");
+                                                                                            return 42;
+                                                                                        });
+            fm1.ExecuteExactMatch(LongFlags.Five, "b", "c").ShouldBeEquivalentTo(42);
 
             fm.AssignToEachFlag(LongFlags.Eight | LongFlags.Five, (f, s) =>
                                 {
@@ -271,6 +310,8 @@ namespace DiagonacticTests
             dic[LongFlags.Nine].ShouldBeEquivalentTo(41);
             fm.ExecuteExactMatch(LongFlags.Four, "testString").ShouldBeEquivalentTo(default(LongFlags));
         }
+
+        
 
         [TestMethod, EnumTest]
         public void TestParse()

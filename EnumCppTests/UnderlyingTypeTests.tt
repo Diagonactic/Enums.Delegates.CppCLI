@@ -256,6 +256,12 @@ namespace EnumCppUnderlyingTypeTests {
 			Enums.ToEnum<TestEnum>((" + typekw + @")" + GetHex(startingNumber, 1) + @").ShouldBeEquivalentTo(Flag1);
 			Enums.ToEnum<TestEnum>((" + typekw + @")" + GetHex(startingNumber, 1) + " | " + GetHex(startingNumber, 2) + @").ShouldBeEquivalentTo(Flag1Flag2);
 			Enums.ToEnum<TestEnum>((Object)" + GetHex(startingNumber, 1) + @").ShouldBeEquivalentTo(Flag1);
+			var enumTest1 = (" + typekw + @")" + GetHex(startingNumber, 0) + @";
+			var enumTest2 = (" + typekw + @")" + GetHex(startingNumber, 1) + @";
+			var enumTest3 = ((" + typekw + @")" + GetHex(startingNumber, 1) + " | " + GetHex(startingNumber, 2) + @");
+			Enums.ToEnum<TestEnum>(enumTest1).ShouldBeEquivalentTo((TestEnum)Enum.ToObject(typeof(TestEnum), enumTest1));
+			Enums.ToEnum<TestEnum>(enumTest2).ShouldBeEquivalentTo((TestEnum)Enum.ToObject(typeof(TestEnum), enumTest2));
+			Enums.ToEnum<TestEnum>(enumTest3).ShouldBeEquivalentTo((TestEnum)Enum.ToObject(typeof(TestEnum), enumTest3));
 		}
 
 		[TestMethod, EnumTest]

@@ -1,4 +1,5 @@
 #pragma once
+#include "Util.h"
 
 using namespace System;
 using namespace System::Runtime::Serialization;

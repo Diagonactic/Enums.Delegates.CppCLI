@@ -228,6 +228,12 @@ namespace EnumCppUnderlyingTypeTests {
 			Enums.ToEnum<TestEnum>((sbyte)0x000000001).ShouldBeEquivalentTo(Flag1);
 			Enums.ToEnum<TestEnum>((sbyte)0x000000001 | 0x000000002).ShouldBeEquivalentTo(Flag1Flag2);
 			Enums.ToEnum<TestEnum>((Object)0x000000001).ShouldBeEquivalentTo(Flag1);
+			var enumTest1 = (sbyte)0x000000000;
+			var enumTest2 = (sbyte)0x000000001;
+			var enumTest3 = ((sbyte)0x000000001 | 0x000000002);
+			Enums.ToEnum<TestEnum>(enumTest1).ShouldBeEquivalentTo((TestEnum)Enum.ToObject(typeof(TestEnum), enumTest1));
+			Enums.ToEnum<TestEnum>(enumTest2).ShouldBeEquivalentTo((TestEnum)Enum.ToObject(typeof(TestEnum), enumTest2));
+			Enums.ToEnum<TestEnum>(enumTest3).ShouldBeEquivalentTo((TestEnum)Enum.ToObject(typeof(TestEnum), enumTest3));
 		}
 
 		[TestMethod, EnumTest]
@@ -457,6 +463,12 @@ namespace EnumCppUnderlyingTypeTests {
 			Enums.ToEnum<TestEnum>((byte)0x000000001).ShouldBeEquivalentTo(Flag1);
 			Enums.ToEnum<TestEnum>((byte)0x000000001 | 0x000000002).ShouldBeEquivalentTo(Flag1Flag2);
 			Enums.ToEnum<TestEnum>((Object)0x000000001).ShouldBeEquivalentTo(Flag1);
+			var enumTest1 = (byte)0x000000000;
+			var enumTest2 = (byte)0x000000001;
+			var enumTest3 = ((byte)0x000000001 | 0x000000002);
+			Enums.ToEnum<TestEnum>(enumTest1).ShouldBeEquivalentTo((TestEnum)Enum.ToObject(typeof(TestEnum), enumTest1));
+			Enums.ToEnum<TestEnum>(enumTest2).ShouldBeEquivalentTo((TestEnum)Enum.ToObject(typeof(TestEnum), enumTest2));
+			Enums.ToEnum<TestEnum>(enumTest3).ShouldBeEquivalentTo((TestEnum)Enum.ToObject(typeof(TestEnum), enumTest3));
 		}
 
 		[TestMethod, EnumTest]
@@ -687,6 +699,12 @@ namespace EnumCppUnderlyingTypeTests {
 			Enums.ToEnum<TestEnum>((short)0x000000008).ShouldBeEquivalentTo(Flag1);
 			Enums.ToEnum<TestEnum>((short)0x000000008 | 0x000000010).ShouldBeEquivalentTo(Flag1Flag2);
 			Enums.ToEnum<TestEnum>((Object)0x000000008).ShouldBeEquivalentTo(Flag1);
+			var enumTest1 = (short)0x000000000;
+			var enumTest2 = (short)0x000000008;
+			var enumTest3 = ((short)0x000000008 | 0x000000010);
+			Enums.ToEnum<TestEnum>(enumTest1).ShouldBeEquivalentTo((TestEnum)Enum.ToObject(typeof(TestEnum), enumTest1));
+			Enums.ToEnum<TestEnum>(enumTest2).ShouldBeEquivalentTo((TestEnum)Enum.ToObject(typeof(TestEnum), enumTest2));
+			Enums.ToEnum<TestEnum>(enumTest3).ShouldBeEquivalentTo((TestEnum)Enum.ToObject(typeof(TestEnum), enumTest3));
 		}
 
 		[TestMethod, EnumTest]
@@ -916,6 +934,12 @@ namespace EnumCppUnderlyingTypeTests {
 			Enums.ToEnum<TestEnum>((ushort)0x000000010).ShouldBeEquivalentTo(Flag1);
 			Enums.ToEnum<TestEnum>((ushort)0x000000010 | 0x000000020).ShouldBeEquivalentTo(Flag1Flag2);
 			Enums.ToEnum<TestEnum>((Object)0x000000010).ShouldBeEquivalentTo(Flag1);
+			var enumTest1 = (ushort)0x000000000;
+			var enumTest2 = (ushort)0x000000010;
+			var enumTest3 = ((ushort)0x000000010 | 0x000000020);
+			Enums.ToEnum<TestEnum>(enumTest1).ShouldBeEquivalentTo((TestEnum)Enum.ToObject(typeof(TestEnum), enumTest1));
+			Enums.ToEnum<TestEnum>(enumTest2).ShouldBeEquivalentTo((TestEnum)Enum.ToObject(typeof(TestEnum), enumTest2));
+			Enums.ToEnum<TestEnum>(enumTest3).ShouldBeEquivalentTo((TestEnum)Enum.ToObject(typeof(TestEnum), enumTest3));
 		}
 
 		[TestMethod, EnumTest]
@@ -1146,6 +1170,12 @@ namespace EnumCppUnderlyingTypeTests {
 			Enums.ToEnum<TestEnum>((int)0x000008000).ShouldBeEquivalentTo(Flag1);
 			Enums.ToEnum<TestEnum>((int)0x000008000 | 0x000010000).ShouldBeEquivalentTo(Flag1Flag2);
 			Enums.ToEnum<TestEnum>((Object)0x000008000).ShouldBeEquivalentTo(Flag1);
+			var enumTest1 = (int)0x000000000;
+			var enumTest2 = (int)0x000008000;
+			var enumTest3 = ((int)0x000008000 | 0x000010000);
+			Enums.ToEnum<TestEnum>(enumTest1).ShouldBeEquivalentTo((TestEnum)Enum.ToObject(typeof(TestEnum), enumTest1));
+			Enums.ToEnum<TestEnum>(enumTest2).ShouldBeEquivalentTo((TestEnum)Enum.ToObject(typeof(TestEnum), enumTest2));
+			Enums.ToEnum<TestEnum>(enumTest3).ShouldBeEquivalentTo((TestEnum)Enum.ToObject(typeof(TestEnum), enumTest3));
 		}
 
 		[TestMethod, EnumTest]
@@ -1375,6 +1405,12 @@ namespace EnumCppUnderlyingTypeTests {
 			Enums.ToEnum<TestEnum>((uint)0x000008000).ShouldBeEquivalentTo(Flag1);
 			Enums.ToEnum<TestEnum>((uint)0x000008000 | 0x000010000).ShouldBeEquivalentTo(Flag1Flag2);
 			Enums.ToEnum<TestEnum>((Object)0x000008000).ShouldBeEquivalentTo(Flag1);
+			var enumTest1 = (uint)0x000000000;
+			var enumTest2 = (uint)0x000008000;
+			var enumTest3 = ((uint)0x000008000 | 0x000010000);
+			Enums.ToEnum<TestEnum>(enumTest1).ShouldBeEquivalentTo((TestEnum)Enum.ToObject(typeof(TestEnum), enumTest1));
+			Enums.ToEnum<TestEnum>(enumTest2).ShouldBeEquivalentTo((TestEnum)Enum.ToObject(typeof(TestEnum), enumTest2));
+			Enums.ToEnum<TestEnum>(enumTest3).ShouldBeEquivalentTo((TestEnum)Enum.ToObject(typeof(TestEnum), enumTest3));
 		}
 
 		[TestMethod, EnumTest]
@@ -1605,6 +1641,12 @@ namespace EnumCppUnderlyingTypeTests {
 			Enums.ToEnum<TestEnum>((long)0x20000000000).ShouldBeEquivalentTo(Flag1);
 			Enums.ToEnum<TestEnum>((long)0x20000000000 | 0x40000000000).ShouldBeEquivalentTo(Flag1Flag2);
 			Enums.ToEnum<TestEnum>((Object)0x20000000000).ShouldBeEquivalentTo(Flag1);
+			var enumTest1 = (long)0x000000000;
+			var enumTest2 = (long)0x20000000000;
+			var enumTest3 = ((long)0x20000000000 | 0x40000000000);
+			Enums.ToEnum<TestEnum>(enumTest1).ShouldBeEquivalentTo((TestEnum)Enum.ToObject(typeof(TestEnum), enumTest1));
+			Enums.ToEnum<TestEnum>(enumTest2).ShouldBeEquivalentTo((TestEnum)Enum.ToObject(typeof(TestEnum), enumTest2));
+			Enums.ToEnum<TestEnum>(enumTest3).ShouldBeEquivalentTo((TestEnum)Enum.ToObject(typeof(TestEnum), enumTest3));
 		}
 
 		[TestMethod, EnumTest]
@@ -1834,6 +1876,12 @@ namespace EnumCppUnderlyingTypeTests {
 			Enums.ToEnum<TestEnum>((ulong)0x400000000000000).ShouldBeEquivalentTo(Flag1);
 			Enums.ToEnum<TestEnum>((ulong)0x400000000000000 | 0x800000000000000).ShouldBeEquivalentTo(Flag1Flag2);
 			Enums.ToEnum<TestEnum>((Object)0x400000000000000).ShouldBeEquivalentTo(Flag1);
+			var enumTest1 = (ulong)0x000000000;
+			var enumTest2 = (ulong)0x400000000000000;
+			var enumTest3 = ((ulong)0x400000000000000 | 0x800000000000000);
+			Enums.ToEnum<TestEnum>(enumTest1).ShouldBeEquivalentTo((TestEnum)Enum.ToObject(typeof(TestEnum), enumTest1));
+			Enums.ToEnum<TestEnum>(enumTest2).ShouldBeEquivalentTo((TestEnum)Enum.ToObject(typeof(TestEnum), enumTest2));
+			Enums.ToEnum<TestEnum>(enumTest3).ShouldBeEquivalentTo((TestEnum)Enum.ToObject(typeof(TestEnum), enumTest3));
 		}
 
 		[TestMethod, EnumTest]

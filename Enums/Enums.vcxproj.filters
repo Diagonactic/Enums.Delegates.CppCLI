@@ -57,10 +57,10 @@
     <ClInclude Include="GenericNumericEnumCore.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Delegates.GetInvocationsAsArray.h">
+    <ClInclude Include="EnumDelegateMap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="EnumDelegateMap.h">
+    <ClInclude Include="ParameterizedEnumDelegateMap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -120,6 +120,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GenericEnumCoreDescriptions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ParameterizedDelegateMap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Util.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

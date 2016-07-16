@@ -1,4 +1,5 @@
 #pragma once
+#include "Util.h"
 
 using namespace System;
 using namespace System::Collections::Generic;
@@ -19,7 +20,7 @@ namespace Diagonactic
 
 			static TEnum s_defaultValue = TEnum();
 			static Type^ s_type = TEnum::typeid;
-			static UnderlyingKind s_kind = Util::GetKind(s_defaultValue);			
+			static UnderlyingKind s_kind = Util::GetKind<TEnum>();
 
 			static Boolean IsFlagSet(TEnum source, TEnum testVal);		
 

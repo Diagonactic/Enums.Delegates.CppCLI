@@ -3,36 +3,29 @@
 #include "GenericEnumMinimal.h"
 
 #define ReturnConvertedFromUtilSourceTargetMethod(type, utilMethodName) return MsilConvert::ClobberFrom<TEnum>(Util::##utilMethodName(Util::ClobberTo##type(source), Util::ClobberTo##type(target)))
-#define FlagsOperationOnEnumArray(type, enumMethod)									\
-	{																				\
-		auto retVal = Util::ClobberTo##type(source);								\
-		for (int i = 0; i < enumArray->Length; i++)									\
-			retVal = Util::enumMethod(retVal, Util::ClobberTo##type(enumArray[i]));	\
-		return MsilConvert::ClobberFrom<TEnum>(retVal);								\
-	}
 
-#define AreAllEnumFlagsToCheckSetOnSource(type) \
-{\
-	auto i = enumFlagsToCheck->Length;\
-	do {\
-		i--;\
-		if (!(Util::IsFlagSet(Util::ClobberTo##type(sourceEnum), Util::ClobberTo##type(enumFlagsToCheck[i]))))\
-			return false;\
-		if (i == 0) return true;\
-	} while(true);\
+#define FlagsOperationOnEnumArray(type, enumMethod)											\
+{																							\
+	auto retVal = Util::ClobberTo##type(source);											\
+	for (int i = 0; i < enumArray->Length; i++)												\
+		retVal = Util::enumMethod(retVal, Util::ClobberTo##type(enumArray[i]));				\
+	return MsilConvert::ClobberFrom<TEnum>(retVal);											\
 }
 
-#define AreAnyEnumFlagsToCheckSetOnSource(type)																\
-{																											\
-	auto i = enumFlagsToCheck->Length;																		\
-	do {																									\
-		i--;																								\
-		if (Util::IsFlagSet(Util::ClobberTo##type(sourceEnum), Util::ClobberTo##type(enumFlagsToCheck[i])))	\
-			return true;																					\
-		if (i == 0) return false;																			\
-	} while(true);																							\
+#define ForEachBooleanReturn(type, arrayName, macroNameWithArrayParameter, defaultValue)	\
+{																							\
+	auto i = arrayName->Length;																\
+	do {																					\
+		i--;																				\
+		macroNameWithArrayParameter(type, arrayName)										\
+		if (i==0) return defaultValue;														\
+	} while (true);																			\
 }
 
+#define AreAllEnumFlagsToCheckSetOnSourceOperation(type, arrayName) if (!Util::IsFlagSet(Util::ClobberTo##type(sourceEnum), Util::ClobberTo##type(arrayName[i]))) return false;
+#define AreAnyEnumFlagsToCheckSetOnSourceOperation(type, arrayName) if (Util::IsFlagSet(Util::ClobberTo##type(sourceEnum), Util::ClobberTo##type(arrayName[i]))) return true;
+#define AreAllEnumFlagsToCheckSetOnSource(type) ForEachBooleanReturn(type, enumFlagsToCheck, AreAllEnumFlagsToCheckSetOnSourceOperation, true)
+#define AreAnyEnumFlagsToCheckSetOnSource(type) ForEachBooleanReturn(type, enumFlagsToCheck, AreAnyEnumFlagsToCheckSetOnSourceOperation, false)
 
 #define RemoveTargetFromSource(type) ReturnConvertedFromUtilSourceTargetMethod(type, RemoveFlagFrom)
 #define AddEnumArrayToSource(type) FlagsOperationOnEnumArray(type, AddFlagTo)
@@ -85,6 +78,15 @@ GenericEnumMinimalMethod(Boolean) AreAnyFlagsSet(array<TEnum>^ enumFlagsToCheck,
 	throw gcnew Exception("This should never throw. All underlying types are represented above.");
 }
 
+GenericEnumMinimalMethod(Boolean) EqualsAny(array<TEnum>^ enumValuesToCheck, TEnum sourceEnum)
+{
+	auto len = enumValuesToCheck->Length;
+	for (int i = 0; i < len; i++) {
+		if (enumValuesToCheck[i] == sourceEnum)
+			return true;
+	}
+	return false;
+}
 
 GenericEnumMinimalMethod(TEnum) AddFlag(TEnum source, TEnum target)
 {
@@ -92,11 +94,6 @@ GenericEnumMinimalMethod(TEnum) AddFlag(TEnum source, TEnum target)
 	throw gcnew Exception("This should never throw. All underlying types are represented above.");
 }
 
-GenericEnumMinimalMethod(TEnum) RemoveFlags(TEnum source, array<TEnum>^ enumArray)
-{
-	SwitchOnType(s_kind, RemoveEnumArrayFromSource)
-	throw gcnew Exception("This should never throw. All underlying types are represented above.");
-}
 
 GenericEnumMinimalMethod(TEnum) AddFlags(array<TEnum>^ enumArray, TEnum source)
 {
@@ -110,18 +107,14 @@ GenericEnumMinimalMethod(TEnum) RemoveFlag(TEnum source, TEnum target)
 	throw gcnew Exception("This should never throw. All underlying types are represented above.");
 }
 
+GenericEnumMinimalMethod(TEnum) RemoveFlags(TEnum source, array<TEnum>^ enumArray)
+{
+	SwitchOnType(s_kind, RemoveEnumArrayFromSource)
+	throw gcnew Exception("This should never throw. All underlying types are represented above.");
+}
+
 GenericEnumMinimalMethod(TEnum) AddFlagsSpecial(array<TEnum>^ enumArray, TEnum source)
 {
 	SwitchOnType(s_kind, AddSpecialEnumArrayToSource)
 	throw gcnew Exception("This should never throw. All underlying types are represented above.");
-}
-
-GenericEnumMinimalMethod(Boolean) EqualsAny(array<TEnum>^ enumValuesToCheck, TEnum sourceEnum)
-{
-	auto len = enumValuesToCheck->Length;
-	for (int i = 0; i < len; i++) {
-		if (enumValuesToCheck[i] == sourceEnum)
-			return true;
-	}
-	return false;
 }

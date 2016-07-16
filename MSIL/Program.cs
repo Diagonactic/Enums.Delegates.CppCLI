@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Resources;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace MSIL
@@ -57,6 +58,7 @@ namespace MSIL
 
             string dllPath = Path.Combine(compiledPath, "Enums.dll");
             string ilPath = Path.Combine(compiledPath, "Enums.il");
+            string xmlPath = Path.Combine(compiledPath, "Enums.xml");
             string resPath = Path.Combine(compiledPath, "Enums.res");
             if (!File.Exists(dllPath))
                 ThrowPathError("Could not locate compiled file", dllPath);
@@ -64,11 +66,15 @@ namespace MSIL
             Console.WriteLine(Launch(ildasm, $"/TEXT /OUT=\"{ilPath}\" \"{dllPath}\""));
 
             ReWrite(ilPath);
-
+            var result = File.ReadAllText(xmlPath);
+            var newFile = s_Pdm.Replace(result, "ParameterizedEnumDelegateMap");
+            File.WriteAllText(xmlPath, newFile);
             Console.WriteLine(Launch(ilasm, $"/OUTPUT=\"{dllPath}\" /PDB /DLL \"{ilPath}\" /RES=\"{resPath}\" /KEY=" + args[0]));
+
             return 0;
         }
 
+        static readonly Regex s_Pdm = new Regex("ParameterizedEnumDelegateMap[0-9]");
         private static void ReWrite(string path)
         {
             if (!File.Exists(path))
@@ -76,10 +82,18 @@ namespace MSIL
 
             var newSource = new List<string>();
             var lines = File.ReadAllLines(path);
-
+            bool successEnumDelegateMap = false, successEnumClobber = false;
             bool foundMethodHeading = false, foundMethodBrace = false, writtenReplacement = false;
             foreach (var line in lines)
             {
+                if (line.Contains("ParameterizedEnumDelegateMap"))
+                {
+                    var newLine = s_Pdm.Replace(line, "ParameterizedEnumDelegateMap");
+                    Console.WriteLine("Message: New Line: " + newLine);
+                    successEnumDelegateMap = true;
+                    newSource.Add(newLine);
+                    continue;
+                }
                 if (line.Contains("ClobberFrom<"))
                 {
                     foundMethodHeading = true;
@@ -110,13 +124,19 @@ namespace MSIL
                     else if (!line.Contains("}"))
                         continue;
                 }
+                if (writtenReplacement)
+                    successEnumClobber = true;
 
                 foundMethodHeading = false;
                 foundMethodBrace = false;
                 writtenReplacement = false;
                 newSource.Add(line);
             }
-
+            if (!successEnumClobber || !successEnumDelegateMap)
+            {
+                Console.WriteLine($"Error - Found Clobber Methods: {successEnumClobber}, Found ParameterizedEnumDelegateMap: {successEnumDelegateMap}");
+                Environment.Exit(5);
+            }
             File.WriteAllLines(path, newSource);
         }
 

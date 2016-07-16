@@ -19,55 +19,23 @@ namespace Diagonactic
 
 	internal:
 		static array<Char> ^s_Split = gcnew array<Char>(1);
+
+		template < class T, class U > 
+		inline static Boolean IsType(U u) { return dynamic_cast<T>(u) != nullptr;	}
 		
-		generic <typename TEnum> 
-			where TEnum:IComparable, IFormattable, IConvertible, System::Enum
-		[MethodImpl(MethodImplOptions::AggressiveInlining)]
-		static UnderlyingKind GetKind(TEnum)
-		{
-			auto uKind = Enum::GetUnderlyingType(TEnum::typeid);
-			if (uKind == Int32::typeid)
-				return UnderlyingKind::Int32Kind;
-			if (uKind == UInt32::typeid)
-				return UnderlyingKind::UInt32Kind;
-			if (uKind == Byte::typeid)
-				return UnderlyingKind::ByteKind;
-			if (uKind == SByte::typeid)
-				return UnderlyingKind::SByteKind;
-			if (uKind == Int16::typeid)
-				return UnderlyingKind::Int16Kind;
-			if (uKind == UInt16::typeid)
-				return UnderlyingKind::UInt16Kind;
-			if (uKind == Int64::typeid)
-				return UnderlyingKind::Int64Kind;
-			if (uKind == UInt64::typeid)
-				return UnderlyingKind::UInt64Kind;
+		GenericEnumType	inline static UnderlyingKind GetKind();
+		GenericEnumType inline static SByte ClobberToSByte(TEnum value);
+		GenericEnumType inline static Byte ClobberToByte(TEnum value);
+		GenericEnumType inline static Int16 ClobberToInt16(TEnum value);
+		GenericEnumType inline static UInt16 ClobberToUInt16(TEnum value);
+		GenericEnumType inline static Int32 ClobberToInt32(TEnum value);
+		GenericEnumType inline static UInt32 ClobberToUInt32(TEnum value);
+		GenericEnumType inline static Int64 ClobberToInt64(TEnum value);
+		GenericEnumType inline static UInt64 ClobberToUInt64(TEnum value);
 
-			throw gcnew NotSupportedException("Type " + (uKind::typeid)->ToString() + " is not supported");
-		}
-
-#pragma warning(disable:4956 4957)
-
-#define CLOBBERTOTYPETARGETTEMPLATE(type) generic <typename TEnum> where TEnum:IComparable, IFormattable, IConvertible, System::Enum\
-			[MethodImpl(MethodImplOptions::AggressiveInlining)] static type ClobberTo##type(TEnum val) { return *reinterpret_cast<type*>(&val); }
-
-		CLOBBERTOTYPETARGETTEMPLATE(Byte)
-		CLOBBERTOTYPETARGETTEMPLATE(SByte)
-		CLOBBERTOTYPETARGETTEMPLATE(Int16)
-		CLOBBERTOTYPETARGETTEMPLATE(UInt16)
-		CLOBBERTOTYPETARGETTEMPLATE(Int32)
-		CLOBBERTOTYPETARGETTEMPLATE(UInt32)
-		CLOBBERTOTYPETARGETTEMPLATE(Int64)
-		CLOBBERTOTYPETARGETTEMPLATE(UInt64)
-#pragma warning(default:4956 4957)
 		
-		template <typename TNumber>
-		[MethodImpl(MethodImplOptions::AggressiveInlining)]
-		static TNumber AddFlagTo(TNumber %enumValue, TNumber %flagToAdd)
-		{						
-			return enumValue | flagToAdd;
-		}
-
+		template <typename TNumber>	inline static TNumber AddFlagTo(TNumber %enumValue, TNumber %flagToAdd) { return enumValue | flagToAdd;	}
+		template <typename TNumber> inline static TNumber RemoveFlagFrom(TNumber enumValue, TNumber flagToAdd)	{ return enumValue & ~flagToAdd; }
 
 		template <typename TNumber>
 		[MethodImpl(MethodImplOptions::AggressiveInlining)]
@@ -127,17 +95,9 @@ namespace Diagonactic
 				return enumValue | flagToAdd;
 
 			return enumValue;
-		}
+		}	
 
-		template <typename TNumber>
-		[MethodImpl(MethodImplOptions::AggressiveInlining)]
-		static TNumber RemoveFlagFrom(TNumber enumValue, TNumber flagToAdd)
-		{
-			return enumValue & ~flagToAdd;
-		}
-
-		template <typename TNumber>
-		inline static Boolean IsFlagSet(TNumber enumValue, TNumber enumFlagToTest)
+		template <typename TNumber>	inline static Boolean IsFlagSet(TNumber enumValue, TNumber enumFlagToTest)
 		{
 			if (enumFlagToTest == enumValue)
 				return true;
