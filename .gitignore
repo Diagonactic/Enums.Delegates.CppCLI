@@ -71,3 +71,4 @@ ipch/
 *.opendb
 EnumCpp.VC.db
 .vs/
+Enums/Util.cpp~RF5862136.TMP
