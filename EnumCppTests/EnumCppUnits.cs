@@ -190,6 +190,20 @@ namespace DiagonacticTests
         }
 
         [TestMethod, EnumTest]
+        public void TestConvert()
+        {
+            var value = LongFlags.Five | LongFlags.Eight;
+            var vc = new FlagsToBooleanValueConverter<LongFlags>();
+            vc.Convert(value, typeof(LongFlags), LongFlags.Eight, null).ShouldBeEquivalentTo(true);
+            vc.Convert(value, typeof(LongFlags), LongFlags.Five, null).ShouldBeEquivalentTo(true);
+            vc.Convert(value, typeof(LongFlags), LongFlags.Two, null).ShouldBeEquivalentTo(false);
+            vc.ConvertBack(value, typeof(LongFlags), LongFlags.Five, null).ShouldBeEquivalentTo(LongFlags.Eight);
+        }
+        
+
+        
+
+        [TestMethod, EnumTest]
         public void TestDescription()
         {
             SmallNonFlags.One.GetDescription().ShouldBeEquivalentTo("The Number One");

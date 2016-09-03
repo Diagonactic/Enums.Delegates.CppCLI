@@ -1,6 +1,7 @@
 #pragma once
 #include "GenericEnumValues.h"
 #include "NumberMap.h"
+#include "MsilConvert.h"
 
 #define NumberMapField(typeName) <typeName>^ s_enum##typeName
 
@@ -54,6 +55,7 @@ namespace Diagonactic {
 		static NumberMap NumberMapField(Byte);
 		static NumberMap NumberMapField(SByte);
 	};
+
 
 
 }

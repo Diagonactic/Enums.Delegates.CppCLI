@@ -138,6 +138,21 @@ Enums.ToEnum(1); // MyEnum.Val1
 Enums.ToEnum(3); // MyEnum.Val1 | mMynum.Val2
 ```
 
+
+Enum WPF Converters
+-------------------
+I had a personal project that used a series of Flags Enums for settings and wanted a way to convert those to booleans for use with Checkboxes (and IsEnabled).  After some searching,
+I ran into this post: http://stackoverflow.com/questions/326802/how-can-you-two-way-bind-a-checkbox-to-an-individual-bit-of-a-flags-enumeration and implemented the answer provided (the "edited version") and
+after confirming it worked, added a generic version of the IValueConverter targetted at FlagsEnums.  The XAML implementation used in that post will work with FlagsToBooleanValueConverter<TEnum> and I'll
+add some documentation here when I have a moment and have implemented it in my other project.
+
+LIMITATION: A converter instance needs to exist for *each* flags field that backs the values in the checkboxes.  This means if you have one group of checkboxes that back to a single flags field, you need
+one converter.  If you have a data table containing a group of flags checkboxes that back to multiple fields of the same type, a converter for *each* of those backing fields is necessary which makes using
+this capability in that scenario impractical.
+
+The implementation, like all in this library, works with enums of any valid underlying type and unit tests for each type are included.  However, due to this being a new implementation, consider this feature
+to be beta quality.  To use this feature, "PresentationFramework.dll" needs to be referenced.
+
 Enum Execute Delegate on Match
 ------------------------------
 

@@ -273,6 +273,17 @@ namespace EnumCppUnderlyingTypeTests {
 			var objResult = Enums.AsObject<TestEnum>((" + typekw +@")(" + GetHex(startingNumber, 1) + " | " + GetHex(startingNumber, 2) + @")) as TestEnum? ?? TestEnum.Ten;
 			objResult.ShouldBeEquivalentTo(Flag1 | Flag2);
         }
+
+		[TestMethod, EnumTest]
+		public void Test" + enumType + @"Convert()
+		{
+			var value = TestEnum.Two | TestEnum.Eight;
+            var vc = new FlagsToBooleanValueConverter<TestEnum>();
+            vc.Convert(value, typeof(TestEnum), TestEnum.Eight, null).ShouldBeEquivalentTo(true);
+            vc.Convert(value, typeof(TestEnum), TestEnum.Two, null).ShouldBeEquivalentTo(true);
+            vc.Convert(value, typeof(TestEnum), TestEnum.Ten, null).ShouldBeEquivalentTo(false);
+            vc.ConvertBack(value, typeof(TestEnum), TestEnum.Two, null).ShouldBeEquivalentTo(TestEnum.Eight);
+		}
 	}";		
 }
 #>

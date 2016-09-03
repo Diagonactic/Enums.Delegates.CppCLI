@@ -2,6 +2,7 @@
 #include "MsilConvert.h"
 #include "GenericEnumMinimal.h"
 
+
 #define ReturnConvertedFromUtilSourceTargetMethod(type, utilMethodName) return MsilConvert::ClobberFrom<TEnum>(Util::##utilMethodName(Util::ClobberTo##type(source), Util::ClobberTo##type(target)))
 
 #define FlagsOperationOnEnumArray(type, enumMethod)											\
@@ -63,11 +64,11 @@ AddFlagArrayMethod(SByte)
 GenericEnumMinimalMethod(Boolean) IsFlagSet(TEnum source, TEnum target)
 {
 	SwitchOnType(s_kind, IsFlagSetNumerically)	
-	throw gcnew Exception("This should never throw. All underlying types are represented above.");
+	ThrowEnumUnderlyingValueInvalid
 }
 
 GenericEnumMinimalMethod(Boolean) AreAllFlagsSet(array<TEnum>^ enumFlagsToCheck, TEnum sourceEnum)
-{
+{	
 	SwitchOnType(s_kind, AreAllEnumFlagsToCheckSetOnSource)
 	throw gcnew Exception("This should never throw. All underlying types are represented above.");
 }

@@ -35,7 +35,9 @@
 #define TParameterTypenameDeclaration(numberOfParameters) CommaRepeat(numberOfParameters, TypenameTParameterName)
 #define TParameterIdentifierNames(numberOfParameters) CommaRepeat(numberOfParameters, param)
 #define TParameterMethodParameters(numberOfParameters) CommaRepeatTwoParams(numberOfParameters, TParameter, param)
+#define ThrowEnumUnderlyingValueInvalid throw gcnew Exception("This should never throw. All underlying types are represented above.");
 
+#define EnumKind GenericEnumMinimal<TEnum>::s_kind
 #define SwitchOnType(targetEnumValue, valueWithTypeParameter)		\
 switch (targetEnumValue) {											\
 	case UnderlyingKind::Int32Kind:									\
@@ -63,3 +65,5 @@ switch (targetEnumValue) {											\
 		valueWithTypeParameter(SByte);								\
 	break;															\
 }
+
+

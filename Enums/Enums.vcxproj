@@ -93,6 +93,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -103,6 +104,8 @@
     <ClInclude Include="EnumDelegateMap.h" />
     <ClInclude Include="Enums.h" />
     <ClInclude Include="EqualityComparers.h" />
+    <ClInclude Include="FastEnumDictionary.h" />
+    <ClInclude Include="FlagsToBooleanValueConverter.h" />
     <ClInclude Include="GenericEnumMinimal.h" />
     <ClInclude Include="GenericNumericEnumCore.h" />
     <ClInclude Include="GenericEnumCoreDescriptions.h" />
@@ -127,6 +130,8 @@
     <ClCompile Include="EnumDelegateMap.cpp" />
     <ClCompile Include="Enums.cpp" />
     <ClCompile Include="EqualityComparers.cpp" />
+    <ClCompile Include="FastEnumDictionary.cpp" />
+    <ClCompile Include="FlagsToBooleanValueConverter.cpp" />
     <ClCompile Include="GenericEnumMinimal.cpp" />
     <ClCompile Include="GenericEnumValues.cpp" />
     <ClCompile Include="GenericNumericEnumCore.cpp" />

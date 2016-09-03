@@ -202,71 +202,51 @@ namespace Diagonactic
 			return GenericNumericEnumCore<TEnum>::s_comparer;
 		}
 
-		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class		
-		static Object^ AsObject(SByte value);
+		GenericEnumType static Object^ AsObject(SByte value);
 
-		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
-		static Object^ AsObject(Byte value);
+		GenericEnumType static Object^ AsObject(Byte value);
 
-		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
-		static Object^ AsObject(Int16 value);
+		GenericEnumType static Object^ AsObject(Int16 value);
 
-		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
-		static Object^ AsObject(UInt16 value);
+		GenericEnumType static Object^ AsObject(UInt16 value);
 
-		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
-		static Object^ AsObject(Int32 value);
+		GenericEnumType static Object^ AsObject(Int32 value);
 
-		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
-		static Object^ AsObject(UInt32 value);
+		GenericEnumType static Object^ AsObject(UInt32 value);
 
-		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
-		static Object^ AsObject(Int64 value);
+		GenericEnumType static Object^ AsObject(Int64 value);
 
-		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
-		static Object^ AsObject(UInt64 value);
+		GenericEnumType static Object^ AsObject(UInt64 value);
 
-		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
-		static TEnum ToEnum(Object^ value);
+		GenericEnumType static TEnum ToEnum(Object^ value);
 
-		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class		
-		static TEnum ToEnum(SByte value);
+		GenericEnumType static TEnum ToEnum(SByte value);
 
-		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
-		static TEnum ToEnum(Byte value);
+		GenericEnumType static TEnum ToEnum(Byte value);
 
-		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
-		static TEnum ToEnum(Int16 value);
+		GenericEnumType static TEnum ToEnum(Int16 value);
 
-		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
-		static TEnum ToEnum(UInt16 value);
+		GenericEnumType static TEnum ToEnum(UInt16 value);
 
-		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
-		static TEnum ToEnum(Int32 value);
+		GenericEnumType static TEnum ToEnum(Int32 value);
 
-		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
-		static TEnum ToEnum(UInt32 value);
+		GenericEnumType static TEnum ToEnum(UInt32 value);
 
-		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
-		static TEnum ToEnum(Int64 value);
+		GenericEnumType static TEnum ToEnum(Int64 value);
 
-		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
-		static TEnum ToEnum(UInt64 value);
+		GenericEnumType static TEnum ToEnum(UInt64 value);
 				
-		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class			
-		static TEnum Parse(String ^source, Boolean ignoreCase);
+		GenericEnumType static TEnum Parse(String ^source, Boolean ignoreCase);
 
-		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
-		static TEnum Parse(String ^source);
+		GenericEnumType static TEnum Parse(String ^source);
 
-		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
-		static Boolean TryParse(String ^source, [Out] TEnum %result);
+		GenericEnumType static Boolean TryParse(String ^source, [Out] TEnum %result);
 
-		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
-		static Boolean TryParse(String ^source, Boolean ignoreCase, [Out] TEnum %result);
+		GenericEnumType static Boolean TryParse(String ^source, Boolean ignoreCase, [Out] TEnum %result);
 		
-		generic <typename TEnum> where TEnum : IComparable, IFormattable, IConvertible, System::Enum, value class
-		static Boolean TryGetFromDescription(String ^source, [Out] TEnum %result);
+		GenericEnumType static Boolean TryGetFromDescription(String ^source, [Out] TEnum %result);
 
 	};
+
+
 }

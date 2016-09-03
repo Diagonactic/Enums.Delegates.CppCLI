@@ -74,7 +74,33 @@ namespace MSIL
             return 0;
         }
 
+        private static string BundleOverloadedClass(string className, string lineOfCil)
+        {
+            var rx = new Regex(className + "[0-9]");
+            if (lineOfCil.Contains(className))
+            {
+                var match = rx.Match(lineOfCil);
+                if (match.Success)
+                {
+                    Console.WriteLine($"Message: Bundled Overloaded Class '{match.Value}' to '{lineOfCil}'");
+                    return rx.Replace(lineOfCil, className);
+                }
+            }
+            return lineOfCil;
+        }
         static readonly Regex s_Pdm = new Regex("ParameterizedEnumDelegateMap[0-9]");
+
+        private static bool CheckLineForOverloadedClass(List<string> newSource, string className, string lineOfCil)
+        {
+            if (newSource == null) throw new ArgumentNullException(nameof(newSource));
+            if (!lineOfCil.Contains(className))
+                return false;
+
+            var newLine = BundleOverloadedClass(className, lineOfCil);
+
+            newSource.Add(newLine);
+            return newLine != lineOfCil;
+        }
         private static void ReWrite(string path)
         {
             if (!File.Exists(path))
@@ -86,14 +112,13 @@ namespace MSIL
             bool foundMethodHeading = false, foundMethodBrace = false, writtenReplacement = false;
             foreach (var line in lines)
             {
-                if (line.Contains("ParameterizedEnumDelegateMap"))
+
+                if (CheckLineForOverloadedClass(newSource, "ParameterizedEnumDelegateMap", line))
                 {
-                    var newLine = s_Pdm.Replace(line, "ParameterizedEnumDelegateMap");
-                    Console.WriteLine("Message: New Line: " + newLine);
                     successEnumDelegateMap = true;
-                    newSource.Add(newLine);
                     continue;
                 }
+                
                 if (line.Contains("ClobberFrom<"))
                 {
                     foundMethodHeading = true;

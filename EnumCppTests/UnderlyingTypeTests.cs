@@ -245,6 +245,17 @@ namespace EnumCppUnderlyingTypeTests {
 			var objResult = Enums.AsObject<TestEnum>((sbyte)(0x000000001 | 0x000000002)) as TestEnum? ?? TestEnum.Ten;
 			objResult.ShouldBeEquivalentTo(Flag1 | Flag2);
         }
+
+		[TestMethod, EnumTest]
+		public void TestSByteConvert()
+		{
+			var value = TestEnum.Two | TestEnum.Eight;
+            var vc = new FlagsToBooleanValueConverter<TestEnum>();
+            vc.Convert(value, typeof(TestEnum), TestEnum.Eight, null).ShouldBeEquivalentTo(true);
+            vc.Convert(value, typeof(TestEnum), TestEnum.Two, null).ShouldBeEquivalentTo(true);
+            vc.Convert(value, typeof(TestEnum), TestEnum.Ten, null).ShouldBeEquivalentTo(false);
+            vc.ConvertBack(value, typeof(TestEnum), TestEnum.Two, null).ShouldBeEquivalentTo(TestEnum.Eight);
+		}
 	}
 	
 	[TestClass]
@@ -480,6 +491,17 @@ namespace EnumCppUnderlyingTypeTests {
 			var objResult = Enums.AsObject<TestEnum>((byte)(0x000000001 | 0x000000002)) as TestEnum? ?? TestEnum.Ten;
 			objResult.ShouldBeEquivalentTo(Flag1 | Flag2);
         }
+
+		[TestMethod, EnumTest]
+		public void TestByteConvert()
+		{
+			var value = TestEnum.Two | TestEnum.Eight;
+            var vc = new FlagsToBooleanValueConverter<TestEnum>();
+            vc.Convert(value, typeof(TestEnum), TestEnum.Eight, null).ShouldBeEquivalentTo(true);
+            vc.Convert(value, typeof(TestEnum), TestEnum.Two, null).ShouldBeEquivalentTo(true);
+            vc.Convert(value, typeof(TestEnum), TestEnum.Ten, null).ShouldBeEquivalentTo(false);
+            vc.ConvertBack(value, typeof(TestEnum), TestEnum.Two, null).ShouldBeEquivalentTo(TestEnum.Eight);
+		}
 	}
 	
 	[TestClass]
@@ -716,6 +738,17 @@ namespace EnumCppUnderlyingTypeTests {
 			var objResult = Enums.AsObject<TestEnum>((short)(0x000000008 | 0x000000010)) as TestEnum? ?? TestEnum.Ten;
 			objResult.ShouldBeEquivalentTo(Flag1 | Flag2);
         }
+
+		[TestMethod, EnumTest]
+		public void TestInt16Convert()
+		{
+			var value = TestEnum.Two | TestEnum.Eight;
+            var vc = new FlagsToBooleanValueConverter<TestEnum>();
+            vc.Convert(value, typeof(TestEnum), TestEnum.Eight, null).ShouldBeEquivalentTo(true);
+            vc.Convert(value, typeof(TestEnum), TestEnum.Two, null).ShouldBeEquivalentTo(true);
+            vc.Convert(value, typeof(TestEnum), TestEnum.Ten, null).ShouldBeEquivalentTo(false);
+            vc.ConvertBack(value, typeof(TestEnum), TestEnum.Two, null).ShouldBeEquivalentTo(TestEnum.Eight);
+		}
 	}
 	
 	[TestClass]
@@ -951,6 +984,17 @@ namespace EnumCppUnderlyingTypeTests {
 			var objResult = Enums.AsObject<TestEnum>((ushort)(0x000000010 | 0x000000020)) as TestEnum? ?? TestEnum.Ten;
 			objResult.ShouldBeEquivalentTo(Flag1 | Flag2);
         }
+
+		[TestMethod, EnumTest]
+		public void TestUInt16Convert()
+		{
+			var value = TestEnum.Two | TestEnum.Eight;
+            var vc = new FlagsToBooleanValueConverter<TestEnum>();
+            vc.Convert(value, typeof(TestEnum), TestEnum.Eight, null).ShouldBeEquivalentTo(true);
+            vc.Convert(value, typeof(TestEnum), TestEnum.Two, null).ShouldBeEquivalentTo(true);
+            vc.Convert(value, typeof(TestEnum), TestEnum.Ten, null).ShouldBeEquivalentTo(false);
+            vc.ConvertBack(value, typeof(TestEnum), TestEnum.Two, null).ShouldBeEquivalentTo(TestEnum.Eight);
+		}
 	}
 	
 	[TestClass]
@@ -1187,6 +1231,17 @@ namespace EnumCppUnderlyingTypeTests {
 			var objResult = Enums.AsObject<TestEnum>((int)(0x000008000 | 0x000010000)) as TestEnum? ?? TestEnum.Ten;
 			objResult.ShouldBeEquivalentTo(Flag1 | Flag2);
         }
+
+		[TestMethod, EnumTest]
+		public void TestInt32Convert()
+		{
+			var value = TestEnum.Two | TestEnum.Eight;
+            var vc = new FlagsToBooleanValueConverter<TestEnum>();
+            vc.Convert(value, typeof(TestEnum), TestEnum.Eight, null).ShouldBeEquivalentTo(true);
+            vc.Convert(value, typeof(TestEnum), TestEnum.Two, null).ShouldBeEquivalentTo(true);
+            vc.Convert(value, typeof(TestEnum), TestEnum.Ten, null).ShouldBeEquivalentTo(false);
+            vc.ConvertBack(value, typeof(TestEnum), TestEnum.Two, null).ShouldBeEquivalentTo(TestEnum.Eight);
+		}
 	}
 	
 	[TestClass]
@@ -1422,6 +1477,17 @@ namespace EnumCppUnderlyingTypeTests {
 			var objResult = Enums.AsObject<TestEnum>((uint)(0x000008000 | 0x000010000)) as TestEnum? ?? TestEnum.Ten;
 			objResult.ShouldBeEquivalentTo(Flag1 | Flag2);
         }
+
+		[TestMethod, EnumTest]
+		public void TestUInt32Convert()
+		{
+			var value = TestEnum.Two | TestEnum.Eight;
+            var vc = new FlagsToBooleanValueConverter<TestEnum>();
+            vc.Convert(value, typeof(TestEnum), TestEnum.Eight, null).ShouldBeEquivalentTo(true);
+            vc.Convert(value, typeof(TestEnum), TestEnum.Two, null).ShouldBeEquivalentTo(true);
+            vc.Convert(value, typeof(TestEnum), TestEnum.Ten, null).ShouldBeEquivalentTo(false);
+            vc.ConvertBack(value, typeof(TestEnum), TestEnum.Two, null).ShouldBeEquivalentTo(TestEnum.Eight);
+		}
 	}
 	
 	[TestClass]
@@ -1658,6 +1724,17 @@ namespace EnumCppUnderlyingTypeTests {
 			var objResult = Enums.AsObject<TestEnum>((long)(0x20000000000 | 0x40000000000)) as TestEnum? ?? TestEnum.Ten;
 			objResult.ShouldBeEquivalentTo(Flag1 | Flag2);
         }
+
+		[TestMethod, EnumTest]
+		public void TestInt64Convert()
+		{
+			var value = TestEnum.Two | TestEnum.Eight;
+            var vc = new FlagsToBooleanValueConverter<TestEnum>();
+            vc.Convert(value, typeof(TestEnum), TestEnum.Eight, null).ShouldBeEquivalentTo(true);
+            vc.Convert(value, typeof(TestEnum), TestEnum.Two, null).ShouldBeEquivalentTo(true);
+            vc.Convert(value, typeof(TestEnum), TestEnum.Ten, null).ShouldBeEquivalentTo(false);
+            vc.ConvertBack(value, typeof(TestEnum), TestEnum.Two, null).ShouldBeEquivalentTo(TestEnum.Eight);
+		}
 	}
 	
 	[TestClass]
@@ -1893,6 +1970,17 @@ namespace EnumCppUnderlyingTypeTests {
 			var objResult = Enums.AsObject<TestEnum>((ulong)(0x400000000000000 | 0x800000000000000)) as TestEnum? ?? TestEnum.Ten;
 			objResult.ShouldBeEquivalentTo(Flag1 | Flag2);
         }
+
+		[TestMethod, EnumTest]
+		public void TestUInt64Convert()
+		{
+			var value = TestEnum.Two | TestEnum.Eight;
+            var vc = new FlagsToBooleanValueConverter<TestEnum>();
+            vc.Convert(value, typeof(TestEnum), TestEnum.Eight, null).ShouldBeEquivalentTo(true);
+            vc.Convert(value, typeof(TestEnum), TestEnum.Two, null).ShouldBeEquivalentTo(true);
+            vc.Convert(value, typeof(TestEnum), TestEnum.Ten, null).ShouldBeEquivalentTo(false);
+            vc.ConvertBack(value, typeof(TestEnum), TestEnum.Two, null).ShouldBeEquivalentTo(TestEnum.Eight);
+		}
 	}
 	}
 }
